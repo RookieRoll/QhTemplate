@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 {
@@ -20,5 +21,31 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public DateTime? DeletionTime { get; set; }
 
         public ICollection<UserRole> UserRole { get; set; }
+
+        public static Role Create(string name,bool isDefault)
+        {
+            return new Role()
+            {
+                Name = name,
+                IsStatic = false,
+                IsDefault = isDefault,
+                IsDeleted = false,
+                CreationTime = DateTime.Now,
+                LastModificationTime = DateTime.Now
+            };
+        }
+
+        public void Update(string roleName, bool isDefault)
+        {
+            this.Name = roleName;
+            this.IsDefault = isDefault;
+            this.LastModificationTime=DateTime.Now;
+        }
+
+        public void Delete()
+        {
+            this.DeletionTime=DateTime.Now;
+            this.IsDeleted = true;
+        }
     }
 }
