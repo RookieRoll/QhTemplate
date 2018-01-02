@@ -46,6 +46,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         {
             this.DeletionTime=DateTime.Now;
             this.IsDeleted = true;
+            this.LastModificationTime=DateTime.Now;
         }
     }
 }

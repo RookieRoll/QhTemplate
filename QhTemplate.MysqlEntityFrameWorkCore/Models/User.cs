@@ -23,5 +23,33 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
         public ICollection<UserOrganization> UserOrganization { get; set; }
         public ICollection<UserRole> UserRole { get; set; }
+
+        public static User Create(string name, string password, string username, string email)
+        {
+            return new User()
+            {
+                Name = name,
+                UserName = username,
+                Password = password,
+                EmailAddress = email,
+                IsDeleted = false,
+                CreationTime = DateTime.Now,
+                LastModificationTime = DateTime.Now
+            };
+        }
+
+        public void Update(string username, string email)
+        {
+            this.UserName = username;
+            this.EmailAddress = email;
+            this.LastModificationTime = DateTime.Now;
+        }
+
+        public void Delete()
+        {
+            this.IsDeleted = true;
+            this.DeletionTime = DateTime.Now;
+            this.LastModificationTime = DateTime.Now;
+        }
     }
 }

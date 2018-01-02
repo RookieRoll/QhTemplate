@@ -20,5 +20,12 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public DateTime? DeletionTime { get; set; }
 
         public ICollection<UserOrganization> UserOrganization { get; set; }
+
+        public void Delete()
+        {
+            this.IsDeleted = true;
+            this.DeletionTime=DateTime.Now;
+            this.LastModificationTime=DateTime.Now;
+        }
     }
 }
