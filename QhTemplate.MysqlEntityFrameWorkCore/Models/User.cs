@@ -24,13 +24,13 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public ICollection<UserOrganization> UserOrganization { get; set; }
         public ICollection<UserRole> UserRole { get; set; }
 
-        public static User Create(string name, string password, string username, string email)
+        public static User Create(string name, string username, string email)
         {
             return new User()
             {
                 Name = name,
                 UserName = username,
-                Password = password,
+                Password = "123456",
                 EmailAddress = email,
                 IsDeleted = false,
                 CreationTime = DateTime.Now,
