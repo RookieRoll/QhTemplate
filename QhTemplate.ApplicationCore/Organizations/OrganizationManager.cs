@@ -118,7 +118,7 @@ namespace QhTemplate.ApplicationCore.Organizations
 
             using (var scope = _db.Database.BeginTransaction())
             {
-                organization.CreationTime = DateTime.Now;
+                
                 _db.Organization.Add(organization);
                 Save();
                 organization.Path = parentOrganization?.Path + $"{organization.Id},";

@@ -8,7 +8,7 @@ namespace QhTemplate.ApplicationCore.Exceptions
     {
         public HttpStatusCode HttpStatus { get; }
 
-        public UserFriendlyException(string message,HttpStatusCode httpStatus=HttpStatusCode.InternalServerError):base(message)
+        public UserFriendlyException(string message,HttpStatusCode httpStatus=HttpStatusCode.BadRequest):base(message)
         {
             this.HttpStatus = httpStatus;
         }

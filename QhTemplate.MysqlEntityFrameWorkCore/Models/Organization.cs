@@ -21,6 +21,17 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
         public ICollection<UserOrganization> UserOrganization { get; set; }
 
+        public static Organization Create(string name,int? parentId)
+        {
+            return new Organization()
+            {
+                Name = name,
+                IsDeleted = false,
+                CreationTime = DateTime.Now,
+                LastModificationTime = DateTime.Now,
+                ParentId = parentId
+            };
+        }
         public void Delete()
         {
             this.IsDeleted = true;
