@@ -19,6 +19,11 @@ namespace QhTemplate.AdminWeb.Controllers
             return Json("");
         }
 
+        public IActionResult SignIn()
+        {
+            return Json("");
+        }
+
         public IActionResult ValidateCode()
         {
             var ms = ValidateCodeServiceUtil.CreateValidateCode(out string code);
