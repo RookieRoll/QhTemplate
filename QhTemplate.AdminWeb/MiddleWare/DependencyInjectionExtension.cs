@@ -15,7 +15,7 @@ namespace QhTemplate.AdminWeb.MIddleWare
     {
         public static void AddDependency(this IServiceCollection service)
         {
-            service.AddScoped<EmsDBContext>();
+            service.AddDbContext<EmsDBContext>();
             service.AddScoped<RoleManager>();
             service.AddScoped<UserManager>();
             service.AddScoped<OrganizationManager>();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataTables.AspNet.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace QhTemplate.AdminWeb
             services.AddDependency();
             services.AddMemoryCache();
             services.AddMvc();
+            services.RegisterDataTables();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +41,7 @@ namespace QhTemplate.AdminWeb
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseAuthentication();
 
             app.UseStaticFiles();
 
