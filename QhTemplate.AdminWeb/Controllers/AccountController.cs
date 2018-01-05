@@ -13,17 +13,25 @@ namespace QhTemplate.AdminWeb.Controllers
             _cache = cache;
         }
 
-        // GET
-        public IActionResult Index()
-        {
-            return Json("");
-        }
-
         public IActionResult SignIn()
         {
+            return View();
+        }
+        public IActionResult SignIn(string username)
+        {
             return Json("");
         }
 
+
+        public IActionResult SignUp()
+        {
+            return Json("");
+        }
+
+        public IActionResult SignOut()
+        {
+            return Json(1);
+        }
         public IActionResult ValidateCode()
         {
             var ms = ValidateCodeServiceUtil.CreateValidateCode(out string code);

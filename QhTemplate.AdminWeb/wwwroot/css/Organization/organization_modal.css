@@ -1,0 +1,28 @@
+﻿body {
+}
+
+.input-text{
+    border:none;
+    border-bottom:2px solid skyblue;
+    border-radius:0;
+    margin-bottom:10px;
+    -webkit-box-shadow: none;
+    padding:0 !important;
+}
+
+.input-text:focus{
+     outline: none;  
+     box-shadow: none;
+}
+
+
+.title-highlight{
+    color:red;
+    background-color:azure;
+    margin:0 5px;
+}
+
+.tips-highlight{
+    color:darkgoldenrod;
+    margin:0 5px;
+}

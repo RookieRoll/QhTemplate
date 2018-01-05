@@ -1,0 +1,53 @@
+﻿body {
+}
+
+.left-tree{
+    width:300px;
+    overflow-y:inherit;  
+}
+
+.left-tree,.user-data{
+    background-color:white;
+    padding:20px;
+}
+
+.search-input{
+    padding:0;
+}
+
+.add-root{
+    padding-right:0;
+}
+
+.head-option{
+    height:45px;
+    border-bottom:1px solid #eee;
+    margin-bottom:10px;
+}
+
+.user-data{
+    margin-left:50px;
+    flex-grow:1;
+}
+
+.table-title{
+    font-size:24px;
+}
+
+#orgnization-table{
+    width:100% !important;
+}
+
+.organization-content{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.user-table{
+    width:100% !important;
+}
+
+#add-member{
+    float:right;
+    width:155px;
+}

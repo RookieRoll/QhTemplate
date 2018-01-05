@@ -1,0 +1,16 @@
+﻿.rolenameinput {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.checkboxdiv {
+    margin-top: 20px;
+}
+
+.roleactive {
+    border-bottom: 3px solid blue;
+}
+
+a {
+    color: black;
+}
