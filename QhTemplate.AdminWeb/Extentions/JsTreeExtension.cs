@@ -82,5 +82,40 @@ namespace QhTemplate.AdminWeb.Extentions
         }
 
         #endregion
+        
+        //动态映射到多选框，使用jstree实现
+        public static List<JsTreeNode> MapToMultipleSelection(this IEnumerable<Role> list, IEnumerable<Role> selected)
+        {
+            var result = new List<JsTreeNode>();
+            foreach (var item in list)
+            {
+                if (selected.Contains(item))
+                {
+                    var node = new JsTreeNode()
+                    {
+                        id = item.Id.ToString(),
+                        text = item.Name,
+                        state = new JsTreeState { selected = true, disabled = false, opened = false },
+                        children = new List<JsTreeNode>(),
+                        icon = ""
+                    };
+                    result.Add(node);
+                }
+                else
+                {
+                    var node = new JsTreeNode()
+                    {
+                        id = item.Id.ToString(),
+                        text = item.Name,
+                        state = new JsTreeState { selected = false, disabled = false, opened = false },
+                        children = new List<JsTreeNode>(),
+                        icon = ""
+                    };
+                    result.Add(node);
+                }
+            }
+            return result;
+        }
+  
     }
 }

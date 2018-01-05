@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.Azure.KeyVault.Models;
 
-namespace QhTemplate.AdminWeb.ViewModel
+namespace QhTemplate.AdminWeb.ViewModels.Account
 {
     public class AccountViewModel
     {

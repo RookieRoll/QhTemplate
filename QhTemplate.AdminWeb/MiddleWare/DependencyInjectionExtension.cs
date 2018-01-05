@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using QhTemplate.AdminWeb.Navigation;
 using QhTemplate.ApplicationCore.Authentications.Permissions;
 using QhTemplate.ApplicationCore.Authentications.Roles;
 using QhTemplate.ApplicationCore.Organizations;
@@ -19,7 +20,8 @@ namespace QhTemplate.AdminWeb.MIddleWare
             service.AddScoped<UserManager>();
             service.AddScoped<OrganizationManager>();
             service.AddScoped<PermissionManager>();
-
+            service.AddScoped<MenuProvider>();
+            
             service.AddScoped<IUserAppService, UserAppService>();
             service.AddScoped<IRolesAppService, RoleAppService>();
             service.AddScoped<IOrganizationAppService, OrganizationAppService>();
