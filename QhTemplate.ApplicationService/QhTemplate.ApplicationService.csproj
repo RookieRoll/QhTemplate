@@ -4,13 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.App" Version="2.0.4" />
+    <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QhTemplate.ApplicationCore\QhTemplate.ApplicationCore.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ZKWeb.System.Drawing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\.nuget\packages\zkweb.system.drawing\4.0.1\lib\netstandard2.0\ZKWeb.System.Drawing.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
