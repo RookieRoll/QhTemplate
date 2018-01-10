@@ -1,14 +1,15 @@
 ﻿@model QhTemplate.AdminWeb.ViewModels.Account.AccountViewModel
+
+<!DOCTYPE html>
+<html lang="en">
 @{
     Layout = null;
 }
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="/css/Account/login.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/css/Account/login.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -16,17 +17,17 @@
         <form asp-controller="Account" asp-action="SignIn" method="post">
             <h1>登陆</h1>
             <div>
-                <input type="text" placeholder="Username" required="" id="username" asp-for="UserName" autocomplete="off" />
+                <input type="text" placeholder="Username" required="" id="username" asp-for="UserName" autocomplete="off"/>
             </div>
             <div>
-                <input type="password" placeholder="Password" required="" id="password" asp-for="Password" />
+                <input type="password" placeholder="Password" required="" id="password" asp-for="Password"/>
             </div>
             <div>
-                <input type="text" placeholder="验证码" required="" id="validatecode" asp-for="ValidateCode" style="width:200px;"autocomplete="off"/>
-                <img id="imgVerify" src="/Account/ValidateCode" alt="看不清？点击更换" onclick="this.src = this.src + '?'" />
+                <input type="text" placeholder="验证码" required="" id="validatecode" asp-for="ValidateCode" style="width: 200px;"autocomplete="off"/>
+                <img id="imgVerify" src="/Account/ValidateCode" alt="看不清？点击更换" onclick="this.src = this.src + '?'"/>
             </div>
             <div>
-                <input type="submit" value="Log in" />
+                <input type="submit" value="Log in"/>
             </div>
             <div asp-validation-summary="All" class="text-danger">
 

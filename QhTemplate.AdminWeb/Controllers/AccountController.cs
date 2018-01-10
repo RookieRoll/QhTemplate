@@ -17,6 +17,7 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             return View();
         }
+        [HttpPost]
         public IActionResult SignIn(string username)
         {
             return Json("");

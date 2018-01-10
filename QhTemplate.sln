@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.MysqlEntityFrameWorkCore", "QhTemplate.MysqlEntityFrameWorkCore\QhTemplate.MysqlEntityFrameWorkCore.csproj", "{B8CAF446-053F-46EE-9339-F8F730B5EADD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.ApplicationCore", "QhTemplate.ApplicationCore\QhTemplate.ApplicationCore.csproj", "{A6D63A6C-9678-426A-8115-5DB7FBFBFBFE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.ApplicationService", "QhTemplate.ApplicationService\QhTemplate.ApplicationService.csproj", "{BF432F50-525F-45A8-8807-5D8DB3D1E8F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.AdminWeb", "QhTemplate.AdminWeb\QhTemplate.AdminWeb.csproj", "{54D0586D-AC25-4CEE-88F8-05D2724A21F3}"
@@ -16,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestEntityFrameWorkCore", "XUnitTestEntityFrameWorkCore\XUnitTestEntityFrameWorkCore.csproj", "{2B90BD95-7911-4E1F-8457-712525697AB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{70643C5B-F272-4983-9D23-F70AE8315D87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.ApplicationCore", "QhTemplate.ApplicationCore\QhTemplate.ApplicationCore.csproj", "{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		{B8CAF446-053F-46EE-9339-F8F730B5EADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8CAF446-053F-46EE-9339-F8F730B5EADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8CAF446-053F-46EE-9339-F8F730B5EADD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6D63A6C-9678-426A-8115-5DB7FBFBFBFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6D63A6C-9678-426A-8115-5DB7FBFBFBFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6D63A6C-9678-426A-8115-5DB7FBFBFBFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6D63A6C-9678-426A-8115-5DB7FBFBFBFE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF432F50-525F-45A8-8807-5D8DB3D1E8F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF432F50-525F-45A8-8807-5D8DB3D1E8F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF432F50-525F-45A8-8807-5D8DB3D1E8F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +43,10 @@ Global
 		{70643C5B-F272-4983-9D23-F70AE8315D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70643C5B-F272-4983-9D23-F70AE8315D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70643C5B-F272-4983-9D23-F70AE8315D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
