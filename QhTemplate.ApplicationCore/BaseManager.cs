@@ -13,6 +13,7 @@ namespace QhTemplate.ApplicationCore
         protected BaseManager(EmsDBContext db)
         {
             _db = db;
+            _dbSet = db.Set<T>();
         }
 
         public IEnumerable<T> Finds()
