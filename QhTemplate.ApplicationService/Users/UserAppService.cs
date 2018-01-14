@@ -29,6 +29,21 @@ namespace QhTemplate.ApplicationService.Users
             return _userManager.Finds().AsQueryable();
         }
 
+        public IQueryable<User> Finds(Func<User, bool> func)
+        {
+            return _userManager.Finds(func).AsQueryable();
+        }
+
+        public User FirstOrDefault(Func<User, bool> func)
+        {
+            return _userManager.FirstOrDefault(func);
+        }
+
+        public User First(Func<User, bool> func)
+        {
+            return _userManager.First(func);
+        }
+
         public User Find(int? id)
         {
             return _userManager.Find(id);

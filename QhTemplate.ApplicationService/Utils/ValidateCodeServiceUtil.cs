@@ -53,7 +53,7 @@ namespace QhTemplate.ApplicationService.Utils
             {
                 int x = random.Next(img.Width);
                 int y = random.Next(img.Height);
-                g.DrawRectangle(new Pen(Color.Gray, 0), x, y, 1, 1);
+                g.DrawRectangle(new Pen(Color.LightGray, 0), x, y, 1, 1);
             }
 
             //验证码绘制在g中  

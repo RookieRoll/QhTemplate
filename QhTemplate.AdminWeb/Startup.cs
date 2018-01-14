@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataTables.AspNet.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,15 @@ namespace QhTemplate.AdminWeb
             services.AddDependency();
             services.AddMemoryCache();
             services.AddMvc();
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = "/Account/Signin";
+                options.LogoutPath = "/Account/SignOut";
+            });
             services.RegisterDataTables();
         }
 
@@ -41,6 +51,7 @@ namespace QhTemplate.AdminWeb
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
             app.UseAuthentication();
 
             app.UseStaticFiles();

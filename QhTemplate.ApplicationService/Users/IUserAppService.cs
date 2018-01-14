@@ -9,6 +9,9 @@ namespace QhTemplate.ApplicationService.Users
     public interface IUserAppService
     {
         IQueryable<User> Finds();
+        IQueryable<User> Finds(Func<User,bool> func);
+        User FirstOrDefault(Func<User, bool> func);
+        User First(Func<User, bool> func);
         User Find(int? id);
         void Create(string userName, string name, string email);
         void Remove(int? id);

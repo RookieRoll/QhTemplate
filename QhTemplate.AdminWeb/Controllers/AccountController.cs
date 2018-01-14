@@ -1,38 +1,104 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using QhTemplate.AdminWeb.ViewModels.Account;
+using QhTemplate.ApplicationService.Users;
 using QhTemplate.ApplicationService.Utils;
+using System;
+using System.Linq.Dynamic.Core;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using QhTemplate.AdminWeb.Navigation;
+using QhTemplate.ApplicationCore.Exceptions;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IMemoryCache _cache;
+        private readonly IUserAppService _userApp;
+        private readonly MenuProvider _menuProvider;
 
-        public AccountController(IMemoryCache cache)
+        public AccountController(IMemoryCache cache, IUserAppService userApp, MenuProvider menuProvider)
         {
             _cache = cache;
+            _userApp = userApp;
+            _menuProvider = menuProvider;
         }
 
         public IActionResult SignIn()
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult SignIn(string username)
+        public async Task<IActionResult> SignIn(AccountViewModel login)
         {
-            return Json("");
+            if (!ModelState.IsValid) return RedirectToAction("SignIn");
+            if (!CheckValidateCode(login.ValidateCode))
+                return RedirectToAction("SignIn");
+
+            Func<User, bool> func = null;
+            //判断是否是邮箱登陆
+            if (IsEmailLogin(login.UserName))
+                func = m => m.EmailAddress.Equals(login.UserName) && m.Password.Equals(login.Password);
+            else
+                func = m => m.UserName.Equals(login.UserName) && m.Password.Equals(login.Password);
+
+            var user = _userApp.FirstOrDefault(func);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "账号或者密码错误");
+                return RedirectToAction("SignIn");
+            }
+
+            await SaveSignInUserIndetifier(user);
+            _menuProvider.RemoveMenu(user.Id);
+            _menuProvider.LoadMenu(user.Id);
+            return RedirectToAction("Index", "Home");
         }
 
-
-        public IActionResult SignUp()
+        private async Task SaveSignInUserIndetifier(User user)
         {
-            return Json("");
+            var userIdentity = new ClaimsPrincipal(
+                new ClaimsIdentity(
+                    new[]
+                    {
+                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Sid, user.Id.ToString())
+                    },
+                    CookieAuthenticationDefaults.AuthenticationScheme
+                ));
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                userIdentity,
+                new Microsoft.AspNetCore.Authentication.AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.Now.Add(TimeSpan.FromDays(7)) // 有效时间
+                });
         }
 
-        public IActionResult SignOut()
+        private bool IsEmailLogin(string value)
         {
-            return Json(1);
+            const string regexStr = @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+            return Regex.IsMatch(value, regexStr);
         }
+
+        private bool CheckValidateCode(string code)
+        {
+            return _cache.Get(HttpContext.Connection.Id) is string originCode &&
+                   originCode.Equals(code, StringComparison.OrdinalIgnoreCase);
+        }
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("SignIn", "Account");
+        }
+
         public IActionResult ValidateCode()
         {
             var ms = ValidateCodeServiceUtil.CreateValidateCode(out string code);
