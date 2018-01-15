@@ -11,7 +11,18 @@ class BriefingContent():
     PublishTime=""
     # 宣讲正文
     Body=""
-    # 职位列表
-    JobList=[]
     # 操作链接
     OpthonList=""
+    # 举办城市
+    City=""
+
+    def __init__(self, company,city,school,held,starttime,publishtime,body,optionlist):
+        self.CompanyName=company
+        self.City=city
+        self.School=school
+        self.Held=held
+        self.StartTime=starttime
+        self.PublishTime=publishtime
+        self.Body=body
+        self.OpthonList=optionlist
+
