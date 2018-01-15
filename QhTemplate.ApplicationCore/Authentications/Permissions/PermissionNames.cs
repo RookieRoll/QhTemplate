@@ -13,7 +13,7 @@
         #region 角色权限
 
         public const string Role = Total + ".Role";
-
+    
         #endregion
 
         #region 组织结构

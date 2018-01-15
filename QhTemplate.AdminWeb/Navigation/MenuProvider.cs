@@ -20,7 +20,6 @@ namespace QhTemplate.AdminWeb.Navigation
         {
             if (_cache.TryGetValue(userId, out MenuItem result))
                 return result;
-            var menu = MenuConfig.SideMenu;
             result = LoadMenu(userId);
 
             return result;
@@ -33,7 +32,7 @@ namespace QhTemplate.AdminWeb.Navigation
         }
         public MenuItem LoadMenu(int userId)
         {
-            MenuItem menu = MenuConfig.SideMenu;
+            var menu = MenuConfig.SideMenu;
             var list = _permission.GetUserPermissions(userId);
             var result = GetFilterMenu(menu, list);
             _cache.Set(userId,result);

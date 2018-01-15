@@ -1,0 +1,24 @@
+﻿@model System.Collections.Generic.List<QhTemplate.AdminWeb.Navigation.MenuItem>
+
+<ul class="treeview-menu">
+    @foreach (var item in Model)
+    {
+        if (item.HasChild)
+        {
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i> <span>@item.Name</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                @Html.Partial("_ChildMenu", item.Children)
+            </li>
+        }
+        else
+        {
+            <li><a href="@item.Url"><i class="fa fa-link"></i> <span>@item.Name</span></a></li>
+        }
+    }
+
+</ul>
