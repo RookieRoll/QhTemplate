@@ -6,6 +6,7 @@ namespace QhTemplate.ApplicationCore.Authentications.Permissions
     {
         public static readonly List<Permissions> PermissionNodes = new List<Permissions> {
             new Permissions { Name=PermissionNames.Total,DisplayName="所有"},
+             new Permissions { Name=PermissionNames.BaseMenu,DisplayName="基础菜单"},
             new Permissions { Name = PermissionNames.User, DisplayName = "用户" },
             new Permissions { Name =PermissionNames.Role, DisplayName = "角色" },
             #region 组织结构

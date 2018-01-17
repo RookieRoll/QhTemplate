@@ -10,7 +10,7 @@ namespace QhTemplate.AdminWeb.Navigation
         static MenuConfig()
         {
             SideMenu = new MenuItem() { Children = new List<MenuItem>() };
-            MenuItem userMenu = new MenuItem() { Name = "基础", RequiredAuthorizeCode = PermissionNames.User };
+            MenuItem userMenu = new MenuItem() { Name = "基础", RequiredAuthorizeCode = PermissionNames.BaseMenu };
             //创建用户相关的权限
             MenuItem item = new MenuItem { Name = "用户", Url = "/User/Index", RequiredAuthorizeCode = PermissionNames.User };
             userMenu.Children.Add(item);

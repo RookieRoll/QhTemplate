@@ -75,7 +75,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 userIdentity,
-                new Microsoft.AspNetCore.Authentication.AuthenticationProperties
+                new AuthenticationProperties
                 {
                     IsPersistent = true,
                     ExpiresUtc = DateTimeOffset.Now.Add(TimeSpan.FromDays(7)) // 有效时间
@@ -90,7 +90,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
         private bool CheckValidateCode(string code)
         {
-            return _cache.Get(HttpContext.Connection.Id) is string originCode &&
+            return _cache.Get(HttpContext.Connection.LocalIpAddress) is string originCode &&
                    originCode.Equals(code, StringComparison.OrdinalIgnoreCase);
         }
         public async Task<IActionResult> SignOut()
@@ -102,7 +102,7 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult ValidateCode()
         {
             var ms = ValidateCodeServiceUtil.CreateValidateCode(out string code);
-            var key = HttpContext.Connection.Id;
+            var key = HttpContext.Connection.LocalIpAddress;
             _cache.Set(key, code);
             return File(ms.ToArray(), @"image/png");
         }

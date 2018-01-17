@@ -18,13 +18,14 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=mytest;Database=EmsDB");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
             modelBuilder.Entity<AuditLog>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
