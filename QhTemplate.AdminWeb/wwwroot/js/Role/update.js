@@ -32,8 +32,10 @@ function saveEditPermission(id) {
             "permissions": list,
         },
         success: function (data) {
+            alert(data)
             $('#eidtrolemodel').modal("hide");
-            $('#dataTable').dataTable().fnReloadAjax("/Role/GetData");
+            //$('#dataTable').dataTable().fnReloadAjax("/Role/GetData");
+            location.reload();
         },
     });
 }

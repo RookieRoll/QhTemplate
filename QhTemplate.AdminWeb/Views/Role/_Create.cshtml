@@ -1,2 +1,35 @@
-﻿@model TModel
+﻿
+<div class="modal fade" id="createrolemodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">创建新的角色</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="set-role-attribute"><a href="javaScript:void(0)">角色属性</a></li>
+                        <li role="presentation" class="set-permission"><a href="javaScript:void(0)">权限设置</a></li>
+                    </ul>
+                    <div class="set-role-attribute-value">
+                        <div class="input-group input-group-lg rolenameinput">
+                            <input type="text" class="form-control" placeholder="角色名称" name="rolename" id="rolename">
+                        </div>
+                        <div class="checkboxdiv">
+                            <input type="checkbox" name="isdefault" id="isdefault" /><span>是否设置为默认</span>
+                        </div>
+                    </div>
+                    <div style="display:none;max-height:400px;overflow-y:auto;" class="set-permission-tree">
+                        <div id="jstree"></div>
+                    </div>
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="save-role-set" disabled="disabled">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

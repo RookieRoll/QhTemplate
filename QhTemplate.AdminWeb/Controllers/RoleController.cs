@@ -80,6 +80,7 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult ConfiredRemove(int? id)
         {
             _roleApp.Remove(id);
+            _menuProvider.ReloadMenu((int)id);
             return Json("删除成功");
         }
         public IActionResult GetData(IDataTablesRequest request)
