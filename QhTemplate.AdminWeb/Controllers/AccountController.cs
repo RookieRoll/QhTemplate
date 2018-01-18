@@ -93,6 +93,7 @@ namespace QhTemplate.AdminWeb.Controllers
             return _cache.Get(HttpContext.Connection.LocalIpAddress) is string originCode &&
                    originCode.Equals(code, StringComparison.OrdinalIgnoreCase);
         }
+        
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,8 +1,28 @@
-﻿@model object
-
+﻿
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
 }
 
-<h2>title</h2>
+<section class="content-header">
+    <h1>
+        用户
+        <small> @ViewData["Title"]</small>
+        <button class="btn btn-primary" style="float:right" onclick="openCreateModel()">添加</button>
+    </h1>
+</section>
+<section class="content">
+    <table id="dataTable" class="table table-striped table-bordered"></table>
+</section>
+@Html.Partial("_Create")
+<div id="model"></div>
+
+@section Scripts{
+    <script src="~/lib/jstree/dist/jstree.js"></script>
+    <script src="~/js/User/index.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

@@ -2,8 +2,9 @@ class Briefing():
     CompanyName=""
     Link=""
     OptionLink=""
-
-    def __init__(self,companyName,link,optionLink):
+    City=""
+    def __init__(self,companyName,link,optionLink,city):
         self.CompanyName=companyName
         self.Link=link
         self.OptionLink=optionLink
+        self.City=city

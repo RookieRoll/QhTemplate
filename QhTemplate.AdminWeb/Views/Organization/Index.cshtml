@@ -1,8 +1,48 @@
-﻿@model object
-
+﻿
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "部门管理";
+}
+@section Styles{
+    <link href="~/css/Organization/organization_index.css" rel="stylesheet" />
+    <link href="~/css/Organization/organization_modal.css" rel="stylesheet" />
+    <link href="~/lib/datatables/styles/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
 }
 
-<h2>title</h2>
+<section class="content-header">
+    @ViewBag.Title
+</section>
+
+<section class="content organization-content">
+    <div class="left-tree" id="organization-tree">
+        <div class="head-option">
+            <div class="search-input col-sm-6">
+                <input type="text" id="search" class="form-control" placeholder="搜索部门..." />
+            </div>
+            <div class="add-root col-sm-6">
+                <button id="add-root" class="btn btn-default form-control"><span class="fa fa-plus"> &nbsp;新部门</span></button>
+            </div>
+        </div>
+        <div id="organization">
+
+        </div>
+    </div>
+    <div class="user-data">
+        <div class="head-option">
+            <span class="table-title">人员管理</span>
+            <button id="add-member" class="btn btn-default"><span class="fa fa-plus"> &nbsp;新成员</span></button>
+        </div>
+        <table id="orgnization-table" class="table table-striped table-bordered"></table>
+    </div>
+</section>
+<div id="modal">
+
+</div>
+@section Scripts{
+    <script src="~/lib/datatables/js/datatables-fnReloadAjax.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="~/lib/jstree/dist/jstree.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/Organizations/Index.js"></script>
+}

@@ -1,2 +1,46 @@
-﻿@model int
+﻿@{
+    Layout = null;
+}
+@model int
+<div id="modal">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑权限</h4>
+                </div>
+                <div class="modal-body" style="max-height:400px;overflow-y:auto;">
+                    <div id="jstree"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary" onclick="saveUserPermission(@(Model))">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+    $(function () {
+        $('#myModal').modal('show');
+        $('#jstree').jstree({
+            'core': {
+                'data': {
+                    'url': '/User/Permission/@Model',
+                    'dataType': 'json'
+                },
+                "check_callback": true
+            },
+            'checkbox': {
+                // 禁用级联选中
+                //'three_state': false,
+                //'cascade': 'undetermined' //有三个选项，up, down, undetermined; 使用前需要先禁用three_state
+            },
+            "plugins": ["themes", "json_data", "search", "checkbox"],
+        });
+    })
+</script>
+
+<script src="~/js/User/authorize.js"></script>

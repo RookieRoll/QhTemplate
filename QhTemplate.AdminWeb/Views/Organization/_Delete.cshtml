@@ -1,2 +1,28 @@
 ﻿@model QhTemplate.AdminWeb.ViewModels.Organizations.OrganizationDeleteViewModel
 
+@Html.HiddenFor(Model => Model.Id)
+<div class="modal fade" id="my-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">删除部门</h4>
+            </div>
+            <div class="modal-body">
+                <h4>您确定要删除<span class="title-highlight">@Model.Name</span>部门吗？</h4>
+                @if (@Model.UserCount > 0)
+                {
+                    <h5>该部门下存在<span class="tips-highlight">@Model.UserName</span>等<span class="tips-highlight">@Model.UserCount</span>位成员，删除后成员将自动解散！</h5>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">取消</button>
+                <button type="button" class="btn btn-danger" id="submit">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $("#my-modal").modal('show');
+</script>
