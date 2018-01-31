@@ -1,0 +1,1 @@
+INSERT INTO `Organization`(`Id`, `ParentId`, `Name`, `Path`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (1, NULL, '本公司', '1,', 0, '2018-01-18 09:58:21', '2018-01-18 09:58:21', NULL);

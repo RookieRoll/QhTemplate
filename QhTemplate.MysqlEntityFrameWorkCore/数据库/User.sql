@@ -1,0 +1,1 @@
+INSERT INTO `User`(`Id`, `Name`, `UserName`, `Password`, `EmailAddress`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (1, 'admin', 'admin', '123456', '28076465688@qq.com', 0, '2018-01-01 15:18:04', '2018-01-01 15:18:08', NULL);

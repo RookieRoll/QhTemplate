@@ -1,0 +1,2 @@
+INSERT INTO `Role`(`Id`, `Name`, `IsStatic`, `IsDefault`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (1, 'admin', 1, 1, 0, '2018-01-15 10:21:35', '2018-01-17 22:16:11', NULL);
+INSERT INTO `Role`(`Id`, `Name`, `IsStatic`, `IsDefault`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (2, '学生测试', 0, 0, 0, '2018-01-17 21:50:20', '2018-01-18 09:57:48', '2018-01-17 21:50:44');
