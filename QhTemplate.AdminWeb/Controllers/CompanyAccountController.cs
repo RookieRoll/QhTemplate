@@ -10,6 +10,7 @@ namespace QhTemplate.AdminWeb.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult SignUp()
         {
             return View();
