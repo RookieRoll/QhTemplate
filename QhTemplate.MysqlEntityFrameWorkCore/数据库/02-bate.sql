@@ -1,10 +1,18 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/1/31 21:01:05                           */
+/* Created on:     2018/2/26 22:36:21                           */
 /*==============================================================*/
 
 
+drop table if exists Area;
+
 drop table if exists AuditLog;
+
+drop table if exists BriefingDetail;
+
+drop table if exists Company;
+
+drop table if exists Major;
 
 drop table if exists Organization;
 
@@ -12,11 +20,29 @@ drop table if exists Permission;
 
 drop table if exists Role;
 
+drop table if exists SchoolArea;
+
 drop table if exists User;
 
 drop table if exists UserOrganization;
 
 drop table if exists UserRole;
+
+drop table if exists 学生信息;
+
+drop table if exists 招聘岗位;
+
+/*==============================================================*/
+/* Table: Area                                                  */
+/*==============================================================*/
+create table Area
+(
+   Id                   int not null auto_increment,
+   Name                 national varchar(255),
+   Code                 varchar(255),
+   ParentId             int,
+   primary key (Id)
+);
 
 /*==============================================================*/
 /* Table: AuditLog                                              */
@@ -34,6 +60,49 @@ create table AuditLog
    ClientName           national varchar(128),
    BrowserInfo          national varchar(256),
    Exception            national varchar(2000),
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: BriefingDetail                                        */
+/*==============================================================*/
+create table BriefingDetail
+(
+   CompanyId            int,
+   SchoolId             int,
+   Address              national varchar(255),
+   StartTime            datetime,
+   PublishTime          datetime,
+   CompanyName          national varchar(255),
+   Body                 national char(1),
+   OptionLink           national varchar(255),
+   CityId               int,
+   id                   int not null auto_increment,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: Company                                               */
+/*==============================================================*/
+create table Company
+(
+   UserId               int not null,
+   CompanyName          varchar(255),
+   CompanyAddress       varchar(255),
+   CompanyOwner         varchar(255),
+   TelPhone             varchar(255),
+   Id                   int not null,
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: Major                                                 */
+/*==============================================================*/
+create table Major
+(
+   Id                   int not null auto_increment,
+   Name                 national varchar(255),
+   Code                 varchar(255),
    primary key (Id)
 );
 
@@ -83,6 +152,19 @@ create table Role
 );
 
 /*==============================================================*/
+/* Table: SchoolArea                                            */
+/*==============================================================*/
+create table SchoolArea
+(
+   AreaId               int not null,
+   Name                 varchar(255),
+   Address              varchar(255),
+   Code                 varchar(255),
+   Id                   int not null auto_increment,
+   primary key (Id)
+);
+
+/*==============================================================*/
 /* Table: User                                                  */
 /*==============================================================*/
 create table User
@@ -119,6 +201,37 @@ create table UserRole
    primary key (UserId, RoleId)
 );
 
+/*==============================================================*/
+/* Table: 学生信息                                                  */
+/*==============================================================*/
+create table 学生信息
+(
+   UserId               int,
+   SchoolId             int not null,
+   primary key ()
+);
+
+/*==============================================================*/
+/* Table: 招聘岗位                                                  */
+/*==============================================================*/
+create table 招聘岗位
+(
+   CompanyId            int,
+   majorId              int
+);
+
+alter table BriefingDetail add constraint FK_Reference_10 foreign key (CompanyId)
+      references Company (Id);
+
+alter table BriefingDetail add constraint FK_Reference_11 foreign key (SchoolId)
+      references SchoolArea (Id);
+
+alter table Company add constraint FK_Reference_5 foreign key (UserId)
+      references User (Id);
+
+alter table SchoolArea add constraint FK_Reference_7 foreign key (AreaId)
+      references Area (Id);
+
 alter table UserOrganization add constraint FK_Reference_3 foreign key (UserId)
       references User (Id);
 
@@ -131,19 +244,15 @@ alter table UserRole add constraint FK_Reference_1 foreign key (UserId)
 alter table UserRole add constraint FK_Reference_2 foreign key (RoleId)
       references Role (Id);
 
-INSERT INTO `Organization`(`Id`, `ParentId`, `Name`, `Path`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (1, NULL, '本公司', '1,', 0, '2018-01-18 09:58:21', '2018-01-18 09:58:21', NULL);
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (101, 1, NULL, 'Total.BaseMenu.User', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (102, 1, NULL, 'Total.BaseMenu.Organization', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (103, 1, NULL, 'Total.BaseMenu.Organization.RemoveUser', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (104, 1, NULL, 'Total.BaseMenu.Organization.AddUser', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (105, 1, NULL, 'Total.BaseMenu.Organization.Migrate', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (106, 1, NULL, 'Total', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (107, 1, NULL, 'Total.BaseMenu.Organization.Delete', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (108, 1, NULL, 'Total.BaseMenu.Organization.Create', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (109, 1, NULL, 'Total.BaseMenu.Role', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (110, 1, NULL, 'Total.BaseMenu', '2018-01-17 22:16:11');
-INSERT INTO `Permission`(`Id`, `RoleId`, `UserId`, `Code`, `CreationTime`) VALUES (111, 1, NULL, 'Total.BaseMenu.Organization.Rename', '2018-01-17 22:16:11');
-INSERT INTO `Role`(`Id`, `Name`, `IsStatic`, `IsDefault`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (1, 'admin', 1, 1, 0, '2018-01-15 10:21:35', '2018-01-17 22:16:11', NULL);
-INSERT INTO `Role`(`Id`, `Name`, `IsStatic`, `IsDefault`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (2, '学生测试', 0, 0, 0, '2018-01-17 21:50:20', '2018-01-18 09:57:48', '2018-01-17 21:50:44');
-INSERT INTO `User`(`Id`, `Name`, `UserName`, `Password`, `EmailAddress`, `IsDeleted`, `CreationTime`, `LastModificationTime`, `DeletionTime`) VALUES (1, 'admin', 'admin', '123456', '28076465688@qq.com', 0, '2018-01-01 15:18:04', '2018-01-01 15:18:08', NULL);
-INSERT INTO `UserRole`(`UserId`, `RoleId`) VALUES (1, 1);
+alter table 学生信息 add constraint FK_Reference_6 foreign key (UserId)
+      references User (Id);
+
+alter table 学生信息 add constraint FK_Reference_8 foreign key (SchoolId)
+      references SchoolArea (Id);
+
+alter table 招聘岗位 add constraint FK_Reference_12 foreign key (majorId)
+      references Major (Id);
+
+alter table 招聘岗位 add constraint FK_Reference_9 foreign key (CompanyId)
+      references Company (Id);
+
