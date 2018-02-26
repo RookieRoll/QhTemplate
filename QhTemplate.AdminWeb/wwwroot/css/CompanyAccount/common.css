@@ -6,7 +6,7 @@
 body {
     font-family: "微软雅黑";
     font-size: 14px;
-    background: url(content.jpg) fixed center center;
+    background: url(../../images/content.jpg) fixed center center;
 }
 
 .logo_box {
