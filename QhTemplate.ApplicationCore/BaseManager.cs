@@ -9,16 +9,14 @@ namespace QhTemplate.ApplicationCore
     public abstract class BaseManager<T> where T :class
     {
         protected readonly EmsDBContext _db;
-        private readonly DbSet<T> _dbSet;
         protected BaseManager(EmsDBContext db)
         {
             _db = db;
-            _dbSet = db.Set<T>();
         }
 
         public IEnumerable<T> Finds()
         {
-            return _dbSet;
+            return _db.Set<T>();
         }
 
         public IEnumerable<T> Finds(Func<T, bool> func)

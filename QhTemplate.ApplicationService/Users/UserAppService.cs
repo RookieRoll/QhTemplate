@@ -9,14 +9,15 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationService.Users
 {
-    public class UserAppService:IUserAppService
+    public class UserAppService : IUserAppService
     {
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
         private readonly PermissionManager _permissionManager;
         private readonly EmsDBContext _db;
 
-        public UserAppService(UserManager userManager, RoleManager roleManager, PermissionManager permissionManager, EmsDBContext db)
+        public UserAppService(UserManager userManager, RoleManager roleManager, PermissionManager permissionManager,
+            EmsDBContext db)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -53,11 +54,19 @@ namespace QhTemplate.ApplicationService.Users
         {
             var user = User.Create(name, userName, email);
             var defaultRole = _roleManager.Finds(m => m.IsDefault).Select(m => m.Id);
-            using (var scope=_db.Database.BeginTransaction())
+
+            using (var scope = _db.Database.BeginTransaction())
             {
-                _userManager.Create(user);
-                _roleManager.SetUserRole(user.Id,defaultRole.ToArray());
-                scope.Commit();
+                try
+                {
+                    _userManager.Create(user);
+                    _roleManager.SetUserRole(user.Id, defaultRole.ToArray());
+                    scope.Commit();
+                }
+                catch (Exception ex)
+                {
+                    scope.Rollback();
+                }
             }
         }
 
@@ -68,7 +77,6 @@ namespace QhTemplate.ApplicationService.Users
 
         public void Update(User user)
         {
-            user.Update(user.UserName,user.EmailAddress);
             _userManager.Update(user);
         }
 
@@ -94,12 +102,12 @@ namespace QhTemplate.ApplicationService.Users
 
         public void SetRoleByUserId(int id, int[] roles)
         {
-            _roleManager.SetUserRole(id,roles);
+            _roleManager.SetUserRole(id, roles);
         }
 
         public void SetAuthorize(int id, string[] permissions)
         {
-            _permissionManager.SetUserPermissions(id,permissions);
+            _permissionManager.SetUserPermissions(id, permissions);
         }
     }
 }
