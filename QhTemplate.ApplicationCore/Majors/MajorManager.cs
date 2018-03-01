@@ -10,14 +10,14 @@ namespace QhTemplate.ApplicationCore.Majors
         {
         }
         
-        public void Create(Area obj)
+        public void Create(Major obj)
         {
-            if (IsAreaExit( obj.Name, obj.Code))
+            if (IsMajorExit( obj.Name, obj.Code))
             {
                 throw new UserFriendlyException("该学科已存在");
             }
 
-            _db.Area.Add(obj);
+            _db.Major.Add(obj);
             Save();
         }
 
@@ -27,10 +27,10 @@ namespace QhTemplate.ApplicationCore.Majors
             return major ?? throw new UserFriendlyException("该学科不存在");
         }
 
-        public void Update(Area obj)
+        public void Update(Major obj)
         {
             var major = Find(obj.Id);
-            if (IsAreaExit( obj.Name, obj.Code,obj.Id))
+            if (IsMajorExit( obj.Name, obj.Code,obj.Id))
             {
                 throw new UserFriendlyException("该学科已存在");
             }
@@ -45,7 +45,7 @@ namespace QhTemplate.ApplicationCore.Majors
             Save();
         }
 
-        private bool IsAreaExit( string name, string code,int? id=null)
+        private bool IsMajorExit( string name, string code,int? id=null)
         {
             return Finds(m => m.Id != id && m.Name.Equals(name) && m.Code.Equals(code)).Any();
         }

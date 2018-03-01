@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.MIddleWare;
 
 namespace QhTemplate.AdminWeb
@@ -26,7 +27,11 @@ namespace QhTemplate.AdminWeb
         {
             services.AddDependency();
             services.AddMemoryCache();
-            services.AddMvc();
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add<MyExceptionFilter>();
+                opt.Filters.Add<LoginFilter>();
+            });
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;

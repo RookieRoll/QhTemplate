@@ -2,7 +2,7 @@
 {
     public partial class Major
     {
-        public static Major CreateArea(string name, string code)
+        public static Major CreateMajor(string name, string code)
         {
             return new Major()
             {
