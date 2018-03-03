@@ -30,7 +30,6 @@ namespace QhTemplate.AdminWeb
             services.AddMvc(opt =>
             {
                 opt.Filters.Add<MyExceptionFilter>();
-                opt.Filters.Add<LoginFilter>();
             });
             services.AddAuthentication(option =>
             {

@@ -6,6 +6,7 @@ using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using QhTemplate.AdminWeb.Extentions;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.Navigation;
 using QhTemplate.AdminWeb.ViewModels.Roles;
 using QhTemplate.ApplicationCore.Authentications.Permissions;
@@ -13,6 +14,7 @@ using QhTemplate.ApplicationService.Authentications;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class RoleController : Controller
     {
         private readonly IRolesAppService _roleApp;
