@@ -14,7 +14,6 @@ using QhTemplate.ApplicationService.Authentications;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
-    [MyAuthentications]
     public class RoleController : Controller
     {
         private readonly IRolesAppService _roleApp;
