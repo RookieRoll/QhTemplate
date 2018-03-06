@@ -39,9 +39,9 @@ namespace QhTemplate.ApplicationService.NewsArticles
             return _article.Find(id);
         }
 
-        public void Create(string title, string content)
+        public void Create(string title, string content,string subcontent)
         {
-            var article = NewArticle.Create(title, content);
+            var article = NewArticle.Create(title, content,subcontent);
             _article.Create(article);
         }
 

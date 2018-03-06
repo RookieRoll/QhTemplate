@@ -26,7 +26,7 @@ namespace QhTemplate.ApplicationCore.News
         public void Update(NewArticle article)
         {
             var news = Find(article.Id);
-            news.Update(article.Title,article.Content);
+            news.Update(article.Title,article.Content,article.SubContent);
             Save();
         }
 

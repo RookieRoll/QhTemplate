@@ -82,6 +82,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.Content).HasColumnType("char(1)");
 
+                entity.Property(e => e.SubContent).HasColumnType("char(1)");
                 entity.Property(e => e.IsDelete).HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.PublishTime)

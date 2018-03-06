@@ -11,7 +11,7 @@ namespace QhTemplate.ApplicationService.NewsArticles
         NewArticle FirstOrDefault(Func<NewArticle, bool> func);
         NewArticle First(Func<NewArticle, bool> func);
         NewArticle Find(int id);
-        void Create(string title, string content);
+        void Create(string title, string content,string subcontent);
         void Remove(int id);
         void Update(NewArticle area);
     }
