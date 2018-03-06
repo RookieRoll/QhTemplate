@@ -76,6 +76,15 @@ create table Company
 );
 
 
+create table NewArticle
+(
+   Id                   int not null auto_increment,
+   Title                national char(1),
+   Content              national char(1),
+   publishTime          datetime,
+   IsDelete             bool,
+   primary key (Id)
+);
 
 
 

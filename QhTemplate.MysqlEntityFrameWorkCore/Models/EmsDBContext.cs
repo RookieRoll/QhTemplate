@@ -9,6 +9,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<AuditLog> AuditLog { get; set; }
         public virtual DbSet<Major> Major { get; set; }
+        public virtual DbSet<NewArticle> NewArticle { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<Role> Role { get; set; }
@@ -29,6 +30,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<NewArticle>().HasQueryFilter(m => !m.IsDelete);
             modelBuilder.Entity<Area>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
@@ -72,6 +74,21 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.Code).HasMaxLength(255);
 
                 entity.Property(e => e.Name).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<NewArticle>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.Content).HasColumnType("char(1)");
+
+                entity.Property(e => e.IsDelete).HasColumnType("tinyint(1)");
+
+                entity.Property(e => e.PublishTime)
+                    .HasColumnName("publishTime")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Title).HasColumnType("char(1)");
             });
 
             modelBuilder.Entity<Organization>(entity =>
