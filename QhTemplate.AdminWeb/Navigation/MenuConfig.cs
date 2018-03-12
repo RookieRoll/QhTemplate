@@ -21,6 +21,8 @@ namespace QhTemplate.AdminWeb.Navigation
             item = new MenuItem { Name = "组织结构", Url = "/Organization/Index", RequiredAuthorizeCode = PermissionNames.Organization };
             userMenu.Children.Add(item);
             SideMenu.Children.Add(userMenu);
+            var major = new MenuItem { Name = "专业", Url = "/Major/Index", RequiredAuthorizeCode = null };
+            SideMenu.Children.Add(major);
         }
     }
 }

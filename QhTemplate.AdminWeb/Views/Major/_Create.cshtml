@@ -1,37 +1,34 @@
 ﻿@model QhTemplate.AdminWeb.ViewModels.Major.MajorViewModel
-<div class="modal fade" id="myCreateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    @using (Html.BeginForm("Create", "Major", FormMethod.Post))
-    {
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">创建专业</h4>
-                </div>
+<div class="modal fade bs-example-modal-sm"  id="myCreateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">创建专业</h4>
+            </div>
+            <form class="form-horizontal">
                 <div class="modal-body">
-                    <div class="form-horizontal">
-                        @Html.HiddenFor(m => m.Id)
+                    <div class="set-major-attribute-value">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-6">
-                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "validate-error" })
+                            <label for="name" class="col-sm-2 control-label">专业名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="专业名称" name="name" required="required">
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-6">
-                                @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Code, null, new { @class = "validate-error" })
+                            <label for="name" class="col-sm-2 control-label">专业编码</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="code" placeholder="专业编码" name="code" required="required">
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-primary" onclick="$('#myModal').modal('hide')">确认</button>
+                    <button type="button" class="btn btn-primary" id="save-role-set" onclick="save()">保存</button>
                 </div>
-            </div>
+            </form>
         </div>
-    }
+    </div>
 </div>

@@ -4,15 +4,15 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationCore.Majors
 {
-    public class MajorManager:BaseManager<Major>
+    public class MajorManager : BaseManager<Major>
     {
         public MajorManager(EmsDBContext db) : base(db)
         {
         }
-        
+
         public void Create(Major obj)
         {
-            if (IsMajorExit( obj.Name, obj.Code))
+            if (IsMajorExit(obj.Name, obj.Code))
             {
                 throw new UserFriendlyException("该学科已存在");
             }
@@ -30,11 +30,11 @@ namespace QhTemplate.ApplicationCore.Majors
         public void Update(Major obj)
         {
             var major = Find(obj.Id);
-            if (IsMajorExit( obj.Name, obj.Code,obj.Id))
+            if (IsMajorExit(obj.Name, obj.Code, obj.Id))
             {
                 throw new UserFriendlyException("该学科已存在");
             }
-            major.Update(obj.Name,obj.Code);
+            major.Update(obj.Name, obj.Code);
             Save();
         }
 
@@ -45,9 +45,9 @@ namespace QhTemplate.ApplicationCore.Majors
             Save();
         }
 
-        private bool IsMajorExit( string name, string code,int? id=null)
+        private bool IsMajorExit(string name, string code, int? id = null)
         {
-            return Finds(m => m.Id != id && m.Name.Equals(name) && m.Code.Equals(code)).Any();
+            return Finds(m => m.Id != id && (m.Name.Equals(name) || m.Code.Equals(code))).Any();
         }
     }
 }

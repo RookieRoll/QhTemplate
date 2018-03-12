@@ -28,6 +28,8 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult Create(MajorViewModel model)
         {
+            if (string.IsNullOrWhiteSpace(model.Name) || string.IsNullOrWhiteSpace(model.Code))
+                return Json("不能为空");
             _majorApp.Create(model.Name, model.Code);
             return Json("创建成功");
         }
@@ -41,6 +43,14 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Update(MajorViewModel model)
         {
+            #region ceshi 
+            Major majors = new Major()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Code = model.Code
+            };
+            #endregion
             Major major = new Major()
             {
                 Id = model.Id,
@@ -58,6 +68,11 @@ namespace QhTemplate.AdminWeb.Controllers
             return PartialView("_Delete", MajorViewModel.ConvertToViewModel(major));
         }
 
+        public IActionResult DeleteComfirm(int id)
+        {
+            _majorApp.Remove(id);
+            return Json("删除成功");
+        }
         public IActionResult GetData(IDataTablesRequest request)
         {
             var data = _majorApp.Finds();

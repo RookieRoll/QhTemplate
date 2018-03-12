@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('#dataTable').dataTable({
         lengthChange: true,
         serverSide: true,
-        ajax: '/Role/GetData',
+        ajax: '/Major/GetData',
         columns: [
             {
                 name: 'operate',
@@ -16,9 +16,9 @@ $(document).ready(function () {
                         "<span class=\"glyphicon glyphicon-th-list\"></span> </button>" +
                         "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\">";
                     html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + id + ")\">编辑</a></li>";
-                    if (!row.isStatic) {
-                        html += "<li><a href=\"javaScript:void(0)\" onclick=\"openDelete(" + id + ")\">删除</a></li>";
-                    }
+
+                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openDelete(" + id + ")\">删除</a></li>";
+
                     html += "</ul></form> </div>";
                     return html;
                 }
@@ -49,8 +49,8 @@ $(document).ready(function () {
 function openEdit(id) {
     $.ajax({
         type: 'Get',
-        url: "/Role/UpdateRole",
-        data: { "roleId": id },
+        url: "/major/Update",
+        data: { "id": id },
         success: function (data) {
             $("#model").html(data)
         }
@@ -59,7 +59,7 @@ function openEdit(id) {
 function openDelete(id) {
     $.ajax({
         type: 'POST',
-        url: "/Role/RemoveRole",
+        url: "/major/Delete",
         data: { "id": id },
         success: function (data) {
             $("#model").html(data);
@@ -68,6 +68,5 @@ function openDelete(id) {
 }
 
 $("#openCreateModal").click(function () {
-    $("#createrolemodel").modal("show");
-    $(".set-role-attribute").click();
+    $("#myCreateModal").modal("show");
 });

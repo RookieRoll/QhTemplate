@@ -27,10 +27,11 @@ namespace QhTemplate.AdminWeb
         {
             services.AddDependency();
             services.AddMemoryCache();
-            services.AddMvc(opt =>
-            {
-                opt.Filters.Add<MyExceptionFilter>();
-            });
+            //services.AddMvc(opt =>
+            //{
+            //    opt.Filters.Add<MyExceptionFilter>();
+            //});
+            services.AddMvc();
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
