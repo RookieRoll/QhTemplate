@@ -22,7 +22,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
             }
         }
@@ -82,12 +82,11 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.Content).HasColumnType("char(1)");
 
-                entity.Property(e => e.SubContent).HasColumnType("char(1)");
                 entity.Property(e => e.IsDelete).HasColumnType("tinyint(1)");
 
-                entity.Property(e => e.PublishTime)
-                    .HasColumnName("publishTime")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.PublishTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SubContent).HasColumnType("char(1)");
 
                 entity.Property(e => e.Title).HasColumnType("char(1)");
             });
