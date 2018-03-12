@@ -43,14 +43,6 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Update(MajorViewModel model)
         {
-            #region ceshi 
-            Major majors = new Major()
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Code = model.Code
-            };
-            #endregion
             Major major = new Major()
             {
                 Id = model.Id,

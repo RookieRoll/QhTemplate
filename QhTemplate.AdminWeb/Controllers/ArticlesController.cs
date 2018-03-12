@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Composition.Convention;
+using System.Linq;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using QhTemplate.AdminWeb.ViewModels.Major;
 using QhTemplate.ApplicationService.NewsArticles;
 using System.Linq.Dynamic.Core;
 using QhTemplate.AdminWeb.ViewModels.NewsArticle;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 
 namespace QhTemplate.AdminWeb.Controllers
@@ -27,28 +29,45 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult Create()
         {
-            
+            return View("_Create");
         }
-        public IActionResult Update()
+        public IActionResult Create(CreateArticleViewModel model)
         {
-            
+            _applicationService.Create(model.Title,model.Content,model.SubContent);
+            return Json("创建成功");
+        }
+        public IActionResult Update(int id)
+        {
+            var article = _applicationService.Find(id);
+            var resul = CreateArticleViewModel.ConvertToView(article);
+            return View("_Update");
         }
 
         [HttpPost]
         public IActionResult Update(CreateArticleViewModel model)
         {
-            
+            NewArticle article=new NewArticle
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Content = model.Content,
+                SubContent = model.SubContent
+            };
+            _applicationService.Update(article);
+            return Json("修改成功");
         }
 
         public IActionResult Delete(int id)
         {
-            
+            var article = _applicationService.Find(id);
+            return PartialView("_Delete", ArticleViewModel.ConvertToViewModel(article));
         }
 
         [HttpPost]
         public IActionResult DeleteComfirm(int id)
         {
-            
+            _applicationService.Remove(id);
+            return Json("创建成功");
         }
         public IActionResult GetData(IDataTablesRequest request)
         {

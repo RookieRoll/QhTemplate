@@ -1,7 +1,7 @@
 $(function () {
     $("#deleteModal").modal();
 })
-//É¾³ý½ÇÉ«
+//åˆ é™¤ä¸“ä¸š
 function deleteMajor(id) {
     $.ajax({
         type: 'POST',

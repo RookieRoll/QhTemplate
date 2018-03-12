@@ -11,11 +11,11 @@ namespace QhTemplate.AdminWeb.ViewModels.NewsArticle
 
         public static ArticleViewModel ConvertToViewModel(NewArticle article)
         {
-            return new ArticleViewModel()
+            return new ArticleViewModel
             {
                 Id = article.Id,
                 Title = article.Title,
-                SubContent = article.SubContent,
+                SubContent = article.SubContent.Substring(0,100),
                 Time = article.PublishTime.ToString("yyyy-MM-dd")
             };
         }
