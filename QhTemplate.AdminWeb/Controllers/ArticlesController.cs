@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using QhTemplate.AdminWeb.ViewModels.Major;
 using QhTemplate.ApplicationService.NewsArticles;
 using System.Linq.Dynamic.Core;
+using Microsoft.AspNetCore.Http;
 using QhTemplate.AdminWeb.ViewModels.NewsArticle;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
+using UEditorNetCore;
 
 
 namespace QhTemplate.AdminWeb.Controllers
@@ -15,10 +17,12 @@ namespace QhTemplate.AdminWeb.Controllers
     public class ArticlesController : Controller
     {
         private readonly IArticlesApplicationService _applicationService;
-
-        public ArticlesController(IArticlesApplicationService applicationService)
+        private readonly UEditorService _uEditorService;
+        
+        public ArticlesController(IArticlesApplicationService applicationService, UEditorService uEditorService)
         {
             _applicationService = applicationService;
+            _uEditorService = uEditorService;
         }
 
         // GET
@@ -68,6 +72,11 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             _applicationService.Remove(id);
             return Json("创建成功");
+        }
+
+        public void DoUeditor()
+        {
+            _uEditorService.DoAction(HttpContext);
         }
         public IActionResult GetData(IDataTablesRequest request)
         {
