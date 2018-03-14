@@ -40,6 +40,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.Name).HasMaxLength(255);
 
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
+                entity.Property(e => e.Path).HasMaxLength(255);
             });
 
             modelBuilder.Entity<AuditLog>(entity =>
@@ -189,7 +190,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<UserOrganization>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.OrganizationId });
+                entity.HasKey(e => new {e.UserId, e.OrganizationId});
 
                 entity.HasIndex(e => e.OrganizationId)
                     .HasName("FK_Reference_4");
@@ -213,7 +214,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
+                entity.HasKey(e => new {e.UserId, e.RoleId});
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("FK_Reference_2");

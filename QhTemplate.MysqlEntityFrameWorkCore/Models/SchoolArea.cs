@@ -10,7 +10,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public string Address { get; set; }
         public string Code { get; set; }
         public int Id { get; set; }
-
+        public string Path { get; set; }
         public Area Area { get; set; }
     }
 }
