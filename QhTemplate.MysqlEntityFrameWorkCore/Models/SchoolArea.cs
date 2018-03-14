@@ -12,5 +12,20 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public int Id { get; set; }
         public string Path { get; set; }
         public Area Area { get; set; }
+
+        public static SchoolArea CreateNewArea(string name,string address,string code,int areaId,string path)
+        {
+            return new SchoolArea
+            {
+                AreaId = areaId,
+                Name = name,
+                Address = address,
+                Code = code,
+                Path = path
+            };
+        }
+        
+        
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QhTemplate.ApplicationCore.Areas;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -14,45 +15,38 @@ namespace QhTemplate.ApplicationService.Areas
             _areaManager = areaManager;
         }
 
-        public IQueryable<Area> Finds()
+
+        public Area GetAreaById(int orgId)
         {
-            return _areaManager.Finds().AsQueryable();
+            return _areaManager.Find(orgId);
         }
 
-        public IQueryable<Area> Finds(Func<Area, bool> func)
+        public void CreateAreas(string orgName,string code, int parentId)
         {
-            return _areaManager.Finds(func).AsQueryable();
-        }
-
-        public Area FirstOrDefault(Func<Area, bool> func)
-        {
-            return _areaManager.FirstOrDefault(func);
-        }
-
-        public Area First(Func<Area, bool> func)
-        {
-            return _areaManager.First(func);
-        }
-
-        public Area Find(int id)
-        {
-            return _areaManager.Find(id);
-        }
-
-        public void Create( string name, string code,int parentId)
-        {
-            var area = Area.CreateArea(name, code,parentId);
+            var area = Area.CreateArea(orgName, code, parentId);
             _areaManager.Create(area);
         }
 
-        public void Remove(int id)
+        public void DeleteAreas(int orgId)
         {
-            _areaManager.Delete(id);
+            _areaManager.Delete(orgId);
         }
 
-        public void Update(Area user)
+        public void UpdateAreas(int orgId, string orgName,string code)
         {
-           _areaManager.Update(user);
+            var area=new Area()
+            {
+                Id = orgId,
+                Name = orgName,
+                Code = code
+            };
+            _areaManager.Update(area);
+        }
+
+
+        public IQueryable<Area> FindAll()
+        {
+            return _areaManager.Finds().AsQueryable();
         }
     }
 }

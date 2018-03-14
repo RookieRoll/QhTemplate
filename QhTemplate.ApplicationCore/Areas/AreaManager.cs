@@ -49,15 +49,16 @@ namespace QhTemplate.ApplicationCore.Areas
             return area ?? throw new UserFriendlyException("您要移动的地域不存在");
         }
 
-        public void Update(Organization organization)
+        public void Update(Area area)
         {
-            var originalOrganization = Find(organization.Id);
+            var originalOrganization = Find(area.Id);
 
             var hierarchyRelevantOrganizations = GetHierarchyRelevantAreas(originalOrganization.ParentId);
-            if (hierarchyRelevantOrganizations.Any(o => o.Name == organization.Name))
-                throw new UserFriendlyException($"此分支中已存在 {organization.Name} 部门，请重新命名！");
+            if (hierarchyRelevantOrganizations.Any(o => o.Name == area.Name))
+                throw new UserFriendlyException($"此分支中已存在 {area.Name} 部门，请重新命名！");
 
-            originalOrganization.Name = organization.Name;
+            originalOrganization.Name = area.Name;
+            originalOrganization.Code = area.Code;
             Save();
         }
 
@@ -90,11 +91,11 @@ namespace QhTemplate.ApplicationCore.Areas
         {
             if (string.IsNullOrWhiteSpace(area.Name))
                 throw new UserFriendlyException("部门名称不能为空");
-            Organization parentOrganization = null;
+            Area parentOrganization = null;
 
             if (area.ParentId != 0)
             {
-                parentOrganization = _db.Organization
+                parentOrganization = _db.Area
                     .SingleOrDefault(o => o.Id == area.ParentId);
                 if (parentOrganization == null)
                     throw new UserFriendlyException("您设置的部门可能已被删除，添加新部门失败");
@@ -106,7 +107,6 @@ namespace QhTemplate.ApplicationCore.Areas
 
             using (var scope = _db.Database.BeginTransaction())
             {
-                
                 _db.Area.Add(area);
                 Save();
                 area.Path = parentOrganization?.Path + $"{area.Id},";
