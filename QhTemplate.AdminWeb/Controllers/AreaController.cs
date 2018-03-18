@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.AdminWeb.ViewModels.Areas;
 using QhTemplate.AdminWeb.ViewModels.Organizations;
 using QhTemplate.ApplicationService.Areas;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -60,22 +61,50 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult CreateArea(int parentId)
         {
             var organization = new Area();
-            if (parentId != null)
-                organization = _areaApp.GetAreaById((int) parentId);
+            if (parentId != 0)
+                organization = _areaApp.GetAreaById(parentId);
 
-            var model = new OrganizationCreateChildViewModel()
+            var model = new AreasViewModel()
             {
-                ParentId = organization?.Id ?? 0,
-                ParentName = organization.Name,
+                Id = organization?.Id ?? 0,
+                Name = organization.Name,
+                Code = organization.Code
             };
             return PartialView("_Create", model);
         }
         
         [HttpPost]
-        public IActionResult CreateOrganization(string orgName, string code,int parentId)
+        public IActionResult CreateArea(string orgName, string code,int parentId)
         {
             _areaApp.CreateAreas(orgName,code,parentId);
             return Json("添加成功！");
         }
+
+        public IActionResult UpdateArea(int id){
+        {
+            var area = _areaApp.GetAreaById(id);
+            return PartialView("_Update", AreasViewModel.ConvertAreasViewModel(area));
+        }}
+
+        public IActionResult UpdateArea(int id, string name, string code)
+        {
+            _areaApp.UpdateAreas(id,name,code);
+            return Json("修改成功");
+        }
+        
+        public IActionResult DeleteArea(int areaId)
+        {
+            var area = _areaApp.GetAreaById(areaId);
+            return PartialView("_Delete",AreasViewModel.ConvertAreasViewModel(area));
+        }
+        
+        [HttpPost]
+        public IActionResult RemoveArea(int areaId)
+        {
+            _areaApp.DeleteAreas(areaId);
+            return Json("删除成功");
+        }
+        
+        
     }
 }

@@ -11,4 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\QhTemplate.ApplicationCore\QhTemplate.ApplicationCore.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SchoolArea" />
+  </ItemGroup>
 </Project>

@@ -24,8 +24,14 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 Path = path
             };
         }
-        
-        
+
+        public void Update(string name, string code, string address, string path)
+        {
+            Address = address;
+            Name = name;
+            Code = code;
+            Path = path;
+        }
         
     }
 }
