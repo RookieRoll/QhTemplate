@@ -1,4 +1,6 @@
-﻿namespace QhTemplate.MysqlEntityFrameWorkCore.Models
+﻿using System;
+
+namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 {
     public partial class Area
     {
@@ -8,6 +10,7 @@
             {
                 Name = name,
                 Code = code,
+                CodeId = Guid.NewGuid()
             };
             if (id != 0)
             {

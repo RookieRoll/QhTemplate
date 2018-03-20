@@ -1,4 +1,5 @@
-﻿using System.Resources;
+﻿using System;
+using System.Resources;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.ViewModels.Areas
@@ -8,14 +9,15 @@ namespace QhTemplate.AdminWeb.ViewModels.Areas
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-
+        public Guid CodeId { get; set; }
         public static AreasViewModel ConvertAreasViewModel(Area area)
         {
             return new AreasViewModel
             {
                 Id = area.Id,
                 Name = area.Name,
-                Code = area.Code
+                Code = area.Code,
+                CodeId=area.CodeId
             };
         }
     }

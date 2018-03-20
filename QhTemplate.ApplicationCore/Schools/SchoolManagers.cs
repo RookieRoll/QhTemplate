@@ -23,7 +23,13 @@ namespace QhTemplate.ApplicationCore.Schools
 
         public void Update(SchoolArea school)
         {
-            school.Update(school.Name,school.Code,school.Address,school.Path);
+            school.Update(school.Name,school.Code,school.Address);
+            Save();
+        }
+
+        public void Migration(SchoolArea school)
+        {
+            school.Migration(school.AreaId,school.Path);
             Save();
         }
 

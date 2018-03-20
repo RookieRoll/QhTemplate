@@ -41,6 +41,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
                 entity.Property(e => e.Path).HasMaxLength(255);
+                entity.Property(e => e.CodeId).HasColumnType("char(36)");
             });
 
             modelBuilder.Entity<AuditLog>(entity =>

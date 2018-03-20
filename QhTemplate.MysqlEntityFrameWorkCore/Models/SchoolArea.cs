@@ -25,12 +25,18 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
             };
         }
 
-        public void Update(string name, string code, string address, string path)
+
+        public void Update(string name, string code,string address)
         {
-            Address = address;
-            Name = name;
-            Code = code;
-            Path = path;
+            this.Name = name;
+            this.Code = code;
+            this.Address = address;
+        }
+
+        public void Migration(int areaId, string path)
+        {
+            this.AreaId = areaId;
+            this.Path = path;
         }
         
     }

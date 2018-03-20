@@ -15,6 +15,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public string Code { get; set; }
         public int ParentId { get; set; }
         public string Path { get; set; }
+        public Guid CodeId { get; set; }
         public ICollection<SchoolArea> SchoolArea { get; set; }
        
     }
