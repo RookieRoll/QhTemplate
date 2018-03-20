@@ -30,6 +30,24 @@ namespace QhTemplate.AdminWeb.Controllers
             return PartialView("_Update");
         }
 
+        public IActionResult Update()
+        {
+            _schoolService.Update();
+            return Json("修改成功");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var school = _schoolService.Find(id);
+            return PartialView("_Delete",);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteComfirm(int id)
+        {
+            _schoolService.Remove(id);
+            return Json("删除成功");
+        }
         public IActionResult GetData(IDataTablesRequest request, Guid areaId)
         {
             var data = _schoolService.Finds().Where(m => m.Path.Contains(areaId.ToString()));
