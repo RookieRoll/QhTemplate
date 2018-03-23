@@ -21,8 +21,6 @@ namespace QhTemplate.ApplicationService.Craws
         {
             var pyEngine = Python.CreateEngine();
             dynamic py = pyEngine.ExecuteFile(FilePath);
-            
-            
             var result = py.get_recruitment_talks("");
         }
     }

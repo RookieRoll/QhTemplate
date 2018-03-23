@@ -15,5 +15,7 @@ namespace QhTemplate.ApplicationService.Areas
         void UpdateAreas(int orgId, string orgName,string code);
         
         IQueryable<Area> FindAll();
+
+        IQueryable<Area> Finds(Func<Area, bool> func);
     }
 }

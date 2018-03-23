@@ -57,7 +57,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
             return Json(organizations);
         }
-        
+
         public IActionResult CreateArea(int parentId)
         {
             var organization = new Area();
@@ -72,39 +72,46 @@ namespace QhTemplate.AdminWeb.Controllers
             };
             return PartialView("_Create", model);
         }
-        
+
         [HttpPost]
-        public IActionResult CreateArea(string orgName, string code,int parentId)
+        public IActionResult CreateArea(string orgName, string code, int parentId)
         {
-            _areaApp.CreateAreas(orgName,code,parentId);
+            _areaApp.CreateAreas(orgName, code, parentId);
             return Json("添加成功！");
         }
 
-        public IActionResult UpdateArea(int id){
+        public IActionResult UpdateArea(int id)
         {
-            var area = _areaApp.GetAreaById(id);
-            return PartialView("_Update", AreasViewModel.ConvertAreasViewModel(area));
-        }}
+            {
+                var area = _areaApp.GetAreaById(id);
+                return PartialView("_Update", AreasViewModel.ConvertAreasViewModel(area));
+            }
+        }
 
         public IActionResult UpdateArea(int id, string name, string code)
         {
-            _areaApp.UpdateAreas(id,name,code);
+            _areaApp.UpdateAreas(id, name, code);
             return Json("修改成功");
         }
-        
+
         public IActionResult DeleteArea(int areaId)
         {
             var area = _areaApp.GetAreaById(areaId);
-            return PartialView("_Delete",AreasViewModel.ConvertAreasViewModel(area));
+            return PartialView("_Delete", AreasViewModel.ConvertAreasViewModel(area));
         }
-        
+
         [HttpPost]
         public IActionResult RemoveArea(int areaId)
         {
             _areaApp.DeleteAreas(areaId);
             return Json("删除成功");
         }
-        
-        
+
+        public IActionResult GetAreaByParentId(int parentId)
+        {
+            var result = _areaApp.Finds(m => m.ParentId == parentId)
+                .Select(m => AreasViewModel.ConvertAreasViewModel(m));
+            return Json(result);
+        }
     }
 }

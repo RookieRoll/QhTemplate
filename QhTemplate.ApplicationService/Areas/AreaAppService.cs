@@ -48,5 +48,10 @@ namespace QhTemplate.ApplicationService.Areas
         {
             return _areaManager.Finds().AsQueryable();
         }
+
+        public IQueryable<Area> Finds(Func<Area, bool> func)
+        {
+            return _areaManager.Finds(func).AsQueryable();
+        }
     }
 }

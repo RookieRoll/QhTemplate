@@ -19,34 +19,11 @@ namespace QhTemplate.ApplicationCore.Areas
             return Finds(o => o.ParentId == parentId).ToList();
         }
 
-//        public void Migrate(int id, int parentId)
-//        {
-//            var area = Find(id);
-//
-//            if (parentId == area.ParentId)
-//                throw new UserFriendlyException("无效的迁移操作！");
-//
-//            var rootOrganization = Find(parentId);
-//            if (rootOrganization == null && parentId != 0)
-//                throw new UserFriendlyException("您要移动到的地域不存在");
-//
-//            var hierarchyRelevantOrganizations = GetHierarchyRelevantAreas(parentId);
-//            if (hierarchyRelevantOrganizations.Any(o => o.Name == area.Name))
-//                throw new UserFriendlyException($"此分支中已存在 {area.Name} 地域，请重新命名！");
-//
-//            var originalPath = area.Path;
-//            var childOrganizations = Finds(d => d.Path.StartsWith(originalPath)).ToList();
-//            area.Path = rootOrganization?.Path + $"{area.Id},";
-//            childOrganizations.ForEach(child => child.Path.Replace(originalPath, area.Path));
-//            area.ParentId = parentId;
-//            
-//            Save();
-//        }
 
         public Area Find(int? id)
         {
             var area = FirstOrDefault(m => m.Id == id);
-            return area ?? throw new UserFriendlyException("您要移动的地域不存在");
+            return area ?? throw new UserFriendlyException("您要查找的地域不存在");
         }
 
         public void Update(Area area)
@@ -55,7 +32,7 @@ namespace QhTemplate.ApplicationCore.Areas
 
             var hierarchyRelevantOrganizations = GetHierarchyRelevantAreas(originalOrganization.ParentId);
             if (hierarchyRelevantOrganizations.Any(o => o.Name == area.Name))
-                throw new UserFriendlyException($"此分支中已存在 {area.Name} 部门，请重新命名！");
+                throw new UserFriendlyException($"此分支中已存在 {area.Name} 地名，请重新命名！");
 
             originalOrganization.Name = area.Name;
             originalOrganization.Code = area.Code;
@@ -73,7 +50,7 @@ namespace QhTemplate.ApplicationCore.Areas
             var childOrganizationCount = _db.Area
                 .Count(o => o.ParentId == area.Id);
             if (childOrganizationCount > 0)
-                throw new UserFriendlyException("您要删除的部门下存在子部门，不可删除！");
+                throw new UserFriendlyException("您要删除的地区下存在子地区，不可删除！");
 
             var school = _db.SchoolArea.Where(m => m.Path.Contains(area.Id.ToString()));
             if (!school.Any())
