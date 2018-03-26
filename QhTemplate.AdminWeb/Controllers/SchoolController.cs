@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
 using QhTemplate.AdminWeb.ViewModels.School;
 using QhTemplate.ApplicationService.Schools;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -27,19 +28,27 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult Update(int id)
         {
             var school = _schoolService.Find(id);
+            
             return PartialView("_Update");
         }
-
-        public IActionResult Update()
+        
+        [HttpPost]
+        public IActionResult Update(EditSchoolViewModel model)
         {
-            _schoolService.Update();
+            var school = new SchoolArea
+            {
+                Id = model.Id,
+                Address = model.Address,
+                Code = model.Code
+            };
+            _schoolService.Update(school);
             return Json("修改成功");
         }
 
         public IActionResult Delete(int id)
         {
             var school = _schoolService.Find(id);
-            return PartialView("_Delete",);
+            return PartialView("_Delete",SchoolViewModel.ConvertToViewModel(school));
         }
 
         [HttpPost]
