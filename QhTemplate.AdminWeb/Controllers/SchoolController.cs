@@ -28,10 +28,10 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult Update(int id)
         {
             var school = _schoolService.Find(id);
-            
-            return PartialView("_Update");
+
+            return PartialView("_Update", EditSchoolViewModel.ConvertSchoolViewModel(school));
         }
-        
+
         [HttpPost]
         public IActionResult Update(EditSchoolViewModel model)
         {
@@ -39,7 +39,9 @@ namespace QhTemplate.AdminWeb.Controllers
             {
                 Id = model.Id,
                 Address = model.Address,
-                Code = model.Code
+                Code = model.Code,
+                Name = model.Name,
+                Path = $"{model.Provice}-{model.City}-{model.District}"
             };
             _schoolService.Update(school);
             return Json("修改成功");
@@ -48,7 +50,7 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult Delete(int id)
         {
             var school = _schoolService.Find(id);
-            return PartialView("_Delete",SchoolViewModel.ConvertToViewModel(school));
+            return PartialView("_Delete", SchoolViewModel.ConvertToViewModel(school));
         }
 
         [HttpPost]
@@ -57,6 +59,7 @@ namespace QhTemplate.AdminWeb.Controllers
             _schoolService.Remove(id);
             return Json("删除成功");
         }
+
         public IActionResult GetData(IDataTablesRequest request, Guid areaId)
         {
             var data = _schoolService.Finds().Where(m => m.Path.Contains(areaId.ToString()));

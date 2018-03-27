@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.ApplicationCore", "QhTemplate.ApplicationCore\QhTemplate.ApplicationCore.csproj", "{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QhTemplate.FontWeb", "QhTemplate.FontWeb\QhTemplate.FontWeb.csproj", "{763B4DF8-293E-42A1-9F76-17D649544006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DACDF8C-9194-4D9E-AC62-469069BAF5EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{763B4DF8-293E-42A1-9F76-17D649544006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{763B4DF8-293E-42A1-9F76-17D649544006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{763B4DF8-293E-42A1-9F76-17D649544006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{763B4DF8-293E-42A1-9F76-17D649544006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
