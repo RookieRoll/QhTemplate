@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "部门管理";
+    ViewBag.Title = "首页";
 }
 @section Styles{
     <link href="~/css/Organization/organization_index.css" rel="stylesheet" />
@@ -9,10 +9,15 @@
     <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
 }
 
-<section class="content-header">
+@*<section class="content-header">
     @ViewBag.Title
+</section>*@
+<section class="content-header">
+    <h1>
+        部门管理
+        <small> @ViewData["Title"]</small>
+    </h1>
 </section>
-
 <section class="content organization-content">
     <div class="left-tree" id="organization-tree">
         <div class="head-option">
