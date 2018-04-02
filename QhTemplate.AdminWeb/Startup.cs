@@ -67,7 +67,7 @@ namespace QhTemplate.AdminWeb
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Account}/{action=SignIn}/{id?}");
+                    template: "{controller=Home}/{action=index}/{id?}");
             });
         }
     }

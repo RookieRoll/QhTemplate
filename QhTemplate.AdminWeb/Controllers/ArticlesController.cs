@@ -35,6 +35,7 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             return View("_Create");
         }
+        [HttpPost]
         public IActionResult Create(CreateArticleViewModel model)
         {
             _applicationService.Create(model.Title,model.Content,model.SubContent);
