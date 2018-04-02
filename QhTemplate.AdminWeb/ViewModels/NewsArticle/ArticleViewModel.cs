@@ -15,7 +15,8 @@ namespace QhTemplate.AdminWeb.ViewModels.NewsArticle
             {
                 Id = article.Id,
                 Title = article.Title,
-                SubContent = article.SubContent.Substring(0,100),
+                SubContent =
+                    article.SubContent.Length > 100 ? article.SubContent.Substring(0, 100) : article.SubContent,
                 Time = article.PublishTime.ToString("yyyy-MM-dd")
             };
         }
