@@ -1,8 +1,54 @@
 ﻿@model object
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "首页";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+@section Styles{
+    <link href="~/lib/datatables/styles/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+}
+
+@*<section class="content-header">
+    @ViewBag.Title
+</section>*@
+<section class="content-header">
+    <h1>
+        学校区域管理
+        <small> @ViewData["Title"]</small>
+    </h1>
+</section>
+<section class="content schoolArea-content">
+    <div class="left-tree" id="schoolArea-tree">
+        <div class="head-option">
+            <div class="search-input col-sm-6">
+                <input type="text" id="search" class="form-control" placeholder="搜索区域..." />
+            </div>
+            <div class="add-root col-sm-6">
+                <button id="add-root" class="btn btn-default form-control"><span class="fa fa-plus"> &nbsp;新区域</span></button>
+            </div>
+        </div>
+        <div id="schoolArea">
+
+        </div>
+    </div>
+    <div class="user-data">
+        <div class="head-option">
+            <span class="table-title">学校管理</span>
+            <button id="add-member" class="btn btn-default"><span class="fa fa-plus"> &nbsp;添加学校</span></button>
+        </div>
+        <table id="school-table" class="table table-striped table-bordered"></table>
+    </div>
+</section>
+<div id="modal">
+
+</div>
+@section Scripts{
+    <script src="~/lib/datatables/js/datatables-fnReloadAjax.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="~/lib/jstree/dist/jstree.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/Area/Index.js"></script>
+}

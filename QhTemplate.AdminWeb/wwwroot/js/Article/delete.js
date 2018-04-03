@@ -1,8 +1,8 @@
 $(function () {
     $("#deleteModal").modal();
 })
-//删除专业
-function deleteMajor(id) {
+//删除文章
+function deleteArticle(id) {
     $.ajax({
         type: 'POST',
         url: "/articles/DeleteComfirm",
