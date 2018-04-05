@@ -17,10 +17,11 @@
      * "相对于网站根目录的相对路径"也就是以斜杠开头的形如"/myProject/ueditor/"这样的路径。
      * 如果站点中有多个不在同一层级的页面需要实例化编辑器，且引用了同一UEditor的时候，此处的URL可能不适用于每个页面的编辑器。
      * 因此，UEditor提供了针对不同页面的编辑器可单独配置的根路径，具体来说，在需要实例化编辑器的页面最顶部写上如下代码即可。当然，需要令此处的URL等于对应的配置。
-     * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
+     * 
      */
+   window.UEDITOR_HOME_URL = "/lib/ueditor/";
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
-
+   
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
      */
@@ -30,8 +31,7 @@
         UEDITOR_HOME_URL: URL
 
         // 服务器统一请求接口路径
-        , //serverUrl: URL + "net/controller.ashx"
-        serverUrl:"http://localhost:59932/Home/Do"
+        , serverUrl: "http://localhost:59932/Articles/DoUeditor"
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
         , toolbars: [[
@@ -62,7 +62,7 @@
         //,theme:'default'
         //,themePath:URL +"themes/"
 
-        //,zIndex : 900     //编辑器层级的基数,默认是900
+        ,zIndex : 999999     //编辑器层级的基数,默认是900
 
         //针对getAllHtml方法，会在对应的head标签中增加该编码设置。
         //,charset:"utf-8"
@@ -84,7 +84,7 @@
         //如果自定义，最好给p标签如下的行高，要不输入中文时，会有跳动感
         //,initialStyle:'p{line-height:1em}'//编辑器层级的基数,可以用来改变字体等
 
-        //,iframeCssUrl: URL + '/themes/iframe.css' //给编辑区域的iframe引入一个css文件
+        ,iframeCssUrl: URL + '/themes/iframe.css' //给编辑区域的iframe引入一个css文件
 
         //indentValue
         //首行缩进距离,默认是2em
@@ -104,7 +104,7 @@
 
         //,fullscreen : false //是否开启初始化时即全屏，默认关闭
 
-        //,imagePopup:true      //图片操作的浮层开关，默认打开
+        , imagePopup: false      //图片操作的浮层开关，默认打开
 
         //,autoSyncData:true //自动同步编辑器要提交的数据
         //,emotionLocalization:false //是否开启表情本地化，默认关闭。若要开启请确保emotion文件夹下包含官网提供的images表情文件夹
