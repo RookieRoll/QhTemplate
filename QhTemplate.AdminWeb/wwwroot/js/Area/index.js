@@ -191,8 +191,16 @@ $(document).ready($(function () {
                 sortable: false,
                 searchable: false,
                 render: function (data, type, row) {
-                    var html = "";
-                    html = "<div class=\"operator\"><button class=\"btn btn-default\" type=\"button\" onclick = \"removeUser(" + id + "," + row.id + ")\">移除</button></div>";
+                    var id = "'" + row.id + "'";
+                    var html = "<div class=\"dropdown operator\"><form>" +
+                        "<button class=\"btn btn-default\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
+                        "<span class=\"glyphicon glyphicon-th-list\"></span> </button>" +
+                        "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\">";
+                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + id + ")\">编辑</a></li>";
+
+                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openDelete(" + id + ")\">删除</a></li>";
+
+                    html += "</ul></form> </div>";
                     return html;
                 }
             },
@@ -238,76 +246,26 @@ $(document).ready($(function () {
     })
 }));
 
-//function addUser(orgId) {
-//    var userData = $("#add-user-table");
-//    userData.dataTable({
-//        lengthChange: true,
-//        serverSide: true,
-//        ajax: '/Organization/GetUsers?orgId=' + orgId,
-//        columns: [
-//            {
-//                name: 'operate',
-//                title: '人员列表',
-//                render: function (data, type, row) {
-//                    var id = "'" + row.id + "'";
-//                    if (row.checked) {
-//                        var html = "<div class=\"operator\">" + row.name + "<\/div>";
-//                    }
-//                    else {
-//                        var html = "<div class=\"operator\"><input type=\"checkbox\" value=\"" + row.id + "\">" + row.name + "</div>";
-//                    }
-//                    return html;
-//                }
-//            },
-//            {
-//                name: 'id',
-//                data: 'id',
-//                title: 'Id',
-//                visible: false,
-//            },
-//        ],
-//        language: {
-//            "url": "/lib/datatables/styles/i18n/zh-CN.json"
-//        }
 
-//    })
-//}
+function openEdit(id) {
+    $.ajax({
+        type: 'Get',
+        url: "/school/Update",
+        data: { "id": id },
+        success: function (data) {
+            $("#modal").html(data)
+        }
+    });
+}
 
-//function addNewUser(orgId, usersId) {
-//    $.ajax({
-//        type: "post",
-//        url: "/Organization/AddUsersToOrganization",
-//        data: { "orgId": orgId, "usersId": usersId },
-//        success: function (msg) {
-//            alert(msg);
-//            $('#my-modal').modal('hide');
-//            $('#organization').jstree(true).refresh();
-//        }
-//    })
-//}
-
-//function removeUser(orgId, userId) {
-//    $.ajax({
-//        type: "get",
-//        url: "/Organization/RemoveUserFromOrganization",
-//        data: { "orgId": orgId, "userId": userId },
-//        success: function (msg) {
-//            $("#modal").html(msg);
-//            $("#submit").click(function () {
-//                $.ajax({
-//                    type: "post",
-//                    url: "/Organization/RemoveUserFromOrganization",
-//                    data: { "orgId": orgId, "userId": userId },
-//                    success: function (msg) {
-//                        alert(msg);
-//                        $('#my-modal').modal('hide');
-//                        $('#organization').jstree(true).refresh();
-//                    }
-//                })
-//            })
-//        }
-//    })
-//}
-
-
+function openDelete(id) {
+    $.ajax({
+        type: 'Get',
+        url: "/school/Delete",
+        data: { "id": id },
+        success: function (data) {
+            $("#modal").html(data)
+        }
+    });
+}
 

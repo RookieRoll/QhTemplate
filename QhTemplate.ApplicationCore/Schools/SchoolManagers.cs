@@ -23,7 +23,8 @@ namespace QhTemplate.ApplicationCore.Schools
 
         public void Update(SchoolArea school)
         {
-            school.Update(school.Name,school.Code,school.Address);
+            var originSchool = Find(school.Id);
+            originSchool.Update(school.Name,school.Code,school.Address);
             Save();
         }
 

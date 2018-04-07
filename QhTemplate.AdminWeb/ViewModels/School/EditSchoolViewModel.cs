@@ -18,7 +18,7 @@ namespace QhTemplate.AdminWeb.ViewModels.School
                 AreaId=school.AreaId,
                 Id = school.Id,
                 Name = school.Name,
-                Code = school.Name,
+                Code = school.Code,
                 Address = school.Address
             };
         }
