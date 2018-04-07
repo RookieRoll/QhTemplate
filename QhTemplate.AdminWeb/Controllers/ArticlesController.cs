@@ -44,8 +44,8 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult Update(int id)
         {
             var article = _applicationService.Find(id);
-            var resul = CreateArticleViewModel.ConvertToView(article);
-            return View("_Update");
+            var result = CreateArticleViewModel.ConvertToView(article);
+            return View("_Update",result);
         }
 
         [HttpPost]
@@ -93,6 +93,10 @@ namespace QhTemplate.AdminWeb.Controllers
                 string ascending = sortColumn.Sort.Direction == SortDirection.Ascending ? "asc" : "desc";
                 string orderStr = $"{sortColumn.Field} {ascending}";
                 filteredData = filteredData.OrderBy(orderStr);
+            }
+            else
+            {
+                filteredData=filteredData.OrderByDescending(m => m.PublishTime);
             }
 
             var dataPage = filteredData.Skip(request.Start).Take(request.Length)

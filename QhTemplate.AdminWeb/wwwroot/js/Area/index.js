@@ -160,44 +160,44 @@ $(document).ready($(function () {
         //location.reload();
     });
 
-    myTree.on('move_node.jstree', function (e, data) {
-        var orgId = data.node.id, parentId = data.node.parent;
-        $.ajax({
-            type: "get",
-            url: "/Area/MigrateArea",
-            data: { "orgId": orgId, "parentId": parentId },
-            success: function (msg) {
-                $("#modal").html(msg);
-                $("#cancel").click(function () {
-                    myTree.jstree(true).refresh();
-                })
-                $("#submit").click(function () {
-                    $.ajax({
-                        type: "post",
-                        url: "/Area/MigrateArea",
-                        data: { "orgId": orgId, "parentId": parentId },
-                        success: function (msg) {
-                            alert(msg);
-                            $('#my-modal').modal('hide');
-                            myTree.jstree(true).refresh();
-                        }
-                    })
-                });
-            }
-        });
-    });
+    //myTree.on('move_node.jstree', function (e, data) {
+    //    var orgId = data.node.id, parentId = data.node.parent;
+    //    $.ajax({
+    //        type: "get",
+    //        url: "/Area/MigrateArea",
+    //        data: { "orgId": orgId, "parentId": parentId },
+    //        success: function (msg) {
+    //            $("#modal").html(msg);
+    //            $("#cancel").click(function () {
+    //                myTree.jstree(true).refresh();
+    //            })
+    //            $("#submit").click(function () {
+    //                $.ajax({
+    //                    type: "post",
+    //                    url: "/Area/MigrateArea",
+    //                    data: { "orgId": orgId, "parentId": parentId },
+    //                    success: function (msg) {
+    //                        alert(msg);
+    //                        $('#my-modal').modal('hide');
+    //                        myTree.jstree(true).refresh();
+    //                    }
+    //                })
+    //            });
+    //        }
+    //    });
+    //});
 
     $('#add-root').on('click', function (obj) {
         $.ajax({
             type: "get",
-            url: "/Organization/CreateOrganization",
+            url: "/Area/CreateArea",
             success: function (msg) {
                 $("#modal").html(msg);
                 $("#submit").click(function () {
                     var orgName = $("#text").val();
                     $.ajax({
                         type: "post",
-                        url: "/Organization/CreateOrganization",
+                        url: "/Area/CreateArea",
                         data: { "orgName": orgName },
                         success: function (msg) {
                             alert(msg);

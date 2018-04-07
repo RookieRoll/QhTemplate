@@ -1,8 +1,48 @@
-﻿@model object
-
+﻿@model QhTemplate.AdminWeb.ViewModels.NewsArticle.CreateArticleViewModel
 @{
-    ViewBag.Title = "title";
     Layout = "_Layout";
+    ViewBag.Title = "修改";
+
+}
+@section Styles{
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css" />
 }
 
-<h2>title</h2>
+<section class="content-header">
+    <h1>
+        修改新闻
+        <small> @ViewData["Title"]</small>
+
+    </h1>
+</section>
+<section class="content">
+    <input type="hidden" value="@Model.Id" id="articleId" />
+    <form>
+        <div>
+            <label>标题</label>
+            <div>
+                <input type="text" name="title" id="title" value="@Model.Title"/>
+            </div>
+        </div>
+        <div class="content-box">
+            <label>内容</label>
+            <div>
+                @Html.TextAreaFor(m => m.Content, new { @id = "contentbox" })
+            </div>
+        </div>
+        <div class="sub-button">
+            <button type="button" class="btn btn-default commitbutton" onclick="updateArticle()">修改</button>
+
+            <button type="button" class="btn btn-default commitbutton" onclick="cancle()">取消</button>
+        </div>
+    </form>
+</section>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/js/Article/update.js"></script>
+<script>
+    ue.setContent(@Model.Content)
+</script>

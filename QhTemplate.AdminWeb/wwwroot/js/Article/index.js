@@ -15,7 +15,7 @@
                         "<button class=\"btn btn-default\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
                         "<span class=\"glyphicon glyphicon-th-list\"></span> </button>" +
                         "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\">";
-                    html += "<li><a href='/articles/Update/"+id+"' \">编辑</a></li>";
+                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + id + ")\">编辑</a></li>";
 
                     html += "<li><a href=\"javaScript:void(0)\" onclick=\"openDelete(" + id + ")\">删除</a></li>";
 
@@ -35,13 +35,14 @@
                 title: '标题'
             },
             {
-                name: 'subcontent',
-                data: 'subcontent',
-                title: '摘要'
+                name: 'summary',
+                data: 'summary',
+                title: '摘要',
+                sortable:false
             },
             {
-                name: 'Time',
-                data: 'Time',
+                name: 'time',
+                data: 'time',
                 title: '发布时间'
             }
         ],
@@ -54,10 +55,14 @@
 function openDelete(id) {
     $.ajax({
         type: 'POST',
-        url: "/major/Delete",
+        url: "/Articles/Delete",
         data: { "id": id },
         success: function (data) {
             $("#model").html(data);
         }
     });
+}
+
+function openEdit(id) {
+    location.href = "/Articles/Update/" + id; 
 }

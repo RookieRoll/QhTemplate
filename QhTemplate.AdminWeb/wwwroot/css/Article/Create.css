@@ -9,16 +9,16 @@
 .sub-button{
     width:1000px;
 }
-    .sub-button input[type=submit] {
-        float: right;
-        margin-top: 5px;
-        height: 27px;
-        font-size: 14px;
-        padding-top: 0;
-        padding-bottom: 0;
-        font-weight: bold;
-        width:100px;
-    }
+.commitbutton {
+    float: right;
+    margin-top: 5px;
+    height: 27px;
+    font-size: 14px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: bold;
+    width: 100px;
+}
 
 #contentbox{
     width:1000px;

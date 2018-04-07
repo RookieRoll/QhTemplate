@@ -82,15 +82,15 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.Content).HasColumnType("char(1)");
+                entity.Property(e => e.Content).HasColumnType("text(65535)");
 
                 entity.Property(e => e.IsDelete).HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.PublishTime).HasColumnType("datetime");
 
-                entity.Property(e => e.SubContent).HasColumnType("char(1)");
+                entity.Property(e => e.SubContent).HasColumnType("text(65535)");
 
-                entity.Property(e => e.Title).HasColumnType("char(1)");
+                entity.Property(e => e.Title).HasColumnType("text(65535)");
             });
 
             modelBuilder.Entity<Organization>(entity =>
@@ -191,7 +191,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<UserOrganization>(entity =>
             {
-                entity.HasKey(e => new {e.UserId, e.OrganizationId});
+                entity.HasKey(e => new { e.UserId, e.OrganizationId });
 
                 entity.HasIndex(e => e.OrganizationId)
                     .HasName("FK_Reference_4");
@@ -215,7 +215,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.HasKey(e => new {e.UserId, e.RoleId});
+                entity.HasKey(e => new { e.UserId, e.RoleId });
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("FK_Reference_2");

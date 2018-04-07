@@ -12,28 +12,28 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public DateTime PublishTime { get; set; }
         public bool IsDelete { get; set; }
         public string SubContent { get; set; }
-        
-        public static NewArticle Create(string title, string content,string subcontent)
+
+        public static NewArticle Create(string title, string content, string subcontent)
         {
             return new NewArticle()
             {
-                Title = title,
-                Content = content,
+                Title = title??string.Empty,
+                Content = content??string.Empty,
                 PublishTime = DateTime.Now,
                 IsDelete = false,
-                SubContent = subcontent
-            };
-        }
-
-        public void Update(string title, string content,string subcontent)
-        {
-            this.Title = title;
-            this.Content = content;
-            this.SubContent = subcontent;
-        }
-        public void Delete()
-        {
-            this.IsDelete = true;
-        }
+                SubContent = subcontent ?? string.Empty
+        };
     }
+
+    public void Update(string title, string content, string subcontent)
+    {
+        this.Title = title;
+        this.Content = content;
+        this.SubContent = subcontent;
+    }
+    public void Delete()
+    {
+        this.IsDelete = true;
+    }
+}
 }

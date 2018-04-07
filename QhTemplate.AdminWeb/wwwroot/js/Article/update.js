@@ -99,12 +99,10 @@ var ue = UE.getEditor('contentbox', {
     elementPathEnabled: false,
     autoHeightEnabled: false,
     imagePopup: false,
-    zindex:99999
-
-
+    zindex: 99999
 });
 
-function createArticle() {
+function updateArticle() {
     var content = ue.getContent();
     var subcontent = ue.getContentTxt();
     var title = $("#title").val();
@@ -117,9 +115,10 @@ function createArticle() {
         return;
     }
     $.ajax({
-        url: "/Articles/Create",
-        type:"post",
+        url: "/Articles/Update",
+        type: "post",
         data: {
+            id: $("#articleId").val(),
             title: title,
             subcontent: subcontent,
             content: content
@@ -128,4 +127,8 @@ function createArticle() {
             history.back(-1);
         }
     })
+}
+
+function cancle() {
+    history.back(-1);
 }
