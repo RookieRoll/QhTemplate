@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /QhTemplate.AdminWeb/wwwroot/upload/image/20180406
+/QhTemplate.AdminWeb/wwwroot/upload/image/20180407

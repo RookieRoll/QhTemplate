@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using IronPython.Runtime.Operations;
+using QhTemplate.ApplicationCore.Areas;
+using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.ApplicationCore.Schools;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationService.Schools
 {
-    public class SchoolService:ISchoolService
+    public class SchoolService : ISchoolService
     {
         private readonly SchoolManagers _schoolManagers;
+        private readonly AreaManager _areaManager;
 
-        public SchoolService(SchoolManagers schoolManagers)
+        public SchoolService(SchoolManagers schoolManagers, AreaManager areaManager)
         {
             _schoolManagers = schoolManagers;
+            _areaManager = areaManager;
         }
 
         public IQueryable<SchoolArea> Finds()
@@ -39,8 +45,9 @@ namespace QhTemplate.ApplicationService.Schools
             return _schoolManagers.Find(id);
         }
 
-        public void Create(string name, string code, string path, string address,int areaid)
+        public void Create(string name, string code, string address, int areaid)
         {
+            var path = _areaManager.Find(areaid).Path;
             var school = SchoolArea.CreateNewArea(name, address, code, areaid, path);
             _schoolManagers.Create(school);
         }
@@ -58,8 +65,8 @@ namespace QhTemplate.ApplicationService.Schools
         public void Migration(int id, string path, int areaid)
         {
             var school = Find(id);
-            school.Migration(areaid,path);
-           _schoolManagers.Migration(school);
+            school.Migration(areaid, path);
+            _schoolManagers.Migration(school);
         }
     }
 }

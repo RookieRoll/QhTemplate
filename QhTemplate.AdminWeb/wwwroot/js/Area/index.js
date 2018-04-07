@@ -2,7 +2,7 @@ $(document).ready($(function () {
     var id = null;
     var name = null;
     var myTree = $('#schoolArea');
-    var dataTables = $("#schoolArea-table");
+    var dataTables = $("#school-table");
     var result = false;                             //设置搜索结果为失败
     myTree.jstree({
         'core': {
@@ -52,10 +52,11 @@ $(document).ready($(function () {
                                 $("#modal").html(msg);
                                 $("#submit").click(function () {
                                     var orgName = $("#text").val();
+                                    var code = $("#code").val();
                                     $.ajax({
                                         type: "post",
                                         url: "/Area/CreateArea",
-                                        data: { "orgName": orgName, "parentId": parentId },
+                                        data: { "orgName": orgName, "parentId": parentId, "code": code },
                                         success: function (msg) {
                                             alert(msg);
                                             $('#my-modal').modal('hide');
@@ -73,15 +74,15 @@ $(document).ready($(function () {
                         var orgId = id;
                         $.ajax({
                             type: "get",
-                            url: "/Area/RemoveArea",
-                            data: { "orgId": orgId },
+                            url: "/Area/DeleteArea",
+                            data: { "areaId": orgId },
                             success: function (msg) {
                                 $("#modal").html(msg);
                                 $("#submit").click(function () {
                                     $.ajax({
                                         type: "post",
                                         url: "/Area/RemoveAreaComfirm",
-                                        data: { "orgId": orgId },
+                                        data: { "areaId": orgId },
                                         success: function (msg) {
                                             alert(msg);
                                             $('#my-modal').modal('hide');
@@ -104,16 +105,17 @@ $(document).ready($(function () {
                         $.ajax({
                             type: "get",
                             url: "/Area/UpdateArea",
-                            data: { "orgId": orgId },
+                            data: { "id": orgId },
                             success: function (msg) {
                                 $("#modal").html(msg);
                                 $("#submit").click(function () {
                                     var orgName = $("#text").val();
+                                    var code = $("#code").val();
                                     if (orgName != null) {
                                         $.ajax({
                                             type: "post",
                                             url: "/Area/UpdateArea",
-                                            data: { "orgId": orgId, "orgName": orgName },
+                                            data: { "id": id, "name": orgName,"code":code },
                                             success: function (msg) {
                                                 alert(msg);
                                                 $('#my-modal').modal('hide');
@@ -126,66 +128,20 @@ $(document).ready($(function () {
                         });
                     }
                 }
-                // "添加员工": {
-                //     "label": "添加员工",
-                //     "action": function (obj) {
-                //         var orgId = id;
-                //         $.ajax({
-                //             type: "get",
-                //             url: "/Organization/AddUsersToOrganization",
-                //             data: { "orgId": orgId },
-                //             success: function (msg) {
-                //                 $("#modal").html(msg);
-                //                 addUser(orgId);
-                //                 var usersId = [];
-                //                 $("#submit-user").click(function () {
-                //                     $("input:checkbox:checked").each(function () {
-                //                         usersId.push($(this).val());
-                //                     });
-                //                     addNewUser(orgId, usersId);
-                //                 })
-                //             }
-                //         });
-                //     }
-                // },
+
             }
         },
-        "plugins": ["themes", "json_data", "search", "wholerow", "contextmenu", 'dnd', 'sort', 'types'],
+        "plugins": ["themes", "json_data", "search", "wholerow", "contextmenu", 'sort', 'types'],
     });
 
     myTree.on("changed.jstree", function (e, data) {
         id = data.node === undefined ? undefined : data.node.id;
         name = data.node === undefined ? undefined : data.node.text;
-        dataTables.dataTable().fnReloadAjax("/Organization/GetUsersFromOrganization?orgId=" + id);
+        dataTables.dataTable().fnReloadAjax("/school/GetData?areaid=" + id);
         //location.reload();
     });
 
-    //myTree.on('move_node.jstree', function (e, data) {
-    //    var orgId = data.node.id, parentId = data.node.parent;
-    //    $.ajax({
-    //        type: "get",
-    //        url: "/Area/MigrateArea",
-    //        data: { "orgId": orgId, "parentId": parentId },
-    //        success: function (msg) {
-    //            $("#modal").html(msg);
-    //            $("#cancel").click(function () {
-    //                myTree.jstree(true).refresh();
-    //            })
-    //            $("#submit").click(function () {
-    //                $.ajax({
-    //                    type: "post",
-    //                    url: "/Area/MigrateArea",
-    //                    data: { "orgId": orgId, "parentId": parentId },
-    //                    success: function (msg) {
-    //                        alert(msg);
-    //                        $('#my-modal').modal('hide');
-    //                        myTree.jstree(true).refresh();
-    //                    }
-    //                })
-    //            });
-    //        }
-    //    });
-    //});
+
 
     $('#add-root').on('click', function (obj) {
         $.ajax({
@@ -195,10 +151,14 @@ $(document).ready($(function () {
                 $("#modal").html(msg);
                 $("#submit").click(function () {
                     var orgName = $("#text").val();
+                    var code = $("#code").val();
                     $.ajax({
                         type: "post",
                         url: "/Area/CreateArea",
-                        data: { "orgName": orgName },
+                        data: {
+                            "orgName": orgName,
+                            "code": code
+                        },
                         success: function (msg) {
                             alert(msg);
                             $('#my-modal').modal('hide');
@@ -222,8 +182,8 @@ $(document).ready($(function () {
     dataTables.dataTable({
         lengthChange: true,
         serverSide: true,
-        ajax: '/Organization/GetUsersFromOrganization',
-        data: { "orgId": id },
+        ajax: '/school/GetData',
+        data: { "areaid": id },
         columns: [
             {
                 name: 'operate',
@@ -245,12 +205,12 @@ $(document).ready($(function () {
             {
                 name: 'name',
                 data: 'name',
-                title: '姓名',
+                title: '名称',
             },
             {
-                name: 'emailaddress',
-                data: 'emailAddress',
-                title: '邮箱'
+                name: 'code',
+                data: 'code',
+                title: '编码'
             },
         ],
         language: {
@@ -266,18 +226,11 @@ $(document).ready($(function () {
             var orgId = id;
             $.ajax({
                 type: "get",
-                url: "/Organization/AddUsersToOrganization",
-                data: { "orgId": orgId },
+                url: "/School/Create",
+                data: { "areaId": orgId },
                 success: function (msg) {
                     $("#modal").html(msg);
-                    addUser(orgId);
-                    var usersId = [];
-                    $("#submit-user").click(function () {
-                        $("input:checkbox:checked").each(function () {
-                            usersId.push($(this).val());
-                        });
-                        addNewUser(orgId, usersId);
-                    })
+             
                 }
             });
 
@@ -285,76 +238,76 @@ $(document).ready($(function () {
     })
 }));
 
-function addUser(orgId) {
-    var userData = $("#add-user-table");
-    userData.dataTable({
-        lengthChange: true,
-        serverSide: true,
-        ajax: '/Organization/GetUsers?orgId=' + orgId,
-        columns: [
-            {
-                name: 'operate',
-                title: '人员列表',
-                render: function (data, type, row) {
-                    var id = "'" + row.id + "'";
-                    if (row.checked) {
-                        var html = "<div class=\"operator\">" + row.name + "<\/div>";
-                    }
-                    else {
-                        var html = "<div class=\"operator\"><input type=\"checkbox\" value=\"" + row.id + "\">" + row.name + "</div>";
-                    }
-                    return html;
-                }
-            },
-            {
-                name: 'id',
-                data: 'id',
-                title: 'Id',
-                visible: false,
-            },
-        ],
-        language: {
-            "url": "/lib/datatables/styles/i18n/zh-CN.json"
-        }
+//function addUser(orgId) {
+//    var userData = $("#add-user-table");
+//    userData.dataTable({
+//        lengthChange: true,
+//        serverSide: true,
+//        ajax: '/Organization/GetUsers?orgId=' + orgId,
+//        columns: [
+//            {
+//                name: 'operate',
+//                title: '人员列表',
+//                render: function (data, type, row) {
+//                    var id = "'" + row.id + "'";
+//                    if (row.checked) {
+//                        var html = "<div class=\"operator\">" + row.name + "<\/div>";
+//                    }
+//                    else {
+//                        var html = "<div class=\"operator\"><input type=\"checkbox\" value=\"" + row.id + "\">" + row.name + "</div>";
+//                    }
+//                    return html;
+//                }
+//            },
+//            {
+//                name: 'id',
+//                data: 'id',
+//                title: 'Id',
+//                visible: false,
+//            },
+//        ],
+//        language: {
+//            "url": "/lib/datatables/styles/i18n/zh-CN.json"
+//        }
 
-    })
-}
+//    })
+//}
 
-function addNewUser(orgId, usersId) {
-    $.ajax({
-        type: "post",
-        url: "/Organization/AddUsersToOrganization",
-        data: { "orgId": orgId, "usersId": usersId },
-        success: function (msg) {
-            alert(msg);
-            $('#my-modal').modal('hide');
-            $('#organization').jstree(true).refresh();
-        }
-    })
-}
+//function addNewUser(orgId, usersId) {
+//    $.ajax({
+//        type: "post",
+//        url: "/Organization/AddUsersToOrganization",
+//        data: { "orgId": orgId, "usersId": usersId },
+//        success: function (msg) {
+//            alert(msg);
+//            $('#my-modal').modal('hide');
+//            $('#organization').jstree(true).refresh();
+//        }
+//    })
+//}
 
-function removeUser(orgId, userId) {
-    $.ajax({
-        type: "get",
-        url: "/Organization/RemoveUserFromOrganization",
-        data: { "orgId": orgId, "userId": userId },
-        success: function (msg) {
-            $("#modal").html(msg);
-            $("#submit").click(function () {
-                $.ajax({
-                    type: "post",
-                    url: "/Organization/RemoveUserFromOrganization",
-                    data: { "orgId": orgId, "userId": userId },
-                    success: function (msg) {
-                        alert(msg);
-                        $('#my-modal').modal('hide');
-                        $('#organization').jstree(true).refresh();
-                    }
-                })
-            })
-        }
-    })
-}
+//function removeUser(orgId, userId) {
+//    $.ajax({
+//        type: "get",
+//        url: "/Organization/RemoveUserFromOrganization",
+//        data: { "orgId": orgId, "userId": userId },
+//        success: function (msg) {
+//            $("#modal").html(msg);
+//            $("#submit").click(function () {
+//                $.ajax({
+//                    type: "post",
+//                    url: "/Organization/RemoveUserFromOrganization",
+//                    data: { "orgId": orgId, "userId": userId },
+//                    success: function (msg) {
+//                        alert(msg);
+//                        $('#my-modal').modal('hide');
+//                        $('#organization').jstree(true).refresh();
+//                    }
+//                })
+//            })
+//        }
+//    })
+//}
 
 
 

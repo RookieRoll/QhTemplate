@@ -56,7 +56,7 @@ namespace QhTemplate.ApplicationCore.Organizations
         public Organization Find(int? id)
         {
             var organization = FirstOrDefault(m => m.Id == id);
-            return organization ?? throw new UserFriendlyException("您要移动的部门不存在");
+            return organization ?? throw new UserFriendlyException("您要查找的部门不存在");
         }
 
         /// <summary>

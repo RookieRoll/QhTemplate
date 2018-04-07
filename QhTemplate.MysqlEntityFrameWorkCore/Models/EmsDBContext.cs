@@ -161,6 +161,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.Name).HasMaxLength(255);
 
+                entity.Property(e => e.Path).HasMaxLength(255);
+
                 entity.HasOne(d => d.Area)
                     .WithMany(p => p.SchoolArea)
                     .HasForeignKey(d => d.AreaId)

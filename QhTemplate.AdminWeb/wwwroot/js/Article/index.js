@@ -41,8 +41,8 @@
                 sortable:false
             },
             {
-                name: 'time',
-                data: 'time',
+                name: 'publishTime',
+                data: 'publishTime',
                 title: '发布时间'
             }
         ],

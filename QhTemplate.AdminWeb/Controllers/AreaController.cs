@@ -28,24 +28,19 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult GetAreas()
         {
             var areas = (from o in _areaApp.FindAll()
-                select new NodeViewModel()
-                {
-                    id = o.Id,
-                    text = o.Name,
-                    parentId = o.ParentId,
-                    path = o.Path,
-                }).ToList();
+                         select new NodeViewModel()
+                         {
+                             id = o.Id,
+                             text = o.Name,
+                             parentId = o.ParentId,
+                             path = o.Path,
+                         }).ToList();
             var organizations = new List<NodeViewModel>();
             foreach (var org in areas)
             {
                 org.state = new State(true, false, false);
-//                var userCount = _userApp.Finds().Include(m => m.UserOrganization)
-//                    .Count(n => n.UserOrganization.Any(d => d.OrganizationId == org.id));
-//                if (userCount > 0)
-//                    org.text += $" (<strong>{userCount}</strong>)";
-//                else
-//                    org.text += $" ({userCount})";
-                if (org.parentId == null)
+
+                if (org.parentId == 0)
                 {
                     organizations.Add(org);
                     continue;
@@ -66,7 +61,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
             var model = new AreasViewModel()
             {
-                Id = organization?.Id ?? 0,
+                ParentId = organization?.Id ?? 0,
                 Name = organization.Name,
                 Code = organization.Code
             };
@@ -82,12 +77,11 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult UpdateArea(int id)
         {
-            {
-                var area = _areaApp.GetAreaById(id);
-                return PartialView("_Update", AreasViewModel.ConvertAreasViewModel(area));
-            }
+            var area = _areaApp.GetAreaById(id);
+            return PartialView("_Update", AreasViewModel.ConvertAreasViewModel(area));
         }
 
+        [HttpPost]
         public IActionResult UpdateArea(int id, string name, string code)
         {
             _areaApp.UpdateAreas(id, name, code);
@@ -101,7 +95,7 @@ namespace QhTemplate.AdminWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveArea(int areaId)
+        public IActionResult RemoveAreaComfirm(int areaId)
         {
             _areaApp.DeleteAreas(areaId);
             return Json("删除成功");

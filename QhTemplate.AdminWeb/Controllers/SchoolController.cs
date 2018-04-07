@@ -5,6 +5,7 @@ using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
 using QhTemplate.AdminWeb.ViewModels.School;
+using QhTemplate.ApplicationService.Areas;
 using QhTemplate.ApplicationService.Schools;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
@@ -13,15 +14,26 @@ namespace QhTemplate.AdminWeb.Controllers
     public class SchoolController : Controller
     {
         private readonly ISchoolService _schoolService;
-
-        public SchoolController(ISchoolService schoolService)
+        private readonly IAreaAppService _areaApp;
+        public SchoolController(ISchoolService schoolService, IAreaAppService areaApp)
         {
             _schoolService = schoolService;
+            _areaApp = areaApp;
         }
 
-        public IActionResult Create(string name, string code, string address, string path, int areaid)
+        public IActionResult Create(int areaId)
         {
-            _schoolService.Create(name, code, path, address, areaid);
+            EditSchoolViewModel school = new EditSchoolViewModel
+            {
+                AreaId = areaId
+            };
+            return PartialView("_Create", school);
+        }
+
+        [HttpPost]
+        public IActionResult Create(string name, string code, string address, int areaid)
+        {
+            _schoolService.Create(name, code, address, areaid);
             return Json("创建成功");
         }
 
@@ -40,8 +52,7 @@ namespace QhTemplate.AdminWeb.Controllers
                 Id = model.Id,
                 Address = model.Address,
                 Code = model.Code,
-                Name = model.Name,
-                Path = $"{model.Provice}-{model.City}-{model.District}"
+                Name = model.Name
             };
             _schoolService.Update(school);
             return Json("修改成功");
@@ -60,9 +71,12 @@ namespace QhTemplate.AdminWeb.Controllers
             return Json("删除成功");
         }
 
-        public IActionResult GetData(IDataTablesRequest request, Guid areaId)
+        public IActionResult GetData(IDataTablesRequest request, int areaid)
         {
-            var data = _schoolService.Finds().Where(m => m.Path.Contains(areaId.ToString()));
+            string path = string.Empty;
+            if (areaid != 0)
+                path = _areaApp.GetAreaById(areaid).Path;
+            var data = _schoolService.Finds().Where(m => m.Path.StartsWith(path));
 
             var filteredData = String.IsNullOrWhiteSpace(request.Search.Value)
                 ? data

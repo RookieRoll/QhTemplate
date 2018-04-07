@@ -1,2 +1,37 @@
 ﻿@model QhTemplate.AdminWeb.ViewModels.Areas.AreasViewModel
 
+<div class="modal fade" id="my-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改区域信息</h4>
+            </div>
+            <div class="modal-body">
+                <lable><h4>即将修改<span class="title-highlight">@Model.Name</span>区域名称，请输入新名称：</h4></lable>
+                <input autofocus class="form-control input-text" id="text" value="@Model.Name" maxlength="15" required />
+                <div>
+                    <lable><h4>区域编码：</h4></lable>
+                    <input autofocus class="form-control input-text" id="code" value="@Model.Code" maxlength="15" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">取消</button>
+                <button type="button" class="btn btn-primary" id="submit" disabled>确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    var name = $("#text").val();
+    $("#my-modal").modal('show');
+    $("#text").bind('input propertychange',function () {
+        var text = $("#text").val();
+        if (text === "" || text === name) {
+            $("#submit").attr("disabled", true)
+        } else {
+            $("#submit").attr("disabled", false)
+        }
+    })
+</script>

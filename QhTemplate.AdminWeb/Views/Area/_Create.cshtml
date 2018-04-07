@@ -1,2 +1,47 @@
 ﻿@model QhTemplate.AdminWeb.ViewModels.Areas.AreasViewModel
 
+
+@Html.HiddenFor(Model => Model.ParentId)
+<div class="modal fade" id="my-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">新增地区</h4>
+            </div>
+            <div class="modal-body">
+                @if (Model.ParentId == 0)
+                {
+                    <lable><h4>即将创建新的区域，请输入根地区名称：</h4></lable>
+                }
+                else
+                {
+                    <lable><h4>即将为<span class="title-highlight">@Model.Name</span>部门新增子地区，请输入子地区名称：</h4></lable>
+                }
+
+                <input autofocus class="form-control input-text" id="text" placeholder="请输入地区名称" maxlength="15" required />
+
+                <div>
+                    <lable><h4>请输入区域编码：</h4></lable>
+                    <input class="form-control input-text" id="code" placeholder="请输入区域编码" maxlength="15" required />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel">关闭</button>
+                <button type="button" class="btn btn-primary" id="submit" disabled>确认</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    $("#my-modal").modal('show');
+    $("#text").bind('input propertychange', function () {
+        var text = $("#text").val();
+        if (text === "") {
+            $("#submit").attr("disabled", true)
+        } else {
+            $("#submit").attr("disabled", false)
+        }
+    })
+</script>

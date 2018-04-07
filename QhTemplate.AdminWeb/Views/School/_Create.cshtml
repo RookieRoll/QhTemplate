@@ -1,2 +1,45 @@
-﻿@model QhTemplate.AdminWeb.ViewModels.School.EditSchoolViewModel
+﻿
+@model QhTemplate.AdminWeb.ViewModels.School.EditSchoolViewModel
 
+<div class="modal fade bs-example-modal-sm" id="myCreateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">创建学校</h4>
+            </div>
+            <form class="form-horizontal">
+                <input type="hidden" value="@Model.AreaId" id="areaId" />
+                <div class="modal-body">
+                    <div class="set-major-attribute-value">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">学校名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="学校名称" name="name" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">学校编码</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="code" placeholder="学校编码" name="code" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">学校地址</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="address" placeholder="学校地址" name="address" required="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="save-role-set" onclick="save()">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/School/create.js" ></script>

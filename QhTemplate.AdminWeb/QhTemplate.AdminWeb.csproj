@@ -38,7 +38,6 @@
     <None Include="wwwroot\lib\ueditor\dialogs\wordimage\wordimage.js" />
     <None Include="wwwroot\lib\ueditor\lang\en\en.js" />
     <None Include="wwwroot\lib\ueditor\lang\zh-cn\zh-cn.js" />
-    <None Include="wwwroot\lib\ueditor\net\net.sln" />
     <None Include="wwwroot\lib\ueditor\third-party\codemirror\codemirror.js" />
     <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\mootools-adapter.js" />
     <None Include="wwwroot\lib\ueditor\third-party\highcharts\adapters\mootools-adapter.src.js" />
@@ -101,5 +100,9 @@
   <ItemGroup>
     <ProjectReference Include="..\QhTemplate.ApplicationService\QhTemplate.ApplicationService.csproj" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties config_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties config_1json__JSONSchema="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

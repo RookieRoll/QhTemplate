@@ -52,8 +52,8 @@ namespace QhTemplate.ApplicationCore.Areas
             if (childOrganizationCount > 0)
                 throw new UserFriendlyException("您要删除的地区下存在子地区，不可删除！");
 
-            var school = _db.SchoolArea.Where(m => m.Path.Contains(area.Id.ToString()));
-            if (!school.Any())
+            var school = _db.SchoolArea.FirstOrDefault(m => m.Path.Contains(area.Id.ToString()));
+            if (school!=null)
             {
                 throw  new UserFriendlyException("您要删除的地域下面有学校，不可删除");
             }
