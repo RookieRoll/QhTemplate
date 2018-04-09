@@ -50,9 +50,9 @@ namespace QhTemplate.ApplicationService.Users
             return _userManager.Find(id);
         }
 
-        public void Create(string userName, string name, string email)
+        public void Create(string userName, string name, string email,UserType type)
         {
-            var user = User.Create(name, userName, email);
+            var user = User.Create(name, userName, email,type);
             var defaultRole = _roleManager.Finds(m => m.IsDefault).Select(m => m.Id);
 
             using (var scope = _db.Database.BeginTransaction())

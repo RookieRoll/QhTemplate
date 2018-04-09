@@ -8,6 +8,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
     {
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<AuditLog> AuditLog { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<CompanyUser> CompanyUser { get; set; }
         public virtual DbSet<Major> Major { get; set; }
         public virtual DbSet<NewArticle> NewArticle { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
@@ -29,6 +31,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
             modelBuilder.Entity<NewArticle>().HasQueryFilter(m => !m.IsDelete);
             modelBuilder.Entity<Area>(entity =>
@@ -40,8 +43,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.Name).HasMaxLength(255);
 
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
+
                 entity.Property(e => e.Path).HasMaxLength(255);
-                entity.Property(e => e.CodeId).HasColumnType("char(36)");
             });
 
             modelBuilder.Entity<AuditLog>(entity =>
@@ -69,6 +72,52 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
             });
 
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.Address).HasMaxLength(255);
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.LegalPerson).HasMaxLength(32);
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("NAME")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Tellphone)
+                    .HasColumnName("tellphone")
+                    .HasMaxLength(15);
+            });
+
+            modelBuilder.Entity<CompanyUser>(entity =>
+            {
+                entity.HasIndex(e => e.CompanyId)
+                    .HasName("CompanyId");
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("UserId");
+
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CompanyId).HasColumnType("int(11)");
+
+                entity.Property(e => e.UserId).HasColumnType("int(11)");
+
+                entity.HasOne(d => d.Company)
+                    .WithMany(p => p.CompanyUser)
+                    .HasForeignKey(d => d.CompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CompanyUser_ibfk_2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.CompanyUser)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("CompanyUser_ibfk_1");
+            });
+
             modelBuilder.Entity<Major>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
@@ -82,15 +131,15 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
-                entity.Property(e => e.Content).HasColumnType("text(65535)");
+                entity.Property(e => e.Content).HasColumnType("text");
 
                 entity.Property(e => e.IsDelete).HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.PublishTime).HasColumnType("datetime");
 
-                entity.Property(e => e.SubContent).HasColumnType("text(65535)");
+                entity.Property(e => e.SubContent).HasColumnType("text");
 
-                entity.Property(e => e.Title).HasColumnType("text(65535)");
+                entity.Property(e => e.Title).HasColumnType("text");
             });
 
             modelBuilder.Entity<Organization>(entity =>
@@ -189,6 +238,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.Password).HasMaxLength(32);
 
                 entity.Property(e => e.UserName).HasMaxLength(32);
+
+                entity.Property(e => e.UserType).HasColumnType("int(255)");
             });
 
             modelBuilder.Entity<UserOrganization>(entity =>

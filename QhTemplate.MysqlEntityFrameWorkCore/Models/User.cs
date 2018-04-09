@@ -7,6 +7,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
     {
         public User()
         {
+            CompanyUser = new HashSet<CompanyUser>();
             UserOrganization = new HashSet<UserOrganization>();
             UserRole = new HashSet<UserRole>();
         }
@@ -16,15 +17,17 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public string EmailAddress { get; set; }
-        public Boolean IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime? LastModificationTime { get; set; }
         public DateTime? DeletionTime { get; set; }
+        public int UserType { get; set; }
 
+        public ICollection<CompanyUser> CompanyUser { get; set; }
         public ICollection<UserOrganization> UserOrganization { get; set; }
         public ICollection<UserRole> UserRole { get; set; }
 
-        public static User Create(string name, string username, string email)
+        public static User Create(string name, string username, string email, UserType type)
         {
             return new User()
             {
@@ -34,7 +37,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 EmailAddress = email,
                 IsDeleted = false,
                 CreationTime = DateTime.Now,
-                LastModificationTime = DateTime.Now
+                LastModificationTime = DateTime.Now,
+                UserType = (int) type
             };
         }
 

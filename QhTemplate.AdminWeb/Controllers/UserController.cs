@@ -33,7 +33,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult Create(UserEditViewModel model)
         {
-            _userAppService.Create(model.Username,model.Name,model.EmailAddress);
+            _userAppService.Create(model.Username,model.Name,model.EmailAddress,UserType.User);
             return RedirectToAction("Index");
         }
 

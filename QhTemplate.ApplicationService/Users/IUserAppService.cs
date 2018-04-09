@@ -13,7 +13,7 @@ namespace QhTemplate.ApplicationService.Users
         User FirstOrDefault(Func<User, bool> func);
         User First(Func<User, bool> func);
         User Find(int? id);
-        void Create(string userName, string name, string email);
+        void Create(string userName, string name, string email,UserType type);
         void Remove(int? id);
         void Update(User user);
         IEnumerable<string> GetAuthorize(int id);
