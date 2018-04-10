@@ -130,7 +130,7 @@ namespace QhTemplate.AdminWeb.Controllers
         #endregion
         public IActionResult GetData(IDataTablesRequest request)
         {
-            var data = _userAppService.Finds();
+            var data = _userAppService.Finds().Where(m=>m.UserType==(int)UserType.User);
 
 
             var filteredData = String.IsNullOrWhiteSpace(request.Search.Value)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QhTemplate.AdminWeb.ViewModels.CompanyAccounts;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -8,6 +9,11 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult SignIn()
         {
             return View();
+        }
+
+        public IActionResult SignIn(SignViewModel model)
+        {
+            return Json("");
         }
 
         [HttpGet]
