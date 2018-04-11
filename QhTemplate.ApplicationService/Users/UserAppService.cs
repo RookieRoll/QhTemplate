@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using QhTemplate.ApplicationCore.Authentications.Permissions;
 using QhTemplate.ApplicationCore.Authentications.Roles;
 using QhTemplate.ApplicationCore.Users;
@@ -108,6 +109,15 @@ namespace QhTemplate.ApplicationService.Users
         public void SetAuthorize(int id, string[] permissions)
         {
             _permissionManager.SetUserPermissions(id, permissions);
+        }
+
+        public IEnumerable<User> GetUsersByCompany(int companyId)
+        {
+            var users = (from cu in _db.CompanyUser
+                join us in Finds() on cu.UserId equals us.Id
+                where cu.CompanyId == companyId
+                select us);
+            return users;
         }
     }
 }
