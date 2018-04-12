@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 09/04/2018 16:56:41
+ Date: 12/04/2018 16:39:39
 */
 
 SET NAMES utf8mb4;
@@ -61,6 +61,7 @@ CREATE TABLE `Company`  (
   `CreateTime` datetime(0) NULL DEFAULT NULL,
   `LegalPerson` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `tellphone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -132,6 +133,20 @@ CREATE TABLE `Permission`  (
   `CreationTime` datetime(0) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for Recruitment
+-- ----------------------------
+DROP TABLE IF EXISTS `Recruitment`;
+CREATE TABLE `Recruitment`  (
+  `Id` int(11) NOT NULL,
+  `CompanyId` int(11) NULL DEFAULT NULL,
+  `Title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `Content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `CreateTime` datetime(0) NULL DEFAULT NULL,
+  `EndTime` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for Role

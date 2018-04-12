@@ -41,6 +41,22 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 UserType = (int) type
             };
         }
+        
+        public static User Register(string name, string username, string email, string password,UserType type)
+        {
+            return new User()
+            {
+                
+                Name = name,
+                UserName = username,
+                Password = password,
+                EmailAddress = email,
+                IsDeleted = false,
+                CreationTime = DateTime.Now,
+                LastModificationTime = DateTime.Now,
+                UserType = (int) type
+            };
+        }
 
         public void Update(string username, string email)
         {

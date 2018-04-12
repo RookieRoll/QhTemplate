@@ -70,7 +70,27 @@ namespace QhTemplate.ApplicationService.Users
                 }
             }
         }
+        public int Register(string userName, string name, string email,string password,UserType type)
+        {
+            var user = User.Register(name, userName, email,password,type);
+            var defaultRole = _roleManager.Finds(m => m.IsDefault).Select(m => m.Id);
 
+            using (var scope = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    _userManager.Create(user);
+                    _roleManager.SetUserRole(user.Id, defaultRole.ToArray());
+                    scope.Commit();
+                }
+                catch (Exception ex)
+                {
+                    scope.Rollback();
+                }
+            }
+
+            return user.Id;
+        }
         public void Remove(int? id)
         {
             _userManager.Deleted(id);

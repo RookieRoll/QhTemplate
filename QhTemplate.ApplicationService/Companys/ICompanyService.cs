@@ -7,7 +7,7 @@ namespace QhTemplate.ApplicationService.Companys
 {
     public interface ICompanyService
     {
-        void Creat(string name, string address, string username, string telphone);
+        int Creat(string name, string address, string username, string telphone);
         void Update(Company company);
         void Delete(int id);
         Company Find(int id);
@@ -15,5 +15,6 @@ namespace QhTemplate.ApplicationService.Companys
         IQueryable<Company> Finds(Func<Company, bool> func);
         Company FirstOrDefault(Func<Company, bool> func);
         Company First(Func<Company, bool> func);
+        void SetCompanyUser(int companyId, int userId);
     }
 }

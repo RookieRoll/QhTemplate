@@ -4,14 +4,11 @@ using QhTemplate.AdminWeb.ViewModels.Account;
 using QhTemplate.ApplicationService.Users;
 using QhTemplate.ApplicationService.Utils;
 using System;
-using System.Linq.Dynamic.Core;
-using System.Security.Claims;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using QhTemplate.AdminWeb.Navigation;
-using QhTemplate.ApplicationCore.Exceptions;
+using QhTemplate.AdminWeb.Utils;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
@@ -43,7 +40,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
             Func<User, bool> func = null;
             //判断是否是邮箱登陆
-            if (IsEmailLogin(login.UserName))
+            if (AccountServiceUtil.IsEmailLogin(login.UserName))
                 func = m => m.EmailAddress.Equals(login.UserName) && m.Password.Equals(login.Password);
             else
                 func = m => m.UserName.Equals(login.UserName) && m.Password.Equals(login.Password);
@@ -55,38 +52,38 @@ namespace QhTemplate.AdminWeb.Controllers
                 return RedirectToAction("SignIn");
             }
 
-            await SaveSignInUserIndetifier(user);
+            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext,user);
             _menuProvider.RemoveMenu(user.Id);
             _menuProvider.LoadMenu(user.Id);
             return RedirectToAction("Index", "Home");
         }
 
-        private async Task SaveSignInUserIndetifier(User user)
-        {
-            var userIdentity = new ClaimsPrincipal(
-                new ClaimsIdentity(
-                    new[]
-                    {
-                        new Claim(ClaimTypes.Name, user.UserName),
-                        new Claim(ClaimTypes.Sid, user.Id.ToString())
-                    },
-                    CookieAuthenticationDefaults.AuthenticationScheme
-                ));
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                userIdentity,
-                new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.Now.Add(TimeSpan.FromDays(7)) // 有效时间
-                });
-        }
-
-        private bool IsEmailLogin(string value)
-        {
-            const string regexStr = @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-            return Regex.IsMatch(value, regexStr);
-        }
+//        private async Task SaveSignInUserIndetifier(User user)
+//        {
+//            var userIdentity = new ClaimsPrincipal(
+//                new ClaimsIdentity(
+//                    new[]
+//                    {
+//                        new Claim(ClaimTypes.Name, user.UserName),
+//                        new Claim(ClaimTypes.Sid, user.Id.ToString())
+//                    },
+//                    CookieAuthenticationDefaults.AuthenticationScheme
+//                ));
+//
+//            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+//                userIdentity,
+//                new AuthenticationProperties
+//                {
+//                    IsPersistent = true,
+//                    ExpiresUtc = DateTimeOffset.Now.Add(TimeSpan.FromDays(7)) // 有效时间
+//                });
+//        }
+//
+//        private bool IsEmailLogin(string value)
+//        {
+//            const string regexStr = @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+//            return Regex.IsMatch(value, regexStr);
+//        }
 
         private bool CheckValidateCode(string code)
         {

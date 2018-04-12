@@ -23,5 +23,6 @@ namespace QhTemplate.ApplicationService.Users
         void SetRoleByUserId(int id, int[] roles);
         void SetAuthorize(int id, string[] permissions);
         IEnumerable<User> GetUsersByCompany(int companyId);
+        int Register(string userName, string name, string email, string password, UserType type);
     }
 }

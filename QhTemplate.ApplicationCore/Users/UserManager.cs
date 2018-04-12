@@ -15,12 +15,13 @@ namespace QhTemplate.ApplicationCore.Users
             return user ?? throw new UserFriendlyException("该用户不存在");
         }
 
-        public void Create(User model)
+        public int Create(User model)
         {
             if (IsUserNameExit(model.UserName))
                 throw new UserFriendlyException("该用户名已经存在");
             _db.User.Add(model);
             Save();
+            return model.Id;
         }
 
         public void Update(User model)

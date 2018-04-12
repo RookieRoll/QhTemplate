@@ -10,10 +10,11 @@ namespace QhTemplate.ApplicationCore.Companys
         {
         }
 
-        public void Create(Company company)
+        public int Create(Company company)
         {
             _db.Company.Add(company);
             Save();
+            return company.Id;
         }
 
         public void Update(Company company)

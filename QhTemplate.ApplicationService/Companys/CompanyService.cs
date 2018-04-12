@@ -8,16 +8,17 @@ namespace QhTemplate.ApplicationService.Companys
     public class CompanyService:ICompanyService
     {
         private readonly CompanyManager _companyManager;
-
-        public CompanyService(CompanyManager companyManager)
+        private readonly EmsDBContext _db; 
+        public CompanyService(CompanyManager companyManager, EmsDBContext db)
         {
             _companyManager = companyManager;
+            _db = db;
         }
 
-        public void Creat(string name, string address, string username, string telphone)
+        public int Creat(string name, string address, string username, string telphone)
         {
             var company = Company.Create(name, address, username, telphone);
-            _companyManager.Create(company);
+            return _companyManager.Create(company);
         }
 
         public void Update(Company company)
@@ -53,6 +54,16 @@ namespace QhTemplate.ApplicationService.Companys
         public Company First(Func<Company, bool> func)
         {
             return _companyManager.First(func);
+        }
+
+        public void SetCompanyUser(int companyId, int userId)
+        {
+            _db.CompanyUser.Add(new CompanyUser
+            {
+                CompanyId = companyId,
+                UserId = userId
+            });
+            _db.SaveChanges();
         }
     }
 }
