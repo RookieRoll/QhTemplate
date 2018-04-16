@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 12/04/2018 16:39:39
+ Date: 16/04/2018 11:21:32
 */
 
 SET NAMES utf8mb4;
@@ -92,6 +92,19 @@ CREATE TABLE `Major`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '专业' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for MajorRecruitMent
+-- ----------------------------
+DROP TABLE IF EXISTS `MajorRecruitMent`;
+CREATE TABLE `MajorRecruitMent`  (
+  `MajorId` int(11) NOT NULL,
+  `RecruitMentId` int(11) NOT NULL,
+  PRIMARY KEY (`MajorId`, `RecruitMentId`) USING BTREE,
+  INDEX `RecruitMentId`(`RecruitMentId`) USING BTREE,
+  CONSTRAINT `MajorRecruitMent_ibfk_1` FOREIGN KEY (`MajorId`) REFERENCES `Major` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `MajorRecruitMent_ibfk_2` FOREIGN KEY (`RecruitMentId`) REFERENCES `Recruitment` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for NewArticle
 -- ----------------------------
 DROP TABLE IF EXISTS `NewArticle`;
@@ -145,8 +158,9 @@ CREATE TABLE `Recruitment`  (
   `Content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `CreateTime` datetime(0) NULL DEFAULT NULL,
   `EndTime` datetime(0) NULL DEFAULT NULL,
+  `MajorId` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '职位招聘表\r\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for Role
@@ -222,6 +236,6 @@ CREATE TABLE `UserRole`  (
   INDEX `FK_Reference_2`(`RoleId`) USING BTREE,
   CONSTRAINT `FK_Reference_1` FOREIGN KEY (`UserId`) REFERENCES `User` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_Reference_2` FOREIGN KEY (`RoleId`) REFERENCES `Role` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

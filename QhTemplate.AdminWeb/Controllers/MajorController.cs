@@ -2,9 +2,11 @@
 using System.Linq.Dynamic.Core;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
+using IronPython.Modules;
 using Microsoft.AspNetCore.Mvc;
 using QhTemplate.AdminWeb.ViewModels.Major;
 using QhTemplate.ApplicationService.Majors;
+using QhTemplate.ApplicationService.Utils;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
@@ -41,12 +43,7 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Update(MajorViewModel model)
         {
-            Major major = new Major()
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Code = model.Code
-            };
+            var major = MapperUtil<MajorViewModel, Major>.Convert(model);
             _majorApp.Update(major);
             return Json("修改成功");
         }
