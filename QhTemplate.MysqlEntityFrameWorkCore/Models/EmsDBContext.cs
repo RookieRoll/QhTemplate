@@ -11,9 +11,11 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CompanyUser> CompanyUser { get; set; }
         public virtual DbSet<Major> Major { get; set; }
+        public virtual DbSet<MajorRecruitMent> MajorRecruitMent { get; set; }
         public virtual DbSet<NewArticle> NewArticle { get; set; }
         public virtual DbSet<Organization> Organization { get; set; }
         public virtual DbSet<Permission> Permission { get; set; }
+        public virtual DbSet<Recruitment> Recruitment { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<SchoolArea> SchoolArea { get; set; }
         public virtual DbSet<User> User { get; set; }
@@ -31,7 +33,6 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
             modelBuilder.Entity<NewArticle>().HasQueryFilter(m => !m.IsDelete);
             modelBuilder.Entity<Area>(entity =>
@@ -80,6 +81,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
+                entity.Property(e => e.Description).HasColumnType("text");
+
                 entity.Property(e => e.LegalPerson).HasMaxLength(32);
 
                 entity.Property(e => e.Name)
@@ -125,6 +128,30 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.Code).HasMaxLength(255);
 
                 entity.Property(e => e.Name).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<MajorRecruitMent>(entity =>
+            {
+                entity.HasKey(e => new { e.MajorId, e.RecruitMentId });
+
+                entity.HasIndex(e => e.RecruitMentId)
+                    .HasName("RecruitMentId");
+
+                entity.Property(e => e.MajorId).HasColumnType("int(11)");
+
+                entity.Property(e => e.RecruitMentId).HasColumnType("int(11)");
+
+                entity.HasOne(d => d.Major)
+                    .WithMany(p => p.MajorRecruitMent)
+                    .HasForeignKey(d => d.MajorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("MajorRecruitMent_ibfk_1");
+
+                entity.HasOne(d => d.RecruitMent)
+                    .WithMany(p => p.MajorRecruitMent)
+                    .HasForeignKey(d => d.RecruitMentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("MajorRecruitMent_ibfk_2");
             });
 
             modelBuilder.Entity<NewArticle>(entity =>
@@ -174,6 +201,23 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.RoleId).HasColumnType("int(11)");
 
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<Recruitment>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CompanyId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Content).HasColumnType("text");
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
+
+                entity.Property(e => e.MajorId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Title).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Role>(entity =>

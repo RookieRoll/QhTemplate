@@ -16,6 +16,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public DateTime CreateTime { get; set; }
         public string LegalPerson { get; set; }
         public string Tellphone { get; set; }
+        public string Description { get; set; }
 
         public ICollection<CompanyUser> CompanyUser { get; set; }
 
