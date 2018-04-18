@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 16/04/2018 11:21:32
+ Date: 18/04/2018 15:15:22
 */
 
 SET NAMES utf8mb4;
@@ -158,7 +158,6 @@ CREATE TABLE `Recruitment`  (
   `Content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `CreateTime` datetime(0) NULL DEFAULT NULL,
   `EndTime` datetime(0) NULL DEFAULT NULL,
-  `MajorId` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '职位招聘表\r\n' ROW_FORMAT = Dynamic;
 

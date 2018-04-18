@@ -215,8 +215,6 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
-                entity.Property(e => e.MajorId).HasColumnType("int(11)");
-
                 entity.Property(e => e.Title).HasMaxLength(255);
             });
 
