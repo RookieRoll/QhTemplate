@@ -1,12 +1,9 @@
-﻿using System.Composition.Convention;
-using System.Linq;
+﻿using System.Linq;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
-using QhTemplate.AdminWeb.ViewModels.Major;
 using QhTemplate.ApplicationService.NewsArticles;
 using System.Linq.Dynamic.Core;
-using Microsoft.AspNetCore.Http;
 using QhTemplate.AdminWeb.ViewModels.NewsArticle;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 using UEditorNetCore;

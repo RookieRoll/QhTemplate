@@ -16,5 +16,6 @@ namespace QhTemplate.ApplicationService.Companys
         Company FirstOrDefault(Func<Company, bool> func);
         Company First(Func<Company, bool> func);
         void SetCompanyUser(int companyId, int userId);
+        
     }
 }
