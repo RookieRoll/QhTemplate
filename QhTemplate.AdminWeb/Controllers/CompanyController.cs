@@ -5,7 +5,6 @@ using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using System.Linq;
 using QhTemplate.AdminWeb.ViewModels.Company;
-using QhTemplate.AdminWeb.ViewModels.Major;
 
 namespace QhTemplate.AdminWeb.Controllers
 {

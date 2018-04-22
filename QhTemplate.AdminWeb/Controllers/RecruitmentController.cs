@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Community.CsharpSqlite;
 using QhTemplate.AdminWeb.ViewModels.Recruitments;
 using QhTemplate.ApplicationService.Companys;
+using QhTemplate.ApplicationService.Majors;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
@@ -17,10 +18,12 @@ namespace QhTemplate.AdminWeb.Controllers
     {
         private readonly IRecruitmentServcie _recruitment;
         private readonly ICompanyService _company;
-        public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company)
+        private readonly IMajorAppService _majorService;
+        public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company, IMajorAppService majorService)
         {
             _recruitment = recruitment;
             _company = company;
+            _majorService = majorService;
         }
 
         // GET
@@ -46,7 +49,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult Update(int id)
         {
-            
+            var model = _recruitment.Find(id);
             return View("Update");
         }
 

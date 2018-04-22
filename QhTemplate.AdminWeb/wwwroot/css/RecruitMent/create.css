@@ -1,0 +1,29 @@
+﻿body {
+}
+
+#title {
+    width: 990px;
+}
+
+.content-box {
+    margin-top: 20px;
+}
+
+.sub-button {
+    width: 1000px;
+}
+
+.commitbutton {
+    float: right;
+    margin-top: 5px;
+    height: 27px;
+    font-size: 14px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-weight: bold;
+    width: 100px;
+}
+
+#contentbox {
+    width: 1000px;
+}

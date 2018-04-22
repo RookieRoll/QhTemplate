@@ -31,6 +31,13 @@ namespace QhTemplate.AdminWeb.Navigation
 
             var area = new MenuItem { Name = "区域学校", Url = "/Area/Index", RequiredAuthorizeCode = null };
             SideMenu.Children.Add(area);
+
+            var company = new MenuItem { Name = "公司", Url = "/Company/index", RequiredAuthorizeCode = null };
+            SideMenu.Children.Add(company);
+
+            var recruitment = new MenuItem { Name = "招聘信息", Url = "/RecruitMent/Index", RequiredAuthorizeCode = null };
+            SideMenu.Children.Add(recruitment);
+
         }
     }
 }
