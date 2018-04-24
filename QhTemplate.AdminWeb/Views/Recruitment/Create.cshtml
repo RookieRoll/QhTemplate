@@ -1,18 +1,17 @@
-﻿
-@{
+﻿@{
     Layout = "_Layout";
     ViewBag.Title = "新增";
-
 }
+
 @section Styles{
-    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
-    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet"/>
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css"/>
 }
 
 <section class="content-header">
     <h1>
-        新增招聘
+        新增招聘信息
         <small> @ViewData["Title"]</small>
 
     </h1>
@@ -22,7 +21,7 @@
         <div>
             <label>标题</label>
             <div>
-                <input type="text" name="title" id="title" />
+                <input type="text" name="title" id="title"/>
             </div>
         </div>
         <div class="content-box">
@@ -33,27 +32,14 @@
                 </textarea>
             </div>
         </div>
-        <div style="display:flex;justify-content:flex-start">
+        <div style="display: flex; justify-content: flex-start; margin-top: 10px;">
             <div>
-                <label>
-                    专业树形
-                    <input type="checkbox" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    专业树形
-                    <input type="checkbox" />
-                </label>
-            </div>
-            <div>
-                <label>
-                    专业树形
-                    <input type="checkbox" />
-                </label>
+                <label>专业类型</label>
+                <div id="major" style="width: 990px; display: flex; justify-content: start;">
+                </div>
             </div>
         </div>
-        <div class="sub-button">
+        <div style="overflow: hidden;" class="sub-button">
             <button type="button" class="btn btn-default commitbutton" onclick="createArticle()">保存</button>
         </div>
     </form>

@@ -18,13 +18,13 @@ namespace QhTemplate.AdminWeb.Controllers
     {
         private readonly IRecruitmentServcie _recruitment;
         private readonly ICompanyService _company;
-        private readonly IMajorAppService _majorService;
-        public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company, IMajorAppService majorService)
+
+        public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company)
         {
             _recruitment = recruitment;
             _company = company;
-            _majorService = majorService;
         }
+
 
         // GET
         public IActionResult Index()
@@ -40,10 +40,10 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Create(EditRecruitment obj)
         {
-            var userId =HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             var id = int.Parse(userId);
             var companyId = _company.Finds(m => m.CompanyUser.Any(n => n.UserId == id)).First().Id;
-            _recruitment.Create(obj.Title,obj.Content,obj.EndTime,id,obj.MajorIds);
+            _recruitment.Create(obj.Title, obj.Content, obj.EndTime, id, obj.MajorIds);
             return Json("创建成功");
         }
 
@@ -62,16 +62,15 @@ namespace QhTemplate.AdminWeb.Controllers
                 Title = obj.Title,
                 Content = obj.Content,
                 EndTime = obj.EndTime,
-
             };
-            _recruitment.Update(temp,obj.MajorIds);
+            _recruitment.Update(temp, obj.MajorIds);
             return Json("修改成功");
         }
 
         public IActionResult Delete(int id)
         {
             var temp = _recruitment.Find(id);
-            return PartialView("_Delete",RecruitmentViewModel.ConvertRecruitmentViewModel(temp));
+            return PartialView("_Delete", RecruitmentViewModel.ConvertRecruitmentViewModel(temp));
         }
 
         public IActionResult DeleteComfirm(int id)
@@ -79,6 +78,7 @@ namespace QhTemplate.AdminWeb.Controllers
             _recruitment.Remove(id);
             return Json("删除成功");
         }
+
         public IActionResult GetData(IDataTablesRequest request)
         {
             var data = _recruitment.Finds();
@@ -96,7 +96,7 @@ namespace QhTemplate.AdminWeb.Controllers
             }
             else
             {
-                filteredData=filteredData.OrderByDescending(m => m.CreateTime).ThenBy(m=>m.EndTime);
+                filteredData = filteredData.OrderByDescending(m => m.CreateTime).ThenBy(m => m.EndTime);
             }
 
             var dataPage = filteredData.Skip(request.Start).Take(request.Length)

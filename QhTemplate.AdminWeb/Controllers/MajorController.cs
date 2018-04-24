@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
@@ -55,6 +56,13 @@ namespace QhTemplate.AdminWeb.Controllers
             return PartialView("_Delete", MajorViewModel.ConvertToViewModel(major));
         }
 
+        [HttpGet]
+        public IActionResult GetMajors()
+        {
+            var majors = _majorApp.Finds().Select(m=>MajorViewModel.ConvertToViewModel(m));
+            return Json(majors);
+        }
+        
         public IActionResult DeleteComfirm(int id)
         {
             _majorApp.Remove(id);
