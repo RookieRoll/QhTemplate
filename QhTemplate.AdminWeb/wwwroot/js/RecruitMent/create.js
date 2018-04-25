@@ -1,4 +1,4 @@
-﻿var width = document.getElementById("contentbox").offsetWidth;
+var width = document.getElementById("contentbox").offsetWidth;
 var ue = UE.getEditor('contentbox', {
     toolbars: [
         [
@@ -103,18 +103,36 @@ var ue = UE.getEditor('contentbox', {
 
 
 });
-
+init();
+function init(){
+    $.ajax({
+        url: "/Major/GetMajors",
+        type: "Get",
+        success: function(data) {
+            var html = "";
+            for (var i = 0; i < data.length; i++) {
+                html += " <label style='margin-left: 20px;'><input type='checkbox' value='"+data[i].id+"' class='majorlist' />"+data[i].name+"</label>";
+            }
+            $("#major").html(html);
+        }
+    });
+}
 
 function createArticle() {
     var content = ue.getContent();
     var subcontent = ue.getContentTxt();
     var title = $("#title").val();
+    var majorlist=get_selected_major();
     if (!title) {
         alert("标题不能为空");
         return;
     }
     if (!content) {
         alert("内容不能为空");
+        return;
+    }
+    if (majorlist==null&&majorlist.length==0){
+        alert("专业选项不能为空");
         return;
     }
     $.ajax({
@@ -129,4 +147,14 @@ function createArticle() {
             history.back(-1);
         }
     })
+}
+
+function get_selected_major(){
+    var ele= $(".majorlist");
+    var check_val = [];
+    for(k in ele){
+        if(ele[k].checked)
+            check_val.push(ele[k].value);
+    }
+    return check_val;
 }

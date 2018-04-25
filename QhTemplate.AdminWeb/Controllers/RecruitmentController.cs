@@ -7,6 +7,7 @@ using QhTemplate.ApplicationService.Recruitments;
 using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Community.CsharpSqlite;
+using Microsoft.EntityFrameworkCore;
 using QhTemplate.AdminWeb.ViewModels.Recruitments;
 using QhTemplate.ApplicationService.Companys;
 using QhTemplate.ApplicationService.Majors;
@@ -18,11 +19,14 @@ namespace QhTemplate.AdminWeb.Controllers
     {
         private readonly IRecruitmentServcie _recruitment;
         private readonly ICompanyService _company;
+        private readonly IMajorAppService _majorApp;
 
-        public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company)
+        public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company,
+            IMajorAppService majorApp)
         {
             _recruitment = recruitment;
             _company = company;
+            _majorApp = majorApp;
         }
 
 
@@ -71,6 +75,22 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             var temp = _recruitment.Find(id);
             return PartialView("_Delete", RecruitmentViewModel.ConvertRecruitmentViewModel(temp));
+        }
+
+        public IActionResult GetMarjor(int id)
+        {
+            var majors = _majorApp.Finds().Select(m => MajorViewModel.ConvertToViewModel(m)).ToList();
+            var relation = _majorApp.Finds().Include(m => m.MajorRecruitMent)
+                .Where(m => m.MajorRecruitMent.Any(n => n.RecruitMentId == id)).ToList();
+            for (var i = 0; i < majors.Count(); i++)
+            {
+                if (relation.Any(m => m.Id.Equals(majors[i].Id)))
+                {
+                    majors[i].Checked = true;
+                }
+            }
+
+            return Json(majors);
         }
 
         public IActionResult DeleteComfirm(int id)
