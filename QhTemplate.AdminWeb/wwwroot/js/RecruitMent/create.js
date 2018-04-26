@@ -123,6 +123,7 @@ function createArticle() {
     var subcontent = ue.getContentTxt();
     var title = $("#title").val();
     var majorlist=get_selected_major();
+    var endtime=$("#endtime").val();
     if (!title) {
         alert("标题不能为空");
         return;
@@ -131,17 +132,19 @@ function createArticle() {
         alert("内容不能为空");
         return;
     }
-    if (majorlist==null&&majorlist.length==0){
+    if (majorlist==null&&majorlist.length===0){
         alert("专业选项不能为空");
         return;
     }
+    
     $.ajax({
         url: "/recruitment/Create",
         type:"post",
         data: {
             title: title,
-            subcontent: subcontent,
-            content: content
+            content: content,
+            EndTime:endtime,
+            MajorIds:majorlist
         },
         success: function () {
             history.back(-1);

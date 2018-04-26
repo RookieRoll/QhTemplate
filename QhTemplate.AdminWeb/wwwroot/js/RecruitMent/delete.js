@@ -8,7 +8,7 @@ function deleteArticle(id) {
         url: "/Recruitment/DeleteComfirm",
         data: { "id": id },
         success: function (data) {
-            $('#deleteModal').modal('hide')
+            $('#deleteModal').modal('hide');
             //$('#dataTable').dataTable().fnReloadAjax("/Role/GetData");
             location.reload();
         }
