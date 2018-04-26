@@ -56,6 +56,7 @@ namespace QhTemplate.FontWeb.Controllers
                     }
                 }
             }
+
             return Ok(new {count = files.Count, size});
         }
 
@@ -86,3 +87,4 @@ namespace QhTemplate.FontWeb.Controllers
             return file.Split('.').LastOrDefault();
         }
     }
+}
