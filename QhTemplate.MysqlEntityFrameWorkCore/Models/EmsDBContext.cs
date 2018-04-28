@@ -8,6 +8,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
     {
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<AuditLog> AuditLog { get; set; }
+        public virtual DbSet<BriefingContent> BriefingContent { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CompanyUser> CompanyUser { get; set; }
         public virtual DbSet<Major> Major { get; set; }
@@ -33,8 +34,10 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
             modelBuilder.Entity<NewArticle>().HasQueryFilter(m => !m.IsDelete);
+
             modelBuilder.Entity<Area>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
@@ -71,6 +74,27 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.ServiceName).HasMaxLength(256);
 
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<BriefingContent>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CompanyName).HasMaxLength(255);
+
+                entity.Property(e => e.Content).HasColumnType("text");
+
+                entity.Property(e => e.Held).HasMaxLength(255);
+
+                entity.Property(e => e.OpthonList).HasMaxLength(255);
+
+                entity.Property(e => e.PublishTime).HasColumnType("datetime");
+
+                entity.Property(e => e.SchoolId).HasColumnType("int(11)");
+
+                entity.Property(e => e.StartTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Title).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Company>(entity =>
