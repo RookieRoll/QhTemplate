@@ -11,6 +11,7 @@ namespace QhTemplate.AdminWeb.ViewModels.Recruitments
         public string Content { get; set; }
         public string EndTime { get; set; }
         public List<int> MajorIds { get; set; }
+        public List<int> AreaId { get; set; }
 
         public static EditRecruitment Convert(Recruitment recruit)
         {

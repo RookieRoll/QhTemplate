@@ -28,7 +28,7 @@ namespace QhTemplate.AdminWeb.Controllers
             _menuProvider = menuProvider;
         }
 
-        
+
         // GET
         public IActionResult Index()
         {
@@ -39,7 +39,7 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             if (string.IsNullOrWhiteSpace(roleName))
                 return Json("角色名不能为空");
-            _roleApp.Create(roleName,isDefault,permissionNames);
+            _roleApp.Create(roleName, isDefault, permissionNames);
             return Json("角色创建成功");
         }
 
@@ -54,9 +54,9 @@ namespace QhTemplate.AdminWeb.Controllers
             };
             return PartialView("_Update", model);
         }
-        
-           [HttpPost]
-        public IActionResult UpdateRole(int?roleId,string roleName,bool isDefault,string[] permissions)
+
+        [HttpPost]
+        public IActionResult UpdateRole(int? roleId, string roleName, bool isDefault, string[] permissions)
         {
             _roleApp.Update(roleId, roleName, isDefault, permissions);
             var user = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
@@ -113,7 +113,7 @@ namespace QhTemplate.AdminWeb.Controllers
             return new DataTablesJsonResult(response, true);
         }
 
-        public IActionResult GetPermissions(int? id=null)
+        public IActionResult GetPermissions(int? id = null)
         {
             var permissoinNodes = _permissionManager.GetRolePermissions(id).MapToPermissionTree();
             return Json(permissoinNodes);

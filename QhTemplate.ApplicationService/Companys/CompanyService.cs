@@ -1,25 +1,44 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using QhTemplate.ApplicationCore;
 using QhTemplate.ApplicationCore.Companys;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationService.Companys
 {
-    public class CompanyService:ICompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly CompanyManager _companyManager;
-        private readonly EmsDBContext _db; 
-        public CompanyService(CompanyManager companyManager, EmsDBContext db)
+        private readonly EmsDBContext _db;
+        private readonly IHostingEnvironment _hosting;
+       
+        public CompanyService(CompanyManager companyManager, EmsDBContext db, IHostingEnvironment hosting)
         {
             _companyManager = companyManager;
             _db = db;
+            _hosting = hosting;
         }
 
-        public int Creat(string name, string address, string username, string telphone,string email)
+        public int Creat(string name, string address, string username, string telphone, string email)
         {
-            var company = Company.Create(name, address, username, telphone,email);
-            return _companyManager.Create(company);
+            var company = Company.Create(name, address, username, telphone, email);
+            int result = _companyManager.Create(company);
+            CreateFolder(result);
+            return result;
         }
+
+        private void CreateFolder(int id)
+        {
+            var url = _hosting.WebRootPath;
+            var path = url+ BaseConst.FolderPrefix+ id.ToString();
+            if (Directory.Exists(path))
+                return;
+
+            Directory.CreateDirectory(path);
+        }
+
 
         public void Update(Company company)
         {

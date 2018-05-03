@@ -9,7 +9,7 @@ namespace QhTemplate.ApplicationCore.Companys
         public CompanyManager(EmsDBContext db) : base(db)
         {
         }
-
+  
         public int Create(Company company)
         {
             _db.Company.Add(company);

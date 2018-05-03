@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
@@ -8,7 +9,9 @@ using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Community.CsharpSqlite;
 using Microsoft.EntityFrameworkCore;
+using QhTemplate.AdminWeb.ViewModels.Organizations;
 using QhTemplate.AdminWeb.ViewModels.Recruitments;
+using QhTemplate.ApplicationService.Areas;
 using QhTemplate.ApplicationService.Companys;
 using QhTemplate.ApplicationService.Majors;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -20,13 +23,14 @@ namespace QhTemplate.AdminWeb.Controllers
         private readonly IRecruitmentServcie _recruitment;
         private readonly ICompanyService _company;
         private readonly IMajorAppService _majorApp;
-
+        private readonly IAreaAppService _areaApp;
         public RecruitmentController(IRecruitmentServcie recruitment, ICompanyService company,
-            IMajorAppService majorApp)
+            IMajorAppService majorApp, IAreaAppService areaApp)
         {
             _recruitment = recruitment;
             _company = company;
             _majorApp = majorApp;
+            _areaApp = areaApp;
         }
 
 
@@ -47,14 +51,14 @@ namespace QhTemplate.AdminWeb.Controllers
             var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             var id = int.Parse(userId);
             var companyId = _company.Finds().Include(m => m.CompanyUser).First(m => m.CompanyUser.Any(n => n.UserId == id));
-            _recruitment.Create(obj.Title, obj.Content,DateTime.Parse(obj.EndTime), id, obj.MajorIds);
+            _recruitment.Create(obj.Title, obj.Content, DateTime.Parse(obj.EndTime), id, obj.MajorIds,obj.AreaId);
             return Json("创建成功");
         }
 
         public IActionResult Update(int id)
         {
             var model = _recruitment.Find(id);
-            return View("Update",EditRecruitment.Convert(model));
+            return View("Update", EditRecruitment.Convert(model));
         }
 
         [HttpPost]
@@ -65,9 +69,9 @@ namespace QhTemplate.AdminWeb.Controllers
                 Id = obj.Id,
                 Title = obj.Title,
                 Content = obj.Content,
-                EndTime =DateTime.Parse(obj.EndTime),
+                EndTime = DateTime.Parse(obj.EndTime),
             };
-            _recruitment.Update(temp, obj.MajorIds);
+            _recruitment.Update(temp,obj.MajorIds,obj.AreaId);
             return Json("修改成功");
         }
 
@@ -75,22 +79,6 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             var temp = _recruitment.Find(id);
             return PartialView("_Delete", RecruitmentViewModel.ConvertRecruitmentViewModel(temp));
-        }
-
-        public IActionResult GetMarjor(int id)
-        {
-            var majors = _majorApp.Finds().Select(m => MajorViewModel.ConvertToViewModel(m)).ToList();
-            var relation = _majorApp.Finds().Include(m => m.MajorRecruitMent)
-                .Where(m => m.MajorRecruitMent.Any(n => n.RecruitMentId == id)).ToList();
-            for (var i = 0; i < majors.Count(); i++)
-            {
-                if (relation.Any(m => m.Id.Equals(majors[i].Id)))
-                {
-                    majors[i].Checked = true;
-                }
-            }
-
-            return Json(majors);
         }
 
         public IActionResult DeleteComfirm(int id)
@@ -125,6 +113,62 @@ namespace QhTemplate.AdminWeb.Controllers
             var response = DataTablesResponse.Create(request, data.Count(), filteredData.Count(), dataPage);
 
             return new DataTablesJsonResult(response, true);
+        }
+
+        [HttpGet]
+        public IActionResult GetAreas(int?id)
+        {
+            var source = _areaApp.FindAll();
+            var list = new List<Area>();
+            source.ToList().ForEach(m =>
+            {
+                if (m.Path.Split(',').Length <= 3)
+                {
+                    list.Add(m);
+                }
+            });
+            var areas = (from o in list
+                         select new NodeViewModel
+                         {
+                             id = o.Id,
+                             text = o.Name,
+                             parentId = o.ParentId,
+                             path = o.Path,
+                         }).ToList();
+            var organizations = new List<NodeViewModel>();
+
+
+            var areaId = _recruitment.GetAreaRecruits(id ?? 0);
+            foreach (var org in areas)
+            {
+                org.state = areaId.Any(m=>m.AreaId.Equals(org.id)) ? new State(false, false, true) : new State(false, false, false);
+
+                if (org.parentId == 0)
+                {
+                    organizations.Add(org);
+                    continue;
+                }
+
+                var parentOrganization = areas.SingleOrDefault(m => m.id == org.parentId);
+                parentOrganization.children.Add(org);
+            }
+
+            return Json(organizations);
+        }
+        public IActionResult GetMarjor(int id)
+        {
+            var majors = _majorApp.Finds().Select(m => MajorViewModel.ConvertToViewModel(m)).ToList();
+            var relation = _majorApp.Finds().Include(m => m.MajorRecruitMent)
+                .Where(m => m.MajorRecruitMent.Any(n => n.RecruitMentId == id)).ToList();
+            for (var i = 0; i < majors.Count(); i++)
+            {
+                if (relation.Any(m => m.Id.Equals(majors[i].Id)))
+                {
+                    majors[i].Checked = true;
+                }
+            }
+
+            return Json(majors);
         }
     }
 }

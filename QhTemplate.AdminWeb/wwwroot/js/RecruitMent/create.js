@@ -103,7 +103,13 @@ var ue = UE.getEditor('contentbox', {
 
 
 });
-init();
+
+initFunction();
+function initFunction(){
+    init();
+    GetArea();
+}
+
 function init(){
     $.ajax({
         url: "/Major/GetMajors",
@@ -118,12 +124,47 @@ function init(){
     });
 }
 
+
+function GetArea() {
+    $('#jstree').jstree({
+        'core': {
+            'data': {
+                'url': '/Recruitment/GetAreas',
+                'dataType': 'json'
+            },
+            "check_callback": true
+        },
+        'checkbox': {
+            // 禁用级联选中
+            'three_state': false,
+            'cascade': 'undetermined' //有三个选项，up, down, undetermined; 使用前需要先禁用three_state
+        },
+        "plugins": ["themes", "json_data", "search", "checkbox"],
+
+    });
+}
+
+function getUncertainNodeIds(id) {
+    var parentids = new Array();
+    $("#" + id).find(".jstree-undetermined ").each(function () {
+        var id = $(this).parent().parent().attr("id");
+        parentids.push(id);
+    })
+    return parentids;
+}
 function createArticle() {
     var content = ue.getContent();
     var subcontent = ue.getContentTxt();
     var title = $("#title").val();
     var majorlist=get_selected_major();
-    var endtime=$("#endtime").val();
+    var endtime = $("#endtime").val();
+
+    var list = [];
+    if ($('#jstree').children().length > 0) {
+        var tree = $('#jstree').jstree();
+        list = tree.get_checked().concat(getUncertainNodeIds("jstree"));
+    }
+    console.log(list)
     if (!title) {
         alert("标题不能为空");
         return;
@@ -144,7 +185,8 @@ function createArticle() {
             title: title,
             content: content,
             EndTime:endtime,
-            MajorIds:majorlist
+            MajorIds: majorlist,
+            AreaId: list
         },
         success: function () {
             history.back(-1);

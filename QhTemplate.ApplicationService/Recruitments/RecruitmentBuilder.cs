@@ -11,19 +11,21 @@ namespace QhTemplate.ApplicationService.Recruitments
     {
         private readonly EmsDBContext _db;
         private readonly RecruitmentManager _recruitment;
-
+     
         public RecruitmentBuilder(RecruitmentManager recruitment, EmsDBContext db)
         {
             _recruitment = recruitment;
             _db = db;
         }
 
-        public void CreateRecruitment(Recruitment recruitment,List<int> majorid)
+        public void CreateRecruitment(Recruitment recruitment,List<int> majorid,List<int> areaId)
         {
             using (var trans=_db.Database.BeginTransaction())
             {
                 var id = CreateRecruitmentEntity(recruitment);
                 BuildRelationOfMajor(id,majorid);
+                BuildRelationOfArea(recruitment.Id,areaId);
+
                 trans.Commit();
             }
             
@@ -52,13 +54,32 @@ namespace QhTemplate.ApplicationService.Recruitments
             _db.SaveChanges();
         }
 
-        public void UpDateRecruitMent(Recruitment recruitment, List<int> ids)
+        private void BuildRelationOfArea(int recruidId, List<int> areaIds)
+        {
+            List<AreaRecruit> list=new List<AreaRecruit>();
+            
+            areaIds.ForEach(m =>
+            {
+                list.Add(new AreaRecruit()
+                {
+                    AreaId = m,
+                    RecruitMentId = recruidId
+                });
+            });
+            
+            _db.AreaRecruit.AddRange(list);
+            _db.SaveChanges();
+        }
+        public void UpDateRecruitMent(Recruitment recruitment, List<int> ids,List<int> areaId)
         {
             using (var strans=_db.Database.BeginTransaction())
             {
                 _db.MajorRecruitMent.RemoveRange(_db.MajorRecruitMent.Where(m=>m.RecruitMentId==recruitment.Id));
+                _db.AreaRecruit.RemoveRange(_db.AreaRecruit.Where(m=>m.RecruitMentId==recruitment.Id));
+
                 _recruitment.Update(recruitment);
                 BuildRelationOfMajor(recruitment.Id,ids);
+                BuildRelationOfArea(recruitment.Id,areaId);
                 strans.Commit();
             }
         }

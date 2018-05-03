@@ -41,11 +41,11 @@ namespace QhTemplate.ApplicationService.Recruitments
             return _recruitment.Find(id);
         }
 
-        public void Create(string title, string content, DateTime endTime,int companyid,List<int> ids)
+        public void Create(string title, string content, DateTime endTime,int companyid,List<int> ids,List<int> areaIds)
         {
             var recruitment = Recruitment.Create(title,content,endTime,companyid);
             var recruitmentBuilder=new RecruitmentBuilder(_recruitment,_db);
-            recruitmentBuilder.CreateRecruitment(recruitment,ids);
+            recruitmentBuilder.CreateRecruitment(recruitment,ids,areaIds);
         }
 
         public void Remove(int id)
@@ -53,10 +53,15 @@ namespace QhTemplate.ApplicationService.Recruitments
             _recruitment.Delete(id);
         }
 
-        public void Update(Recruitment area,List<int> list)
+        public void Update(Recruitment area,List<int> list,List<int> areaIds)
         {
             var recruitmentBuilder=new RecruitmentBuilder(_recruitment,_db);
-            recruitmentBuilder.UpDateRecruitMent(area,list);
+            recruitmentBuilder.UpDateRecruitMent(area,list,areaIds);
+        }
+
+        public IQueryable<AreaRecruit> GetAreaRecruits(int reId)
+        {
+            return _db.AreaRecruit.Where(m => m.RecruitMentId == reId);
         }
     }
 }

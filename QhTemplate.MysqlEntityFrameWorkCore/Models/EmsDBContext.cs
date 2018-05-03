@@ -7,6 +7,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
     public partial class EmsDBContext : DbContext
     {
         public virtual DbSet<Area> Area { get; set; }
+        public virtual DbSet<AreaRecruit> AreaRecruit { get; set; }
         public virtual DbSet<AuditLog> AuditLog { get; set; }
         public virtual DbSet<BriefingContent> BriefingContent { get; set; }
         public virtual DbSet<Company> Company { get; set; }
@@ -29,17 +30,14 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
-                //optionsBuilder.UseMySql("Server=127.0.0.1;User Id=root;Password=qh18723361304;Database=EmsDB");
-
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
             modelBuilder.Entity<NewArticle>().HasQueryFilter(m => !m.IsDelete);
-
             modelBuilder.Entity<Area>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
@@ -51,6 +49,15 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.ParentId).HasColumnType("int(11)");
 
                 entity.Property(e => e.Path).HasMaxLength(255);
+            });
+
+            modelBuilder.Entity<AreaRecruit>(entity =>
+            {
+                entity.HasKey(e => new { e.RecruitMentId, e.AreaId });
+
+                entity.Property(e => e.RecruitMentId).HasColumnType("int(11)");
+
+                entity.Property(e => e.AreaId).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<AuditLog>(entity =>
@@ -109,10 +116,9 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
-                entity.Property(e => e.LegalPerson).HasMaxLength(32);
-
                 entity.Property(e => e.Email).HasMaxLength(255);
 
+                entity.Property(e => e.LegalPerson).HasMaxLength(32);
 
                 entity.Property(e => e.Name)
                     .HasColumnName("NAME")
@@ -164,23 +170,11 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.HasKey(e => new { e.MajorId, e.RecruitMentId });
 
                 entity.HasIndex(e => e.RecruitMentId)
-                    .HasName("RecruitMentId");
+                    .HasName("MajorRecruitMent_ibfk_2");
 
                 entity.Property(e => e.MajorId).HasColumnType("int(11)");
 
                 entity.Property(e => e.RecruitMentId).HasColumnType("int(11)");
-
-                entity.HasOne(d => d.Major)
-                    .WithMany(p => p.MajorRecruitMent)
-                    .HasForeignKey(d => d.MajorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("MajorRecruitMent_ibfk_1");
-
-                entity.HasOne(d => d.RecruitMent)
-                    .WithMany(p => p.MajorRecruitMent)
-                    .HasForeignKey(d => d.RecruitMentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("MajorRecruitMent_ibfk_2");
             });
 
             modelBuilder.Entity<NewArticle>(entity =>

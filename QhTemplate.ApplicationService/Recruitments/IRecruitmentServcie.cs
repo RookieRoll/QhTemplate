@@ -12,8 +12,9 @@ namespace QhTemplate.ApplicationService.Recruitments
         Recruitment FirstOrDefault(Func<Recruitment, bool> func);
         Recruitment First(Func<Recruitment, bool> func);
         Recruitment Find(int id);
-        void Create(string title, string content, DateTime endTime, int companyid, List<int> ids);
+        void Create(string title, string content, DateTime endTime, int companyid, List<int> ids,List<int> areaids);
         void Remove(int id);
-        void Update(Recruitment area, List<int> list);
+        void Update(Recruitment area, List<int> list,List<int> areaids);
+        IQueryable<AreaRecruit> GetAreaRecruits(int reId);
     }
 }

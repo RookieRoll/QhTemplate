@@ -4,9 +4,11 @@
 }
 
 @section Styles{
-    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet"/>
-    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css"/>
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+
+    <link href="~/css/RecruitMent/create.css" rel="stylesheet" type="text/css" />
 }
 
 <section class="content-header">
@@ -18,27 +20,37 @@
 </section>
 <section class="content">
     <form>
-        <div>
-            <label>标题</label>
+        <div style="display:flex;">
             <div>
-                <input type="text" name="title" id="title"/>
-            </div>
-        </div>
-        <div class="content-box">
-            <label>内容</label>
-            <div>
-                <textarea id="contentbox">
+                <div>
+                    <label>标题</label>
+                    <div>
+                        <input type="text" name="title" id="title" />
+                    </div>
+                </div>
+                <div class="content-box">
+                    <label>内容</label>
+                    <div>
+                        <textarea id="contentbox">
 
                 </textarea>
+                    </div>
+                </div>
+                <div style="margin-top:20px;">
+                    <label>结束时间<input type="date" id="endtime" name="endtime" style="margin-left:20px;" /></label>
+                </div>
+                <div style="display: flex; justify-content: flex-start; margin-top: 20px;">
+                    <div>
+                        <label>专业类型</label>
+                        <div id="major" style="width: 890px; display: flex; justify-content: flex-start;">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div style="margin-top:20px;">
-            <label>结束时间<input type="date" id="endtime" name="endtime" style="margin-left:20px;"/></label>
-        </div>
-        <div style="display: flex; justify-content: flex-start; margin-top: 20px;">
             <div>
-                <label>专业类型</label>
-                <div id="major" style="width: 990px; display: flex; justify-content: flex-start;">
+                <div>工作地域：</div>
+                <div id="jstree">
+
                 </div>
             </div>
         </div>
@@ -50,7 +62,8 @@
 <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="~/lib/jstree/dist/jstree.js"></script>
 <script type="text/javascript" charset="utf-8" src="~/js/RecruitMent/create.js"></script>
 <script>
-    
+
 </script>

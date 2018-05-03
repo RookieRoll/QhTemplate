@@ -1,8 +1,7 @@
-﻿body {
-}
+﻿
 
 #title {
-    width: 990px;
+    width: 890px;
 }
 
 .content-box {
@@ -10,7 +9,6 @@
 }
 
 .sub-button {
-    width: 1000px;
 }
 
 .commitbutton {
@@ -25,5 +23,5 @@
 }
 
 #contentbox {
-    width: 1000px;
+    width: 900px;
 }

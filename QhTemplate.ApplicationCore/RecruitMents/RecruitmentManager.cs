@@ -41,6 +41,7 @@ namespace QhTemplate.ApplicationCore.RecruitMents
                     _db.Recruitment.Remove(origin);
                     var relations = _db.MajorRecruitMent.Where(m => m.RecruitMentId == origin.Id);
                     _db.MajorRecruitMent.RemoveRange(relations);
+                    _db.AreaRecruit.RemoveRange(_db.AreaRecruit.Where(m => m.RecruitMentId == origin.Id));
                     Save();
                     scope.Commit();
                 }

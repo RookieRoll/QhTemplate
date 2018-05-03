@@ -103,7 +103,13 @@ var ue = UE.getEditor('contentbox', {
 
 
 });
-init();
+
+initFunction();
+function initFunction() {
+    init();
+    GetArea();
+}
+
 function init(){
     var id=$("#reid").val();
     $.ajax({
@@ -124,14 +130,48 @@ function init(){
     });
 }
 
+function GetArea() {
+    var id = $("#reid").val();
+    $('#jstree').jstree({
+        'core': {
+            'data': {
+                'url': '/Recruitment/GetAreas/'+id,
+                'dataType': 'json'
+            },
+            "check_callback": true
+        },
+        'checkbox': {
+            // 禁用级联选中
+            'three_state': false,
+            'cascade': 'undetermined' //有三个选项，up, down, undetermined; 使用前需要先禁用three_state
+        },
+        "plugins": ["themes", "json_data", "search", "checkbox"],
 
+    });
+}
+
+function getUncertainNodeIds(id) {
+    var parentids = new Array();
+    $("#" + id).find(".jstree-undetermined ").each(function () {
+        var id = $(this).parent().parent().attr("id");
+        parentids.push(id);
+    })
+    return parentids;
+}
 function createArticle() {
     var content = ue.getContent();
     var subcontent = ue.getContentTxt();
     var title = $("#title").val();
     var majorlist=get_selected_major();
     var endtime=$("#endtime").val();
-    var id=$("#reid").val();
+    var id = $("#reid").val();
+
+
+    var list = [];
+    if ($('#jstree').children().length > 0) {
+        var tree = $('#jstree').jstree();
+        list = tree.get_checked().concat(getUncertainNodeIds("jstree"));
+    }
     if (!title) {
         alert("标题不能为空");
         return;
@@ -140,7 +180,7 @@ function createArticle() {
         alert("内容不能为空");
         return;
     }
-    if (majorlist==null&&majorlist.length===0){
+    if (majorlist === null && majorlist.length === 0) {
         alert("专业选项不能为空");
         return;
     }
@@ -153,7 +193,8 @@ function createArticle() {
             title: title,
             content: content,
             EndTime:endtime,
-            MajorIds:majorlist
+            MajorIds: majorlist,
+            AreaId: list
         },
         success: function () {
             history.back(-1);
