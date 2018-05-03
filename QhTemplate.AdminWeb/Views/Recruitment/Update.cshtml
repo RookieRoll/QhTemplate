@@ -1,29 +1,29 @@
 ﻿@model QhTemplate.AdminWeb.ViewModels.Recruitments.EditRecruitment
 @{
     Layout = "_Layout";
-    ViewBag.Title = "新增";
+    ViewBag.Title = "编辑";
 }
 
 @section Styles{
-    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet"/>
-    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css"/>
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css" />
 }
 
 <section class="content-header">
     <h1>
-        新增招聘信息
+        编辑招聘信息
         <small> @ViewData["Title"]</small>
 
     </h1>
 </section>
 <section class="content">
-    <form>.
-        <input type="hidden" name="Id" id="reid" value="@Model.Id"/>
+    <form>
+        <input type="hidden" name="Id" id="reid" value="@Model.Id" />
         <div>
             <label>标题</label>
             <div>
-                <input type="text" name="title" id="title" value="@Model.Title"/>
+                <input type="text" name="title" id="title" value="@Model.Title" />
             </div>
         </div>
         <div class="content-box">
@@ -32,10 +32,15 @@
                 @Html.TextAreaFor(m => m.Content, new { @id = "contentbox" })
             </div>
         </div>
-        <div style="display: flex; justify-content: flex-start; margin-top: 10px;">
+        <div style="margin-top:20px;">
+            <label>
+                结束时间<input type="date" id="endtime" name="endtime" value="@Model.EndTime" style="margin-left:20px;"/>
+            </label>
+        </div>
+        <div style="display: flex; justify-content: flex-start; margin-top: 20px;">
             <div>
                 <label>专业类型</label>
-                <div id="major" style="width: 990px; display: flex; justify-content: start;">
+                <div id="major" style="width: 990px; display: flex; justify-content: flex-start;">
                 </div>
             </div>
         </div>
@@ -47,7 +52,7 @@
 <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript" charset="utf-8" src="~/js/Article/create.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/js/RecruitMent/update.js"></script>
 <script>
-    
+
 </script>

@@ -132,7 +132,7 @@ function createArticle() {
         alert("内容不能为空");
         return;
     }
-    if (majorlist==null&&majorlist.length===0){
+    if (majorlist===null&&majorlist.length===0){
         alert("专业选项不能为空");
         return;
     }

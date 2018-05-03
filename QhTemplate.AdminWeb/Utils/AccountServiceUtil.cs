@@ -18,7 +18,8 @@ namespace QhTemplate.AdminWeb.Utils
                     new[]
                     {
                         new Claim(ClaimTypes.Name, user.UserName),
-                        new Claim(ClaimTypes.Sid, user.Id.ToString())
+                        new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                        new Claim(ClaimTypes.Role,user.UserType.ToString())
                     },
                     CookieAuthenticationDefaults.AuthenticationScheme
                 ));

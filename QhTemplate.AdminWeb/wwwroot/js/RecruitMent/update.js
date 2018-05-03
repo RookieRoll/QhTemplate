@@ -111,8 +111,13 @@ function init(){
         type: "Get",
         success: function(data) {
             var html = "";
+            console.log(data)
             for (var i = 0; i < data.length; i++) {
-                html += " <label style='margin-left: 20px;'><input type='checkbox' value='"+data[i].id+"' class='majorlist' checked='"+data[i].Checked+"' />"+data[i].name+"</label>";
+                if (data[i].checked)
+                    html += " <label style='margin-left: 20px;'><input type='checkbox' value='" + data[i].id + "' class='majorlist' checked='checked' />" + data[i].name + "</label>";
+                else
+                    html += " <label style='margin-left: 20px;'><input type='checkbox' value='" + data[i].id + "' class='majorlist' />" + data[i].name + "</label>";
+
             }
             $("#major").html(html);
         }

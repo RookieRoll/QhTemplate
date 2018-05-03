@@ -38,13 +38,18 @@
                 title: '法人'
             },
             {
-                name: 'TellPhone',
-                data: 'TellPhone',
+                name: 'tellPhone',
+                data: 'tellPhone',
                 title: '联系电话'
             },
             {
-                name: 'CreateTime',
-                data: 'CreateTime',
+                name: 'email',
+                data: 'email',
+                title: '邮箱'
+            },
+            {
+                name: 'createTime',
+                data: 'createTime',
                 title: '创建时间'
             }
         ],

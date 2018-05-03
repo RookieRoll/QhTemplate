@@ -8,14 +8,18 @@ namespace QhTemplate.AdminWeb.ViewModels.Recruitments
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string CreateTime { get; set; }
+        public string EndTime { get; set; }
 
         public static RecruitmentViewModel ConvertRecruitmentViewModel(Recruitment recruitment)
         {
-            return MapperUtil<Recruitment, RecruitmentViewModel>.Convert(recruitment);
+            return new RecruitmentViewModel
+            {
+                Id=recruitment.Id,
+                Title=recruitment.Title,
+                CreateTime=recruitment.CreateTime.ToString("yyyy-MM-dd"),
+                EndTime = recruitment.EndTime.ToString("yyyy-MM-dd")
+            };
         }
     }
-
-
 }

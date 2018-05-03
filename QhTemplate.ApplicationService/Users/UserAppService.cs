@@ -123,7 +123,11 @@ namespace QhTemplate.ApplicationService.Users
 
         public void SetRoleByUserId(int id, int[] roles)
         {
-            _roleManager.SetUserRole(id, roles);
+            using (var scope = _db.Database.BeginTransaction())
+            {
+                _roleManager.SetUserRole(id, roles);
+                scope.Commit();
+            }
         }
 
         public void SetAuthorize(int id, string[] permissions)

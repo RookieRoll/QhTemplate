@@ -9,12 +9,18 @@ namespace QhTemplate.AdminWeb.ViewModels.Recruitments
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime EndTime { get; set; }
+        public string EndTime { get; set; }
         public List<int> MajorIds { get; set; }
 
         public static EditRecruitment Convert(Recruitment recruit)
         {
-            return new EditRecruitment();
+            return new EditRecruitment()
+            {
+                Id=recruit.Id,
+                Title=recruit.Title,
+                Content=recruit.Content,
+                EndTime=recruit.EndTime.ToString("yyyy-MM-dd")
+            };
         }
     }
 }

@@ -29,6 +29,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
+                //optionsBuilder.UseMySql("Server=127.0.0.1;User Id=root;Password=qh18723361304;Database=EmsDB");
+
             }
         }
 
@@ -108,6 +110,9 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.Description).HasColumnType("text");
 
                 entity.Property(e => e.LegalPerson).HasMaxLength(32);
+
+                entity.Property(e => e.Email).HasMaxLength(255);
+
 
                 entity.Property(e => e.Name)
                     .HasColumnName("NAME")

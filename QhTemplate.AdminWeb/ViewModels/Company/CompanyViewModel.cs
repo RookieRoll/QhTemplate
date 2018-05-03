@@ -7,6 +7,7 @@
         public string LegalPerson { get; set; }
         public string TellPhone { get; set; }
         public string CreateTime { get; set; }
+        public string Email { get; set; }
         public static CompanyViewModel ConvertCompanyViewModel(MysqlEntityFrameWorkCore.Models.Company model)
         {
             return new CompanyViewModel()
@@ -15,7 +16,8 @@
                 Name = model.Name,
                 LegalPerson = model.LegalPerson,
                 TellPhone = model.Tellphone,
-                CreateTime = model.CreateTime.ToString("yyyy-MM-dd")
+                CreateTime = model.CreateTime.ToString("yyyy-MM-dd"),
+                Email=model.Email
             };
         }
     }

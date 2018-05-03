@@ -1,8 +1,19 @@
-﻿@model object
+﻿@model int?
 
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = null;
 }
+<div>
+    <form asp-controller="CompanyAccount" asp-action="SignUpUser" method="post">
 
+        <label>注册用户</label>
+        <label>公司编号<input name="companyId" value="@Model" /></label>
+        <label>姓名<input name="Name" /></label>
+        <label>用户名<input name="username" /></label>
+        <label> 邮箱<input name="email" /></label>
+        <label>密码<input name="password" /></label>
+        <input type="submit" value="登陆" />
+    </form>
+</div>
 <h2>title</h2>

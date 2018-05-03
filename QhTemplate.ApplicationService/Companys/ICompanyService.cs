@@ -7,7 +7,7 @@ namespace QhTemplate.ApplicationService.Companys
 {
     public interface ICompanyService
     {
-        int Creat(string name, string address, string username, string telphone);
+        int Creat(string name, string address, string username, string telphone,string email);
         void Update(Company company);
         void Delete(int id);
         Company Find(int id);

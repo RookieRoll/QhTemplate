@@ -1,8 +1,21 @@
-﻿@model object
-
+﻿
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout =null;
 }
 
 <h2>title</h2>
+
+<div>
+    <form asp-controller="CompanyAccount" asp-action="SignUpCompany" method="post">
+        <div>
+            <label>公司注册</label>
+        </div>
+        <label>公司名称：  <input type="text" name="Name" /></label>
+        <label>公司地址：  <input type="text" name="Address" /></label>
+        <label>公司法人：  <input type="text" name="LegalPerson" /></label>
+        <label>联系电话：  <input type="text" name="Tellphone" /></label>
+        <label>联系邮箱：  <input type="text" name="Email" /></label>
+        <input type="submit" value="注册" />
+    </form>
+</div>

@@ -103,26 +103,24 @@ namespace QhTemplate.ApplicationCore.Authentications.Roles
             var db = _db.UserRole;
             if (user == null)
                 throw new UserFriendlyException("该用户不存在");
-            using (var scope =_db.Database.BeginTransaction())
+
+            var userRoles = db.Where(m => m.UserId == userId);
+            db.RemoveRange(userRoles);
+            Save();
+            if (roleIds.Length != 0)
             {
-                var userRoles = db.Where(m => m.UserId == userId);
-                db.RemoveRange(userRoles);
+                var roles = Finds(d => roleIds.Contains(d.Id))
+                    .Select(m => new UserRole
+                    {
+                        UserId = userId,
+                        RoleId = m.Id
+                    });
+                db.AddRange(roles);
                 Save();
-                if (roleIds.Length != 0)
-                {
-                    var roles = Finds(d => roleIds.Contains(d.Id))
-                        .Select(m => new UserRole
-                        {
-                            UserId = userId,
-                            RoleId = m.Id
-                        });
-                    db.AddRange(roles);
-                    Save();
-                }
-                scope.Commit();
             }
-           
         }
+
+
 
         /// <summary>
         /// 判断根据角色名判断该角色在数据库中是否存在

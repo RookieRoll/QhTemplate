@@ -18,9 +18,10 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public string Tellphone { get; set; }
         public string Description { get; set; }
 
+        public string Email { get; set; }
         public ICollection<CompanyUser> CompanyUser { get; set; }
 
-        public static Company Create(string name, string address, string LegalPerson, string tellphone)
+        public static Company Create(string name, string address, string LegalPerson, string tellphone,string email)
         {
             return new Company()
             {
@@ -28,15 +29,17 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 Address = address,
                 CreateTime = DateTime.Now,
                 LegalPerson = LegalPerson,
-                Tellphone = tellphone
+                Tellphone = tellphone,
+                Email=email
             };
         }
 
-        public void Update(string name, string address, string tellphone)
+        public void Update(string name, string address, string tellphone,string email)
         {
             this.Name = name;
             this.Address = address;
             this.Tellphone = tellphone;
+            this.Email = email;
         }
     }
 }

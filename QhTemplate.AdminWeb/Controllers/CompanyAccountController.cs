@@ -25,13 +25,16 @@ namespace QhTemplate.AdminWeb.Controllers
             _menuProvider = menuProvider;
         }
 
+        #region 登陆
         // GET
+        [HttpGet]
         public IActionResult SignIn()
         {
-            
+
             return View("_SignIn");
         }
 
+        [HttpPost]
         public async Task<IActionResult> SignIn(SignViewModel model)
         {
             var company = _companyService.Find(model.CompanyId);
@@ -50,28 +53,43 @@ namespace QhTemplate.AdminWeb.Controllers
                 return RedirectToAction("SignIn");
             }
 
-            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext,user);
+            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, user);
             _menuProvider.RemoveMenu(user.Id);
             _menuProvider.LoadMenu(user.Id);
             return RedirectToAction("Index", "Home");
         }
 
+
+        #endregion
+
+        #region 注册
         [HttpGet]
+        public IActionResult SignUpComnpany()
+        {
+            return View("_SignCompany");
+        }
+
+        [HttpPost]
         public IActionResult SignUpCompany(CompanySignUpViewModel model)
         {
-            var id = _companyService.Creat(model.Name, model.Address, model.LegalPerson, model.Tellphone);
-            return Json(id);
+            var id = _companyService.Creat(model.Name, model.Address, model.LegalPerson, model.Tellphone, model.Email);
+            return RedirectToAction("SignUpUser", new { id });
         }
-        
-        [HttpGet]
+
+        public IActionResult SignUpUser(int? id)
+        {
+            return View("_SignUser", id ?? 0);
+        }
+        [HttpPost]
         public IActionResult SignUpUser(SignUpViewModel model)
         {
             var company = _companyService.Find(model.CompanyId);
             var user = _userAppService.Register(model.UserName, model.Name, model.Email, model.Password,
                 UserType.Employee);
-            
-            _companyService.SetCompanyUser(company.Id,user);
-            return View("SignIn");
+
+            _companyService.SetCompanyUser(company.Id, user);
+            return RedirectToAction("SignIn");
         }
+        #endregion
     }
 }

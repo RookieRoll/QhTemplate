@@ -15,9 +15,9 @@ namespace QhTemplate.ApplicationService.Companys
             _db = db;
         }
 
-        public int Creat(string name, string address, string username, string telphone)
+        public int Creat(string name, string address, string username, string telphone,string email)
         {
-            var company = Company.Create(name, address, username, telphone);
+            var company = Company.Create(name, address, username, telphone,email);
             return _companyManager.Create(company);
         }
 

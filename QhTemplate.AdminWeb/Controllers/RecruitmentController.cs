@@ -46,15 +46,15 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             var id = int.Parse(userId);
-            var companyId = _company.Finds(m => m.CompanyUser.Any(n => n.UserId == id)).First().Id;
-            _recruitment.Create(obj.Title, obj.Content, obj.EndTime, id, obj.MajorIds);
+            var companyId = _company.Finds().Include(m => m.CompanyUser).First(m => m.CompanyUser.Any(n => n.UserId == id));
+            _recruitment.Create(obj.Title, obj.Content,DateTime.Parse(obj.EndTime), id, obj.MajorIds);
             return Json("创建成功");
         }
 
         public IActionResult Update(int id)
         {
             var model = _recruitment.Find(id);
-            return View("Update");
+            return View("Update",EditRecruitment.Convert(model));
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace QhTemplate.AdminWeb.Controllers
                 Id = obj.Id,
                 Title = obj.Title,
                 Content = obj.Content,
-                EndTime = obj.EndTime,
+                EndTime =DateTime.Parse(obj.EndTime),
             };
             _recruitment.Update(temp, obj.MajorIds);
             return Json("修改成功");

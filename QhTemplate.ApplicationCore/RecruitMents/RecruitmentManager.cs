@@ -1,5 +1,7 @@
 ﻿using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
+using System;
+using System.Linq;
 
 namespace QhTemplate.ApplicationCore.RecruitMents
 {
@@ -25,15 +27,30 @@ namespace QhTemplate.ApplicationCore.RecruitMents
         public void Update(Recruitment recruitment)
         {
             var originRecruitment = Find(recruitment.Id);
-            originRecruitment.Update(recruitment.Title,recruitment.Content,recruitment.EndTime);
+            originRecruitment.Update(recruitment.Title, recruitment.Content, recruitment.EndTime);
             Save();
         }
 
         public void Delete(int id)
         {
-            var origin = Find(id);
-            _db.Recruitment.Remove(origin);
-            Save();
+            using (var scope = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var origin = Find(id);
+                    _db.Recruitment.Remove(origin);
+                    var relations = _db.MajorRecruitMent.Where(m => m.RecruitMentId == origin.Id);
+                    _db.MajorRecruitMent.RemoveRange(relations);
+                    Save();
+                    scope.Commit();
+                }
+                catch (Exception ex)
+                {
+                    scope.Rollback();
+                }
+
+            }
+
         }
     }
 }

@@ -42,7 +42,7 @@
             },
             {
                 name: 'endTime',
-                data: 'endTIme',
+                data: 'endTime',
                 title: '截至时间'
             }
         ],

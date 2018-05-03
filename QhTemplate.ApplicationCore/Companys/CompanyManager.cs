@@ -20,7 +20,7 @@ namespace QhTemplate.ApplicationCore.Companys
         public void Update(Company company)
         {
             var originCompany = Find(company.Id);
-            originCompany.Update(company.Name,company.Address,company.Tellphone);
+            originCompany.Update(company.Name,company.Address,company.Tellphone,company.Email);
             Save();
         }
 

@@ -52,49 +52,51 @@ namespace QhTemplate.AdminWeb.Controllers
                 return RedirectToAction("SignIn");
             }
 
-            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext,user);
+            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, user);
             _menuProvider.RemoveMenu(user.Id);
             _menuProvider.LoadMenu(user.Id);
             return RedirectToAction("Index", "Home");
         }
 
-//        private async Task SaveSignInUserIndetifier(User user)
-//        {
-//            var userIdentity = new ClaimsPrincipal(
-//                new ClaimsIdentity(
-//                    new[]
-//                    {
-//                        new Claim(ClaimTypes.Name, user.UserName),
-//                        new Claim(ClaimTypes.Sid, user.Id.ToString())
-//                    },
-//                    CookieAuthenticationDefaults.AuthenticationScheme
-//                ));
-//
-//            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-//                userIdentity,
-//                new AuthenticationProperties
-//                {
-//                    IsPersistent = true,
-//                    ExpiresUtc = DateTimeOffset.Now.Add(TimeSpan.FromDays(7)) // 有效时间
-//                });
-//        }
-//
-//        private bool IsEmailLogin(string value)
-//        {
-//            const string regexStr = @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-//            return Regex.IsMatch(value, regexStr);
-//        }
+        //        private async Task SaveSignInUserIndetifier(User user)
+        //        {
+        //            var userIdentity = new ClaimsPrincipal(
+        //                new ClaimsIdentity(
+        //                    new[]
+        //                    {
+        //                        new Claim(ClaimTypes.Name, user.UserName),
+        //                        new Claim(ClaimTypes.Sid, user.Id.ToString())
+        //                    },
+        //                    CookieAuthenticationDefaults.AuthenticationScheme
+        //                ));
+        //
+        //            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+        //                userIdentity,
+        //                new AuthenticationProperties
+        //                {
+        //                    IsPersistent = true,
+        //                    ExpiresUtc = DateTimeOffset.Now.Add(TimeSpan.FromDays(7)) // 有效时间
+        //                });
+        //        }
+        //
+        //        private bool IsEmailLogin(string value)
+        //        {
+        //            const string regexStr = @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+        //            return Regex.IsMatch(value, regexStr);
+        //        }
 
         private bool CheckValidateCode(string code)
         {
             return _cache.Get(HttpContext.Connection.LocalIpAddress) is string originCode &&
                    originCode.Equals(code, StringComparison.OrdinalIgnoreCase);
         }
-        
-        public async Task<IActionResult> SignOut()
+
+        public async Task<IActionResult> SignOut(string url)
         {
+            var param = url.Trim().Split('/');
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("SignIn", "Account");
+            return RedirectToAction(param[1], param[0]);
+            //return RedirectToAction("SignIn", "Account");
         }
 
         public IActionResult ValidateCode()
