@@ -17,9 +17,9 @@ namespace QhTemplate.ApplicationCore.BriefingContents
         }
 
         public void Create(string title, string content, string held,
-            DateTime startTime, int schoolId)
+            DateTime startTime, int schoolId,string companyName)
         {
-            var briefing = BriefingContent.Create(title,content,held,startTime,schoolId);
+            var briefing = BriefingContent.Create(title,content,held,startTime,schoolId,companyName);
             _db.BriefingContent.Add(briefing);
             Save();
         }
@@ -35,6 +35,7 @@ namespace QhTemplate.ApplicationCore.BriefingContents
         {
             var briefing = Find(id);
             _db.BriefingContent.Remove(briefing);
+            Save();
         }
     }
 }

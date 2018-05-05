@@ -38,6 +38,8 @@ namespace QhTemplate.AdminWeb.Navigation
             var recruitment = new MenuItem { Name = "招聘信息", Url = "/RecruitMent/Index", RequiredAuthorizeCode = null };
             SideMenu.Children.Add(recruitment);
 
+            var briefing = new MenuItem { Name = "宣讲会", Url = "/CareerTalk/index", RequiredAuthorizeCode = null };
+            SideMenu.Children.Add(briefing);
         }
     }
 }

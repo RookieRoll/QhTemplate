@@ -17,7 +17,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public DateTime StartTime { get; set; }
 
         public static BriefingContent Create(string title, string content, string held,
-            DateTime startTime, int schoolId)
+            DateTime startTime, int schoolId,string companyName)
         {
             return new BriefingContent
             {
@@ -25,8 +25,9 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 SchoolId = schoolId,
                 Title = title,
                 Content = content,
-                StartTime = DateTime.Now,
+                StartTime = startTime,
                 PublishTime = DateTime.Now,
+                CompanyName=companyName
             };
         }
 

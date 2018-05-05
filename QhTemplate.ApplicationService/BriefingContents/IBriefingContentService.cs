@@ -6,9 +6,7 @@ namespace QhTemplate.ApplicationService.BriefingContents
 {
     public interface IBriefingContentService
     {
-        void Create(string title, string content, string held,
-            DateTime startTime, int schoolId);
-
+        void Create(string title, string content, string held, DateTime startTime, int schoolId, string companyName);
         void Update(BriefingContent briefingContent);
         void Delete(int id);
         BriefingContent Find(int id);

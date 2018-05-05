@@ -1,8 +1,54 @@
-﻿@model object
-
+﻿
 @{
-    ViewBag.Title = "title";
     Layout = "_Layout";
+    ViewBag.Title = "新增";
+
+}
+@section Styles{
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/BriefingContents/create.css" rel="stylesheet" type="text/css" />
 }
 
-<h2>title</h2>
+<section class="content-header">
+    <h1>
+        新增宣讲会
+        <small> @ViewData["Title"]</small>
+
+    </h1>
+</section>
+<section class="content">
+    <form>
+        <div>
+            <label>标题</label>
+            <div>
+                <input type="text" name="title" id="title" />
+            </div>
+        </div>
+        <div class="content-box">
+            <label>内容</label>
+            <div>
+                <textarea id="contentbox">
+
+                </textarea>
+            </div>
+        </div>
+        <div>
+            <label>公司名称<input type="text" name="companyName" id="companyName" class="sub-text" /></label>
+        </div>
+        <div>
+            <label>举办地点<input type="text" name="held" id="held" class="sub-text" /></label>
+        </div>
+        <div>
+            <label>开始时间<input type="datetime-local" name="startTime" id="startTime" class="sub-text"/></label>
+        </div>
+
+        <div class="sub-button" >
+            <button type="button" class="btn btn-default commitbutton" onclick="createArticle()">保存</button>
+        </div>
+    </form>
+</section>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/js/BriefingContents/create.js"></script>

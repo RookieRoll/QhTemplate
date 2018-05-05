@@ -16,9 +16,9 @@ namespace QhTemplate.ApplicationService.BriefingContents
         }
 
         public void Create(string title, string content, string held,
-            DateTime startTime, int schoolId)
+            DateTime startTime, int schoolId,string companyName)
         {
-            _briefingContentManager.Create(title,content,held,startTime,schoolId);
+            _briefingContentManager.Create(title,content,held,startTime,schoolId,companyName);
         }
 
         public void Update(BriefingContent briefingContent)

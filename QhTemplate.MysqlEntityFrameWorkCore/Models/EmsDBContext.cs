@@ -20,6 +20,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public virtual DbSet<Recruitment> Recruitment { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<SchoolArea> SchoolArea { get; set; }
+        public virtual DbSet<SchoolUser> SchoolUser { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserOrganization> UserOrganization { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
@@ -35,7 +36,6 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Role>().HasQueryFilter(m => !m.IsDeleted);
             modelBuilder.Entity<NewArticle>().HasQueryFilter(m => !m.IsDelete);
             modelBuilder.Entity<Area>(entity =>
@@ -282,6 +282,30 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .HasForeignKey(d => d.AreaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Reference_7");
+            });
+
+            modelBuilder.Entity<SchoolUser>(entity =>
+            {
+                entity.HasKey(e => new { e.SchoolId, e.UserId });
+
+                entity.HasIndex(e => e.UserId)
+                    .HasName("UserId");
+
+                entity.Property(e => e.SchoolId).HasColumnType("int(11)");
+
+                entity.Property(e => e.UserId).HasColumnType("int(11)");
+
+                entity.HasOne(d => d.School)
+                    .WithMany(p => p.SchoolUser)
+                    .HasForeignKey(d => d.SchoolId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("SchoolUser_ibfk_1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.SchoolUser)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("SchoolUser_ibfk_2");
             });
 
             modelBuilder.Entity<User>(entity =>
