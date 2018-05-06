@@ -1,14 +1,71 @@
 ﻿@model object
-
+@{ 
+    Layout = null;
+}
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>教师注册</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
-<div>
-      
-</div>
+    <div>
+        <form>
+
+            <label>注册用户</label>
+            <div>
+                <label>学校名称<input type="text" list="data" oninput="getData()" id="schoolname" /></label>
+            </div>
+            <label>姓名<input name="Name" id="name"/></label>
+            <label>用户名<input name="username" id="username"/></label>
+            <label> 邮箱<input name="email" id="email"/></label>
+            <label>密码<input name="password" id="password"/></label>
+            <button type="button" onclick="signUp()">注册</button>
+            <datalist id="data"></datalist>
+        </form>
+    </div>
+    <script>
+        function signUp() {
+            var school = $("#schoolname").val();
+            var name = $("#name").val();
+            var username = $("#username").val();
+            var email = $("#email").val();
+            var password = $("#password").val();
+
+            $.ajax({
+                url: "/SchoolAccount/SignUp",
+                type: "post",
+                data: {
+                    schoolname: school,
+                    name: name,
+                    username: username,
+                    email: email,
+                    password: password
+                },
+                success: function (data) {
+                    location.href = "/schoolaccount/signin";
+                }
+            });
+        }
+        function getData() {
+            var value = $("#schoolname").val();
+            $.ajax({
+                url: "/SchoolAccount/GetSchool",
+                type: "post",
+                data: {
+                    name: value
+                },
+                success: function (data) {
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += "<option value='" + data[i].name + "'>";
+                    }
+                    $("#data").html(html);
+                }
+            });
+
+        }
+    </script>
 </body>
 </html>

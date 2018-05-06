@@ -13,11 +13,13 @@ namespace QhTemplate.ApplicationService.Schools
     {
         private readonly SchoolManagers _schoolManagers;
         private readonly AreaManager _areaManager;
-
-        public SchoolService(SchoolManagers schoolManagers, AreaManager areaManager)
+        private readonly EmsDBContext _db;
+        
+        public SchoolService(SchoolManagers schoolManagers, AreaManager areaManager, EmsDBContext db)
         {
             _schoolManagers = schoolManagers;
             _areaManager = areaManager;
+            _db = db;
         }
 
         public IQueryable<SchoolArea> Finds()
@@ -67,6 +69,16 @@ namespace QhTemplate.ApplicationService.Schools
             var school = Find(id);
             school.Migration(areaid, path);
             _schoolManagers.Migration(school);
+        }
+
+        public void AddTeachers(int schoolAreaId, int user)
+        {
+            _db.SchoolUser.Add(new SchoolUser
+            {
+                SchoolId = schoolAreaId,
+                UserId = user
+            });
+            _db.SaveChanges();
         }
     }
 }

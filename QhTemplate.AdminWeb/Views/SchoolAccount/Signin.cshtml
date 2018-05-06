@@ -1,14 +1,74 @@
 ﻿@model object
-
+@{
+    Layout = null;
+}
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>教师登录</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
 </head>
 <body>
-<div>
-      
-</div>
+    <div>
+        <label>教师登录</label>
+        <form>
+            <div>
+                <label>学校名称<input type="text" list="data" oninput="getData()" id="schoolname" /></label>
+            </div>
+            <div>
+                <label>用户名<input type="text" name="username" id="username" /></label>
+            </div>
+            <div>
+                <label>密码<input type="password" name="password" id="password" /></label>
+            </div>
+            <a href="/schoolaccount/signup">注册</a>
+            <button type="button" onclick="signIn">登录</button>
+            
+            <datalist id="data"></datalist>
+        </form>
+    </div>
+    <script>
+
+        function signIn() {
+            var schoolname = $("#schoolname").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            $.ajax({
+                url: "/SchoolAccount/SignUp",
+                type: "post",
+                data: {
+                    SchoolName: schoolname,
+                    UserName: username,
+                    Password: password
+                },
+                success: function (data) {
+                    location.href = "/home/index";
+                }
+            });
+
+        }
+        function getData() {
+            var value = $("#schoolname").val();
+            $.ajax({
+                url: "/SchoolAccount/GetSchool",
+                type: "post",
+                data: {
+                    name: value
+
+                },
+                success: function (data) {
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += "<option value='" + data[i].name + "'>";
+                    }
+                    $("#data").html(html);
+
+                }
+            });
+
+        }
+    </script>
 </body>
 </html>

@@ -51,10 +51,12 @@ namespace QhTemplate.ApplicationService.Users
             return _userManager.Find(id);
         }
 
-        public void Create(string userName, string name, string email,UserType type)
+        public void Create(string userName, string name, string email, UserType type)
         {
-            var user = User.Create(name, userName, email,type);
-            var defaultRole = _roleManager.Finds(m => m.IsDefault).Select(m => m.Id);
+            var user = User.Create(name, userName, email, type);
+            Func<Role, bool> func = GetDefaultRole(type);
+
+            var defaultRole = _roleManager.Finds(func).Select(m => m.Id);
 
             using (var scope = _db.Database.BeginTransaction())
             {
@@ -70,9 +72,22 @@ namespace QhTemplate.ApplicationService.Users
                 }
             }
         }
-        public int Register(string userName, string name, string email,string password,UserType type)
+
+        private Func<Role, bool> GetDefaultRole(UserType type)
         {
-            var user = User.Register(name, userName, email,password,type);
+            Func<Role, bool> func;
+            switch (type)
+            {
+                case UserType.Employee: func = m => m.Id == 3 && m.IsDefault; break;
+                case UserType.Teacher: func = m => m.IsDefault && m.Id == 2; break;
+                case UserType.Admin: func = m => m.IsDefault && m.Id == 1; break;
+                default: func = m => m.IsDefault && !m.IsStatic; break;
+            }
+            return func;
+        }
+        public int Register(string userName, string name, string email, string password, UserType type)
+        {
+            var user = User.Register(name, userName, email, password, type);
             var defaultRole = _roleManager.Finds(m => m.IsDefault).Select(m => m.Id);
 
             using (var scope = _db.Database.BeginTransaction())
@@ -138,9 +153,9 @@ namespace QhTemplate.ApplicationService.Users
         public IEnumerable<User> GetUsersByCompany(int companyId)
         {
             var users = (from cu in _db.CompanyUser
-                join us in Finds() on cu.UserId equals us.Id
-                where cu.CompanyId == companyId
-                select us);
+                         join us in Finds() on cu.UserId equals us.Id
+                         where cu.CompanyId == companyId
+                         select us);
             return users;
         }
     }

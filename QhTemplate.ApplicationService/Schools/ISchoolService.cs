@@ -15,5 +15,6 @@ namespace QhTemplate.ApplicationService.Schools
         void Remove(int id);
         void Update(SchoolArea area);
         void Migration(int id, string path, int areaid);
+        void AddTeachers(int schoolAreaId, int user);
     }
 }
