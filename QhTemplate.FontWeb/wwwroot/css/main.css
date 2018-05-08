@@ -1,0 +1,59 @@
+﻿body {
+    background-color: #333333;
+}
+
+.mynavbar {
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+    border-radius: 0;
+}
+
+.left-menu-bar {
+    display: flex;
+    height: 690px;
+    position: fixed;
+    top: 52px;
+}
+
+.main-content {
+    margin-top: 52px;
+    margin-left: 220px;
+    min-height: 635px;
+    background-color: #F0F0F0;
+    overflow:hidden;
+}
+
+.logo {
+    width: 240px;
+    text-align: center;
+    display:flex;
+    justify-content:center;
+}
+
+.footer-box {
+    bottom: 0px;
+    left: 217px;
+    margin-left: 215px;
+    text-align: left;
+    background-color: white;
+}
+
+    .footer-box > hr {
+        margin: 0px;
+        padding-top: 20px;
+    }
+
+    .footer-box > footer > p {
+        padding-left: 10px;
+        margin: 0;
+        padding-bottom: 10px;
+    }
+.user-button {
+    height: 30px;
+    width: 73px;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing:24px;
+}

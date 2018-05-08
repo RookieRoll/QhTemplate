@@ -1,35 +1,83 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding: 0px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.navbar {
+    margin-bottom: 0px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.navbar-nav {
+    height: 70px;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+    .navbar-nav navmenu {
+        height: 100%;
     }
+
+    .navbar-nav > .navmenu > a {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+.logo {
+    float: left;
+    height: 50px;
+    padding: 24px 20px;
+    font-size: 40px;
+    line-height: 20px;
+    font-family: cursive;
 }
+
+.signin-btn-li {
+    padding-top: 15px;
+    margin-left: 10px;
+}
+
+.signin-btn-li-a {
+    font-size: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.search-border {
+    border-radius: 50px;
+    border: 1px solid gray;
+    width: 250px;
+    margin-top:8px;
+}
+.search-input {
+    margin-left: 17px;
+    border: none;
+    outline: none;
+    height: 33px;
+    width: 200px;
+}
+.search-logo {
+    font-size: 20px;
+    line-height: 21px;
+    padding-top: 2px;
+    position: relative;
+    top: 4px;
+    color: gray;
+}
+.nav > .signin-btn-li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #31b0d5;
+}
+a {
+    color:black;
+}
+a:hover{
+    color:black;
+}
+.myactive {
+    background-color: #3B85EB;
+}
+    .myactive > a {
+        font-weight: bold;
+        color: white;
+    }
+        .myactive > a:hover {
+            font-weight: initial;
+            color: black;
+        }

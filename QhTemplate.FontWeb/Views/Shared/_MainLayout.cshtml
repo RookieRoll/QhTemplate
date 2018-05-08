@@ -7,57 +7,61 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/main.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
 <body style="padding:0px;">
-    <nav class="navbar">
-        <div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+    <nav class="navbar navbar-default mynavbar">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header logo">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo">就业网</a>
+                <a class="navbar-brand" href="#">Brand</a>
             </div>
-            <div class="navbar-collapse collapse">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="navmenu myactive"><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
-                    <li class="navmenu"><a asp-area="" asp-controller="Home" asp-action="About">宣讲</a></li>
-                    <li class="navmenu"><a asp-area="" asp-controller="Home" asp-action="Contact">招聘</a></li>
-                </ul>
+                    <li class="active"><a href="#">首页</a></li>
+                    <li><a href="#">实习</a></li>
+                    <li><a href="#">宣讲</a></li>
 
+                </ul>
+               
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="signin-btn-li"><a href="" class="btn btn-info signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">企业登陆</a></li>
-                    <li class="signin-btn-li"><a href="" class="btn btn-primary signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">学校登陆</a></li>
-                    <li class="signin-btn-li"><a href="" class="btn btn-default signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">学生登陆</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <form class="navbar-form navbar-right">
-                    <div class="form-group search-border">
-                        <input type="text"  placeholder="搜索 宣讲会/实习/公司/职位" class="search-input">
-                        <i class="glyphicon glyphicon-search search-logo"></i>
-                    </div>
-                   
-                </form>
-
-
-            </div>
-        </div>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
     </nav>
-    <div class="body-content" style="padding:0px;">
+    <div class="body-content" style="padding:0px;width: 95%;  margin: auto;">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - QhTemplate.FontWeb</p>
-        </footer>
+        <div class="footer-box">
+            <hr style="margin-top:0px;" />
+            <footer>
+                <p>&copy; 2018 - QhTemplate.FontWeb</p>
+            </footer>
+        </div>
     </div>
 
     <environment include="Development">

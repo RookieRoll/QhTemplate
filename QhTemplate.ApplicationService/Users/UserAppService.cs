@@ -55,7 +55,6 @@ namespace QhTemplate.ApplicationService.Users
         {
             var user = User.Create(name, userName, email, type);
             Func<Role, bool> func = GetDefaultRole(type);
-
             var defaultRole = _roleManager.Finds(func).Select(m => m.Id);
 
             using (var scope = _db.Database.BeginTransaction())

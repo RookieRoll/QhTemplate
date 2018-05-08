@@ -1,0 +1,25 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.MenuBar.MenuBarViewModel>
+
+
+<div style="display:flex">
+    <div style="display:flex;height:690px;" class="left-menu-bar">
+
+        <div style="height:100%; width:220px;background-color:#2a2d33;">
+            @*<div style="height:70px;background-color:#1d1f24;display:flex;justify-content:space-evenly;align-items:center;">
+                    <a class="btn btn-info user-button  ">登录</a>
+                    <a class="btn btn-default user-button ">注册</a>
+                </div>*@
+            <div style="height:70px;background-color:#1d1f24;display:flex;justify-content:flex-start;align-items:center;">
+                <img src="~/images/user-face-male.png" style="width:45px;border-radius:50%;margin-left: 20px;"/>
+                <span style="color:white;    margin-left: 20px;">hi,kobold</span>
+            </div>
+            <ul >
+                @foreach (var item in Model)
+                {
+                    <li style="color:white;">@item.Name</li>
+
+                }
+            </ul>
+        </div>
+    </div>
+</div>
