@@ -17,8 +17,6 @@ namespace QhTemplate.ApplicationCore.Users
 
         public int Create(User model)
         {
-            if (IsUserNameExit(model.UserName))
-                throw new UserFriendlyException("该用户名已经存在");
             _db.User.Add(model);
             Save();
             return model.Id;

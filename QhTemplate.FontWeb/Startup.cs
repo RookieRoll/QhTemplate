@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QhTemplate.ApplicationCore.BriefingContents;
+using QhTemplate.ApplicationService.BriefingContents;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.FontWeb
 {
@@ -22,6 +25,9 @@ namespace QhTemplate.FontWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddScoped<IBriefingContentService, BriefingContentService>();
+            services.AddScoped<BriefingContentManager>();
+            services.AddScoped<EmsDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +48,7 @@ namespace QhTemplate.FontWeb
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}/{ids?}");
             });
         }
     }

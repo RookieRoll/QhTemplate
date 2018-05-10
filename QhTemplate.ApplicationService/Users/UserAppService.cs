@@ -157,5 +157,14 @@ namespace QhTemplate.ApplicationService.Users
                          select us);
             return users;
         }
+
+        public IEnumerable<User> GetUsersBySchool(int school)
+        {
+            var users = (from cu in _db.SchoolUser
+                         join us in Finds() on cu.UserId equals us.Id
+                         where cu.SchoolId == school
+                         select us);
+            return users;
+        }
     }
 }

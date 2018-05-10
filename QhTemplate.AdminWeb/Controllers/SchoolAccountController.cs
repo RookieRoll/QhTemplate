@@ -51,13 +51,13 @@ namespace QhTemplate.AdminWeb.Controllers
             var schoolArea = _schoolService.Finds(m => m.Name.Equals(model.SchoolName)).FirstOrDefault() ??
                           throw new UserFriendlyException("该学校不在本系统中");
 
-            var users = _userAppService.GetUsersByCompany(schoolArea.Id);
+            var users = _userAppService.GetUsersBySchool(schoolArea.Id);
             Func<User, bool> func;
             //判断是否是邮箱登陆
             if (AccountServiceUtil.IsEmailLogin(model.UserName))
-                func = m => m.EmailAddress.Equals(model.UserName) && m.Password.Equals(model.Password);
+                func = m => m.EmailAddress.Equals(model.UserName) && m.Password.Equals(model.Password) && m.UserType == (int)UserType.Teacher;
             else
-                func = m => m.UserName.Equals(model.UserName) && m.Password.Equals(model.Password);
+                func = m => m.UserName.Equals(model.UserName) && m.Password.Equals(model.Password) && m.UserType==(int)UserType.Teacher;
 
             var user = users.FirstOrDefault(func);
             if (user == null)

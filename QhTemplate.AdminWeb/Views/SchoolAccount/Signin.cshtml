@@ -24,7 +24,7 @@
                 <label>密码<input type="password" name="password" id="password" /></label>
             </div>
             <a href="/schoolaccount/signup">注册</a>
-            <button type="button" onclick="signIn">登录</button>
+            <button type="button" onclick="signIn()">登录</button>
             
             <datalist id="data"></datalist>
         </form>
@@ -36,7 +36,7 @@
             var username = $("#username").val();
             var password = $("#password").val();
             $.ajax({
-                url: "/SchoolAccount/SignUp",
+                url: "/SchoolAccount/SignIN",
                 type: "post",
                 data: {
                     SchoolName: schoolname,

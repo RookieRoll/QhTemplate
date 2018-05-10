@@ -3,160 +3,25 @@
     Layout = "_MainLayout";
 }
 
-@await Component.InvokeAsync("ClassifiesMenuBar")
+@await Component.InvokeAsync("ClassifiesMenuBar",1)
 <div class="main-content">
-    <ul style="list-style:none;">
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-        <li>计算机</li>
-    </ul>
+   <div>
+       <form asp-controller="BriefingContent" asp-action="index">
+           <label>宣讲会查询系统</label>
+           <input type="text" name="search" />
+           <input type="date"  name="time"/>
+           <button>搜索宣讲会</button>
+       </form>
+   </div>
+   <ul>
+       <li>12</li>
+       <li>12</li>
+       <li>12</li>
+       <li>12</li>
+       <li>12</li>
+       <li>12</li>
+       <li>12</li>
+   </ul>
 </div>
 
 

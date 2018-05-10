@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service\" />
+    <Folder Include="wwwroot\css\recruitment\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QhTemplate.ApplicationService\QhTemplate.ApplicationService.csproj" />

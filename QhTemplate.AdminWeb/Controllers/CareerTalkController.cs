@@ -43,7 +43,7 @@ namespace QhTemplate.AdminWeb.Controllers
             var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             var id = int.Parse(userId);
             var school = _schoolService.Finds().Include(m => m.SchoolUser).First(m => m.SchoolUser.Any(n => n.UserId == id));
-            _briefingContent.Create(obj.Title, obj.Content, obj.Held, DateTime.Parse(obj.StartTime), 16, obj.CompanyName);
+            _briefingContent.Create(obj.Title, obj.Content, obj.Held, DateTime.Parse(obj.StartTime), school.Id, obj.CompanyName);
             return Json("创建成功");
         }
 
