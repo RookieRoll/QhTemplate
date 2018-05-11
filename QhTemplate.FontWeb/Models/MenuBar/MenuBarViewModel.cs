@@ -16,5 +16,6 @@ namespace QhTemplate.FontWeb.Models.MenuBar
     {
         public List<MenuBar> MenuBar { get; set; }
         public int AreaId { get; set; }
+        public int MenuType { get; set; }
     }
 }

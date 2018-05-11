@@ -1,0 +1,99 @@
+﻿body {
+}
+
+.search-box {
+    width: 98%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.search-box-div {
+    background-color: white;
+    display: flex;
+    border: 10px solid lightgray;
+    border-radius: 4px;
+}
+
+.search-box-logo {
+    min-width: 45px;
+    font-size: 18px;
+    padding-left: 11px;
+    line-height: 40px;
+    color: lightgray;
+}
+
+.search-box-input {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.search-box-btn {
+    min-width: 100px;
+}
+
+.area-list-div {
+    width: 98%;
+    margin: auto;
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    padding-top: 15px;
+}
+
+.area-list-div-label {
+    min-width: 80px;
+    padding: 10px 5px;
+}
+
+.area-list-ul {
+    display: flex;
+    list-style: none;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding-left: 0px;
+}
+
+.area-list-li {
+    color: white;
+    border-radius: 4px;
+    margin: 3px;
+}
+
+    .area-list-li > a {
+        text-decoration: none;
+        color: black;
+        width: 100%;
+        padding: 5px 10px;
+        display: block;
+        width: 100%;
+    }
+
+        .area-list-li > a:hover {
+            background-color: #38f;
+            color: white;
+            border-radius: 4px;
+        }
+
+.area-active {
+    background-color: #38f;
+    color: white;
+    border-radius: 4px;
+}
+
+.recruit-list {
+    width: 98%;
+    margin: auto;
+    background-color: white;
+    font-size: 15px;
+}
+
+    .recruit-list > tbody > tr > td > a {
+        color: black;
+    }
+
+        .recruit-list > tbody > tr > td > a:hover, .recruit-list > tbody > tr > td > a:visited {
+            text-decoration: none;
+        }

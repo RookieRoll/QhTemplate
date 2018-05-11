@@ -1,0 +1,57 @@
+﻿
+@model QhTemplate.FontWeb.Models.BriefingContents.DetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@section Styles{
+    <link href="~/css/recruitment/detail.css" rel="stylesheet" />
+}
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 2, areaId = 0 })
+<div class="main-content">
+    <div>
+        @*公司信息*@
+        <h3 style="width:95%;margin-left:20px;">
+            【@Model.CompanyName】
+        </h3>
+        <div class="detail-description-company">
+            <table style="width: 100%;height: 75px; margin-left: 34px;">
+                <tr>
+                    <td>
+                        <span class="detail-company-color">来源高校：</span>
+                        @Model.SchoolName
+                    </td>
+                    <td>
+                        <span class="detail-company-color">举办地点：</span>
+                        @Model.Held
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="detail-company-color">宣讲时间：</span>
+                        @Model.StartTime
+                    </td>
+                    <td>
+                        <span class="detail-company-color">发布时间：</span>
+                        @Model.PublishTime
+                    </td>
+                </tr>
+            </table>
+        </div>
+        @*公司简介*@
+        <div class="detail-description">
+            <div class="page-header" style="border:none;">
+                <ul class="detail-description-ul">
+                    <li class="detail-description-ul-li">
+                        <a href="#detailcontent" class="detail-description-ul-li-a">宣讲正文</a>
+                    </li>
+                 
+                </ul>
+            </div>
+            <div id="detailcontent">
+                @Html.Raw(Model.Content)
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -15,6 +15,7 @@ using QhTemplate.ApplicationService.Areas;
 using QhTemplate.ApplicationService.Companys;
 using QhTemplate.ApplicationService.Majors;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
+using QhTemplate.AdminWeb.Utils;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -51,7 +52,7 @@ namespace QhTemplate.AdminWeb.Controllers
             var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             var id = int.Parse(userId);
             var companyId = _company.Finds().Include(m => m.CompanyUser).First(m => m.CompanyUser.Any(n => n.UserId == id));
-            _recruitment.Create(obj.Title, obj.Content, DateTime.Parse(obj.EndTime), id, obj.MajorIds,obj.AreaId);
+            _recruitment.Create(obj.Title, PathUtil.PathReplace(obj.Content), DateTime.Parse(obj.EndTime), companyId.Id, obj.MajorIds, obj.AreaId);
             return Json("创建成功");
         }
 
@@ -68,10 +69,10 @@ namespace QhTemplate.AdminWeb.Controllers
             {
                 Id = obj.Id,
                 Title = obj.Title,
-                Content = obj.Content,
-                EndTime = DateTime.Parse(obj.EndTime),
+                Content = PathUtil.PathReplace(obj.Content),
+                EndTime = DateTime.Parse(obj.EndTime)
             };
-            _recruitment.Update(temp,obj.MajorIds,obj.AreaId);
+            _recruitment.Update(temp, obj.MajorIds, obj.AreaId);
             return Json("修改成功");
         }
 
@@ -116,13 +117,13 @@ namespace QhTemplate.AdminWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAreas(int?id)
+        public IActionResult GetAreas(int? id)
         {
             var source = _areaApp.FindAll();
             var list = new List<Area>();
             source.ToList().ForEach(m =>
             {
-                if (m.Path.Split(',').Length <= 3)
+                if (m.Path.Split(',').Length == 3)
                 {
                     list.Add(m);
                 }
@@ -141,16 +142,11 @@ namespace QhTemplate.AdminWeb.Controllers
             var areaId = _recruitment.GetAreaRecruits(id ?? 0);
             foreach (var org in areas)
             {
-                org.state = areaId.Any(m=>m.AreaId.Equals(org.id)) ? new State(false, false, true) : new State(false, false, false);
+                org.state = areaId.Any(m => m.AreaId.Equals(org.id)) ? new State(false, false, true) : new State(false, false, false);
 
-                if (org.parentId == 0)
-                {
-                    organizations.Add(org);
-                    continue;
-                }
 
-                var parentOrganization = areas.SingleOrDefault(m => m.id == org.parentId);
-                parentOrganization.children.Add(org);
+                organizations.Add(org);
+
             }
 
             return Json(organizations);

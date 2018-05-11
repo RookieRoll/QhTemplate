@@ -19,17 +19,32 @@ namespace QhTemplate.FontWeb.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int type,int areaId)
         {
-            var area = _context.Area.FirstOrDefault(m=>m.Id==areaId);
-            var schools = _context.SchoolArea.Where(m => m.Path.StartsWith(area.Path)).Select(m=>new MenuBar()
+            List<MenuBar> result;
+            if (type == 1)
             {
-                Id = m.Id,
-                Name = m.Name
-            }).ToList();
+                var area = _context.Area.FirstOrDefault(m => m.Id == areaId);
+                result = _context.SchoolArea.Where(m => m.Path.StartsWith(area.Path)).Select(m => new MenuBar()
+                {
+                    Id = m.Id,
+                    Name = m.Name
+                }).ToList();
+
+            }
+            else
+            {
+                result = _context.Major.Select(m => new MenuBar
+                {
+                    Id=m.Id,
+                    Name=m.Name
+                }).ToList();
+            }
+       
 
             MenuBarViewModel bar = new MenuBarViewModel
             {
                 AreaId = areaId,
-                MenuBar = schools
+                MenuBar = result,
+                MenuType = type
             };
             return View("MenuBar",bar);
         }

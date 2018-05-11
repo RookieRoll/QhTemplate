@@ -13,7 +13,7 @@
         public const string User_Delete = User + ".Delete";
         public const string User_Permission = User + ".Permission";
         public const string User_Role = User + ".Role";
-        
+
         #endregion
 
         #region 角色权限
@@ -22,6 +22,7 @@
         public const string Role_Create = Role + ".Create";
         public const string Role_Update = Role + ".Update";
         public const string Role_Delete = Role + ".Delete";
+
         #endregion
 
         #region 组织结构
@@ -37,11 +38,31 @@
         #endregion
 
         #region 地区学校管理
+
         public const string SchoolArea = BaseMenu + ".SchoolArea";
         public const string SchoolArea_AreaCreate = SchoolArea + ".AreateCreate";
         public const string SchoolArea_AreaDelete = SchoolArea + ".AreaDelete";
         public const string SchoolArea_SchoolCreate = SchoolArea + ".SchoolCreate";
         public const string SchoolArea_SchoolDelete = SchoolArea + ".SchoolDelete";
+
+        #endregion
+
+        #region  公司管理
+
+        public const string Company = BaseMenu + ".Company";
+
+        #endregion
+
+        #region 招聘管理
+
+        public const string RecruitMent = BaseMenu + ".RecruitMent";
+
+        #endregion
+
+        #region 宣讲会
+
+        public const string CareerTalk = BaseMenu + ".CareerTalk";
+
         #endregion
     }
 }

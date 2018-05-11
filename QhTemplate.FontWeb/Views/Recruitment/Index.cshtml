@@ -1,12 +1,67 @@
-﻿
+﻿@model QhTemplate.FontWeb.Models.Recruitments.RecruitmentViewmodel
 @{
     ViewData["Title"] = "Index";
     Layout = "_MainLayout";
 }
-@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 1, areaId = 8 })
+@section Styles{
+    <link href="~/css/recruitment/index.css" rel="stylesheet" />
+}
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 2, areaId = 0 })
 <div class="main-content">
+    <div class="search-box">
+        <form asp-controller="Recruitment" asp-action="index">
+            <div><h3>校园招聘查询系统</h3></div>
+            <div class="search-box-div">
+                <i class="glyphicon glyphicon-search search-box-logo"></i>
+                <input type="text" name="search" class="search-box-input" />
+                <button class="btn btn-primary search-box-btn">搜索信息</button>
+            </div>
+        </form>
+    </div>
+    <div class="area-list-div">
+        <label class="area-list-div-label">涉及城市：</label>
+        <div >
+            <ul class="area-list-ul" id="area">
+                <li class='area-list-li'><a href='/Recruitment/index/@Model.TypeId/0'>全部</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <table  class="table table-hover recruit-list">
+            <thead>
+                <tr>
+                    <th>公司标题</th>
+                    <th>职位名称</th>
+                    <th>联系邮箱</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Result)
+                {
+                    <tr>
+                        <td><a href="/Recruitment/detail/@item.CompanyId" style="display:block;width:100%;color:#4a90e6;" target="_blank">@item.CompanyName</a></td>
+                        <td><a href="/Recruitment/detail/@item.CompanyId" style="display:block;width:100%" target="_blank"> @item.JobName </a></td>
+                        <td>@item.Email</td>
 
+                    </tr>
 
-    <h2>Index</h2>
+                }
+            </tbody>
+        </table>
+    </div>
+
 </div>
-
+<script>
+    $.ajax({
+        url: '/Recruitment/GetArea',
+        type: "post",
+        success: function (data) {
+            var html = "";
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i])
+                html += " <li class='area-list-li'><a href='/Recruitment/index/"+@Model.TypeId+"/"+data[i].id+"'>"+data[i].name+"</a></li>"
+            }
+            $("#area").append(html);
+        }
+    })
+</script>

@@ -12,10 +12,24 @@
                 <span class="header-box-name">hi,kobold</span>
             </div>
             <ul class="header-menu-ul ">
-                @foreach (var item in Model.MenuBar)
+                @if (Model.MenuType == 1)
                 {
-                    <li class="header-menu-ul-li"><a href="/BriefingContent/index/@Model.AreaId/@item.Id"> • @item.Name</a></li>
+                    foreach (var item in Model.MenuBar)
+                    {
+                        <li class="header-menu-ul-li"><a href="/BriefingContent/index/@Model.AreaId/@item.Id"> • @item.Name</a></li>
+                    }
                 }
+                else
+                {
+                    <li class="header-menu-ul-li"><a href="/Recruitment/index/0"> • 全部</a></li>
+                    foreach (var item in Model.MenuBar)
+                    {
+                        <li class="header-menu-ul-li"><a href="/Recruitment/index/@item.Id"> • @item.Name</a></li>
+                    }
+                }
+
+
+
             </ul>
         </div>
     </div>

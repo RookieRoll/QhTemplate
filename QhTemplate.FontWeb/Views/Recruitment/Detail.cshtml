@@ -1,0 +1,85 @@
+﻿@model QhTemplate.FontWeb.Models.Recruitments.DetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@section Styles{
+    <link href="~/css/recruitment/detail.css" rel="stylesheet" />
+}
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 2, areaId = 0 })
+<div class="main-content">
+    <div>
+        @*公司信息*@
+        <div class="detail-description-company">
+            <h3 >
+                【@Model.CompanyName】
+            </h3>
+            <ul class="detail-company">
+                <li style="width:50%;">
+                    <span class="detail-company-color">公司地址：</span>
+                    @Model.Address
+                </li>
+                <li  style="width:50%;">
+                    <span class="detail-company-color">公司邮箱：</span>
+                    @Model.Email
+                </li>
+            </ul>
+        </div>
+        @*公司简介*@
+        <div class="detail-description">
+            <div class="page-header" style="border:none;">
+                <ul class="detail-description-ul">
+                    <li class="detail-description-ul-li-active">
+                        <a href="#detailcontent" class="detail-description-ul-li-a-active">公司简介</a>
+                    </li>
+                    <li class="detail-description-ul-li">
+                        <a href="#recruitcontent" class="detail-description-ul-li-a">招聘职位</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div id="detailcontent">
+                @Html.Raw(Model.Description)
+            </div>
+
+        </div>
+        @*招聘职位*@
+        <div id="recruitcontent" style="width:95%;margin:auto;background-color:white;border-radius:4px;margin-top:20px;">
+            <div class="page-header" style="border:none;">
+                <ul class="detail-description-ul">
+                    <li class="detail-description-ul-li">
+                        <a href="#detailcontent" class="detail-description-ul-li-a">公司简介</a>
+                    </li>
+                    <li class="detail-description-ul-li-active">
+                        <a href="#recruitcontent" class="detail-description-ul-li-a-active">招聘职位</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="width: 98%;margin: auto;">
+
+                @foreach (var item in Model.Recruits)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
+                                    @item.Title
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="@item.Id" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                @Html.Raw(item.Content)
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-default">投递</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -41,6 +41,15 @@ namespace QhTemplate.ApplicationCore.Authentications.Permissions
             new Permissions {Name = PermissionNames.Organization_RemoveUser, DisplayName = "移除组织成员"},
 
             #endregion
+
+            new Permissions {Name = PermissionNames.SchoolArea, DisplayName = "地区学校管理"},
+            new Permissions {Name = PermissionNames.Company, DisplayName = "公司管理"},
+
+            new Permissions {Name = PermissionNames.RecruitMent, DisplayName = "招聘管理"},
+            new Permissions {Name = PermissionNames.CareerTalk, DisplayName = "宣讲会管理"}
+
+            
+          
         };
 
         public class Permissions

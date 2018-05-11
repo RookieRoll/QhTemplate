@@ -10,12 +10,16 @@
     <div style="position: absolute;top: 20px;z-index: 99999;left: 200px;">
         <span>重庆</span>
     </div>
-    <div>
+
+    <div style="width:98%;margin:auto;margin-bottom:20px;">
         <form asp-controller="BriefingContent" asp-action="index">
-            <label>宣讲会查询系统</label>
-            <input type="text" name="search" />
-            <input type="date" name="time" />
-            <button>搜索宣讲会</button>
+            <div><h3>宣讲会查询系统</h3></div>
+            <div style="background-color:white;display:flex;border:10px solid lightgray;border-radius:4px;">
+                <i class="glyphicon glyphicon-search" style="    min-width: 45px;font-size: 18px;padding-left: 11px;line-height: 40px;color: lightgray;"></i>
+                <input type="text" name="search" style="border:none;outline:none;width: 100%;" />
+                <input type="date" name="time" />
+                <button style="min-width: 100px;" class="btn btn-primary">搜索宣讲会</button>
+            </div>
         </form>
     </div>
     <table class="table" style="width: 98%;margin: auto;background-color: white;">
@@ -31,7 +35,7 @@
             @foreach (var item in Model.Result)
             {
                 <tr>
-                    <td>@item.Company</td>
+                    <td><a href="/BriefingContent/detail/@item.Id" style="display:block;width:100%;color:#4a90e6;" target="_blank">@item.Company</a></td>
                     <td>@item.StartTime</td>
                     <td>@item.Held</td>
                     <td>@item.PublishTime</td>

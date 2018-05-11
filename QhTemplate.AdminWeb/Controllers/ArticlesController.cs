@@ -7,7 +7,7 @@ using System.Linq.Dynamic.Core;
 using QhTemplate.AdminWeb.ViewModels.NewsArticle;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 using UEditorNetCore;
-
+using QhTemplate.AdminWeb.Utils;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -35,7 +35,7 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Create(CreateArticleViewModel model)
         {
-            _applicationService.Create(model.Title,model.Content,model.SubContent);
+            _applicationService.Create(model.Title, PathUtil.PathReplace(model.Content),model.SubContent);
             return Json("创建成功");
         }
         public IActionResult Update(int id)
@@ -52,7 +52,7 @@ namespace QhTemplate.AdminWeb.Controllers
             {
                 Id = model.Id,
                 Title = model.Title,
-                Content = model.Content,
+                Content = PathUtil.PathReplace(model.Content),
                 SubContent = model.SubContent
             };
             _applicationService.Update(article);
