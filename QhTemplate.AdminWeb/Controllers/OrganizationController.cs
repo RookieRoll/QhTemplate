@@ -7,6 +7,7 @@ using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.Organizations;
 using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.ApplicationService.Organizations;
@@ -15,6 +16,7 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class OrganizationController : Controller
     {
         private readonly IOrganizationAppService _organizationApp;

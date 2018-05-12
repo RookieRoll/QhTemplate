@@ -1,18 +1,105 @@
-﻿@model int?
-
+﻿@model string
 @{
     ViewBag.Title = "title";
     Layout = null;
 }
-<div>
-    <form asp-controller="CompanyAccount" asp-action="SignUpUser" method="post">
 
-        <label>注册用户</label>
-        <label>公司编号<input name="companyId" value="@Model" /></label>
-        <label>姓名<input name="Name" /></label>
-        <label>用户名<input name="username" /></label>
-        <label> 邮箱<input name="email" /></label>
-        <label>密码<input name="password" /></label>
-        <input type="submit" value="登陆" />
-    </form>
-</div>
+<html>
+<head>
+    <title>注册用户</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body style="display:flex;background-image:url(../../images/companyLogin.jpg);background-size:100%;">
+    <div style="width: 500px;border: 1px solid lightgray; margin: auto;height: 400px;background-color:white;border-radius: 30px;">
+        <h3 style="text-align:center;">注册用户</h3>
+        <form style="width:80%;margin:auto;">
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">公司名称</span>
+                <input type="text" class="form-control" placeholder="公司名称" aria-describedby="basic-addon1" list="data" oninput="getData()" id="schoolname" value="@Model">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">用户名</span>
+                <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon2" id="username">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">姓名</span>
+                <input type="text" class="form-control" placeholder="姓名" aria-describedby="basic-addon3" id="name">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon4" style="min-width: 85px;">邮箱</span>
+                <input type="email" class="form-control" placeholder="邮箱" aria-describedby="basic-addon4" id="email">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon5" style="min-width: 85px;">密码</span>
+                <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon5" id="password">
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:20px;">
+                <div>
+                    <a href="/companyaccount/Signin">返回登录</a>
+                    <a href="/CompanyAccount/SignUpComnpany">注册公司</a>
+                </div>
+                <button type="button" onclick="signUp()" class="btn btn-lg btn-primary" style="width:200px;height:30px;font-size: 14px;padding: 0px;background-color: cornflowerblue;">注册</button>
+
+            </div>
+
+            <datalist id="data"></datalist>
+        </form>
+    </div>
+    <script>
+
+        function signUp() {
+            var schoolname = $("#schoolname").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var name = $("#name").val();
+            var email = $("#email").val();
+            $.ajax({
+                url: "/CompanyAccount/SignUpUser",
+                type: "post",
+                data: {
+                    CompanyId: schoolname,
+                    UserName: username,
+                    Password: password,
+                    name: name,
+                    email:email
+                },
+                success: function (data) {
+                    if (data === 'ok')
+                        location.href = "/companyaccount/Signin";
+                    else {
+                        alert(data)
+
+                    }
+                }
+            });
+
+        }
+        function getData() {
+            var value = $("#schoolname").val();
+            $.ajax({
+                url: "/CompanyAccount/GetCompany",
+                type: "post",
+                data: {
+                    name: value
+
+                },
+                success: function (data) {
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += "<option value='" + data[i].name + "'>";
+                    }
+                    $("#data").html(html);
+
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

@@ -7,37 +7,61 @@
 }
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
-    <link href="/css/Account/login.css" rel="stylesheet"/>
+    <title>管理登录</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/Account/login.css" rel="stylesheet" />
 </head>
 <body>
-<div class="container">
-    <section id="content">
-        <form asp-controller="Account" asp-action="SignIn" method="post">
-            <h1>登陆</h1>
-            <div>
-                <input type="text" placeholder="Username" required="" id="username" asp-for="UserName" autocomplete="off"/>
-            </div>
-            <div>
-                <input type="password" placeholder="Password" required="" id="password" asp-for="Password"/>
-            </div>
-            <div>
-                <input type="text" placeholder="验证码" required="" id="validatecode" asp-for="ValidateCode" style="width: 200px;"autocomplete="off"/>
-                <img id="imgVerify" src="/Account/ValidateCode" alt="看不清？点击更换" onclick="this.src = this.src + '?'"/>
-            </div>
-            <div>
-                <input type="submit" value="Log in"/>
-            </div>
-            <div asp-validation-summary="All" class="text-danger">
+    <div class="container">
+        <section id="content">
+            <form>
+                <h1>登陆</h1>
+                <div>
+                    <input type="text" placeholder="Username" required="" id="username" autocomplete="off" />
+                </div>
+                <div>
+                    <input type="password" placeholder="Password" required="" id="password" />
+                </div>
+                <div>
+                    <input type="text" placeholder="验证码" required="" id="validatecode" style="width: 200px;" autocomplete="off" />
+                    <img id="imgVerify" src="/Account/ValidateCode" alt="看不清？点击更换" onclick="this.src = this.src + '?'" />
+                </div>
+                <div>
+                    <input type="button" value="Log in" onclick="SignIn()"/>
+                </div>
 
-            </div>
-        </form>
+            </form>
 
-    </section>
-</div>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        </section>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        function SignIn() {
+            var userName = $("#username").val();
+            var password = $("#password").val();
+            var validatecode = $("#validatecode").val();
+            $.ajax({
+
+                url: "/Account/SignIn",
+                type: "post",
+                data: {
+                    username: userName,
+                    ValidateCode: validatecode,
+                    password: password
+
+                }, success: function (data) {
+                    if (data === "ok")
+                        location.href = "/home/index";
+                    else {
+                        alert(data);
+                    }
+                }
+            })
+
+        }
+    </script>
+
 </body>
 </html>

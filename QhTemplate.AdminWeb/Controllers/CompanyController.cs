@@ -4,10 +4,12 @@ using System.Linq.Dynamic.Core;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using System.Linq;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.Company;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;

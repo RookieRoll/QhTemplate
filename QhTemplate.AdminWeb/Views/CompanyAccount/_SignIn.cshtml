@@ -4,12 +4,84 @@
     Layout = null;
 }
 
-<div>
-    <form asp-action="SignIn" asp-controller="CompanyAccount" method="post">
-        <label>登陆</label>
-        <label>公司编号<input type="number" name="companyid" /></label>
-        <label>用户名<input type="text" name="username" /></label>
-        <label>密码<input type="password" name="password" /></label>
-        <input type="submit" value="登录" />
-    </form>
-</div>
+<html>
+<head>
+    <title>公司登录</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body style="display:flex;background-image:url(../../images/companyLogin.jpg);background-size:100%;">
+    <div style="width: 500px;border: 1px solid lightgray; margin: auto;height: 300px;background-color:white;border-radius: 30px;">
+        <h3 style="text-align:center;">公司登录</h3>
+        <form style="width:80%;margin:auto;">
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">公司名称</span>
+                <input type="text" class="form-control" placeholder="公司名称" aria-describedby="basic-addon1" list="data" oninput="getData()" id="schoolname">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">用户名</span>
+                <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon2" id="username">
+            </div>
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">密码</span>
+                <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon3" id="password">
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:20px;">
+                <a href="/companyaccount/SignUpUser">注册</a>
+                <button type="button" onclick="signIn()" class="btn btn-lg btn-primary" style="width:200px;height:30px;font-size: 14px;padding: 0px;background-color: cornflowerblue;">登录</button>
+
+            </div>
+
+            <datalist id="data"></datalist>
+        </form>
+    </div>
+    <script>
+
+        function signIn() {
+            var schoolname = $("#schoolname").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            $.ajax({
+                url: "/CompanyAccount/SignIn",
+                type: "post",
+                data: {
+                    CompanyId: schoolname,
+                    UserName: username,
+                    Password: password
+                },
+                success: function (data) {
+                    if (data === 'ok')
+                        location.href = "/home/index";
+                    else {
+                        alert(data)
+
+                    }
+                }
+            });
+
+        }
+        function getData() {
+            var value = $("#schoolname").val();
+            $.ajax({
+                url: "/CompanyAccount/GetCompany",
+                type: "post",
+                data: {
+                    name: value
+
+                },
+                success: function (data) {
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += "<option value='" + data[i].name + "'>";
+                    }
+                    $("#data").html(html);
+
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

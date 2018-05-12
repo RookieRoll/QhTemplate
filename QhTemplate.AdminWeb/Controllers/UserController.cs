@@ -6,6 +6,7 @@ using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using QhTemplate.AdminWeb.Extentions;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.Navigation;
 using QhTemplate.AdminWeb.ViewModels.Users;
 using QhTemplate.ApplicationService.Users;
@@ -13,6 +14,7 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class UserController : Controller
     {
         private readonly IUserAppService _userAppService;

@@ -23,23 +23,27 @@ namespace QhTemplate.AdminWeb.Navigation
             userMenu.Children.Add(item);
             SideMenu.Children.Add(userMenu);
             #endregion
-            var major = new MenuItem { Name = "专业", Url = "/Major/Index", RequiredAuthorizeCode = null };
+            var major = new MenuItem { Name = "专业", Url = "/Major/Index", RequiredAuthorizeCode = PermissionNames.Major };
             SideMenu.Children.Add(major);
 
-            var article = new MenuItem { Name = "新闻", Url = "/Articles/Index", RequiredAuthorizeCode = null };
+            var article = new MenuItem { Name = "新闻", Url = "/Articles/Index", RequiredAuthorizeCode = PermissionNames.Article };
             SideMenu.Children.Add(article);
 
-            var area = new MenuItem { Name = "区域学校", Url = "/Area/Index", RequiredAuthorizeCode = null };
+            var area = new MenuItem { Name = "区域学校", Url = "/Area/Index", RequiredAuthorizeCode = PermissionNames.SchoolArea };
             SideMenu.Children.Add(area);
 
-            var company = new MenuItem { Name = "公司", Url = "/Company/index", RequiredAuthorizeCode = null };
+            var company = new MenuItem { Name = "公司", Url = "/Company/index", RequiredAuthorizeCode = PermissionNames.Company };
             SideMenu.Children.Add(company);
 
-            var recruitment = new MenuItem { Name = "招聘信息", Url = "/RecruitMent/Index", RequiredAuthorizeCode = null };
+            var recruitment = new MenuItem { Name = "招聘信息", Url = "/RecruitMent/Index", RequiredAuthorizeCode = PermissionNames.RecruitMent };
             SideMenu.Children.Add(recruitment);
 
-            var briefing = new MenuItem { Name = "宣讲会", Url = "/CareerTalk/index", RequiredAuthorizeCode = null };
+            var briefing = new MenuItem { Name = "宣讲会", Url = "/CareerTalk/index", RequiredAuthorizeCode = PermissionNames.CareerTalk };
             SideMenu.Children.Add(briefing);
+
+
+            var resume = new MenuItem { Name = "简历查看", Url = "/Resume/index", RequiredAuthorizeCode = PermissionNames.Resument };
+            SideMenu.Children.Add(resume);
         }
     }
 }

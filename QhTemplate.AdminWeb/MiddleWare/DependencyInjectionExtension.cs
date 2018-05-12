@@ -9,6 +9,7 @@ using QhTemplate.ApplicationCore.Majors;
 using QhTemplate.ApplicationCore.News;
 using QhTemplate.ApplicationCore.Organizations;
 using QhTemplate.ApplicationCore.RecruitMents;
+using QhTemplate.ApplicationCore.Resumes;
 using QhTemplate.ApplicationCore.Schools;
 using QhTemplate.ApplicationCore.Users;
 using QhTemplate.ApplicationService.Areas;
@@ -19,6 +20,7 @@ using QhTemplate.ApplicationService.Majors;
 using QhTemplate.ApplicationService.NewsArticles;
 using QhTemplate.ApplicationService.Organizations;
 using QhTemplate.ApplicationService.Recruitments;
+using QhTemplate.ApplicationService.Resumes;
 using QhTemplate.ApplicationService.Schools;
 using QhTemplate.ApplicationService.Users;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -42,6 +44,7 @@ namespace QhTemplate.AdminWeb.MIddleWare
             service.AddScoped<CompanyManager>();
             service.AddScoped<RecruitmentManager>();
             service.AddScoped<BriefingContentManager>();
+            service.AddScoped<ResumeManager>();
             
             service.AddScoped<IUserAppService, UserAppService>();
             service.AddScoped<IRolesAppService, RoleAppService>();
@@ -53,6 +56,7 @@ namespace QhTemplate.AdminWeb.MIddleWare
             service.AddScoped<ICompanyService, CompanyService>();
             service.AddScoped<IRecruitmentServcie, RecruitmentServcie>();
             service.AddScoped<IBriefingContentService, BriefingContentService>();
+            service.AddScoped<IResumeService, ResumeService>();
         }
     }
 }

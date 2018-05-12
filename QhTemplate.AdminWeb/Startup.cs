@@ -28,10 +28,10 @@ namespace QhTemplate.AdminWeb
         {
             services.AddDependency();
             services.AddMemoryCache();
-            //services.AddMvc(opt =>
-            //{
-            //    opt.Filters.Add<MyExceptionFilter>();
-            //});
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add<MyExceptionFilter>();
+            });
             services.AddMvc();
             services.AddAuthentication(option =>
             {
@@ -44,6 +44,7 @@ namespace QhTemplate.AdminWeb
             });
             services.RegisterDataTables();
             services.AddUEditorService();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

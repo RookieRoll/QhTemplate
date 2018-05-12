@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using QhTemplate.ApplicationService.Recruitments;
 using System.Linq.Dynamic.Core;
 using System.Security.Claims;
-using Community.CsharpSqlite;
 using Microsoft.EntityFrameworkCore;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.Organizations;
 using QhTemplate.AdminWeb.ViewModels.Recruitments;
 using QhTemplate.ApplicationService.Areas;
@@ -19,6 +19,7 @@ using QhTemplate.AdminWeb.Utils;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class RecruitmentController : Controller
     {
         private readonly IRecruitmentServcie _recruitment;

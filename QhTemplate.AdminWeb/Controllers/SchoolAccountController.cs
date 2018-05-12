@@ -63,13 +63,13 @@ namespace QhTemplate.AdminWeb.Controllers
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "账号或者密码错误");
-                return RedirectToAction("SignIn");
+                return Json("账号或者密码错误");
             }
 
             await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, user);
             _menuProvider.RemoveMenu(user.Id);
             _menuProvider.LoadMenu(user.Id);
-            return RedirectToAction("Index", "Home");
+            return Json("ok");
         }
 
         public IActionResult SignUp()
@@ -85,7 +85,7 @@ namespace QhTemplate.AdminWeb.Controllers
 
            var user = _userAppService.Register(obj.UserName, obj.Name, obj.Email, obj.Password, UserType.Teacher);
             _schoolService.AddTeachers(schoolArea.Id,user);
-            return RedirectToAction("SignIn");
+            return Json("ok");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ namespace QhTemplate.FontWeb.ViewComponents
                     School = school.Name,
                     Time = briefing.StartTime.ToString("MM-dd HH:mm")
                 };
+            
             return View("BrifingContent",list);
         }
     }

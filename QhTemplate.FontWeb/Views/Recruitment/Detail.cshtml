@@ -73,7 +73,7 @@
                                 @Html.Raw(item.Content)
                             </div>
                             <div class="panel-footer">
-                                <button class="btn btn-default">投递</button>
+                                <button class="btn btn-default" onclick="SendFile(@Model.CompanyId,@item.Id)">投递</button>
                             </div>
                         </div>
                     </div>
@@ -83,3 +83,20 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function SendFile(companyId,recruid) {
+        $.ajax({
+            url:"/FileOption/Delivery",
+            type:"post",
+            data: {
+                companyId:companyId,
+                recruidId:recruid
+            },
+            sucess:function(data) {
+                alert("投递成功");
+            }
+        });
+    }
+</script>

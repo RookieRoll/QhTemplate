@@ -15,8 +15,8 @@
                         "<button class=\"btn btn-default\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
                         "<span class=\"glyphicon glyphicon-th-list\"></span> </button>" +
                         "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\">";
-                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + id + ")\">编辑</a></li>";
                     if (!row.isStatic) {
+                        html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + id + ")\">编辑</a></li>";
                         html += "<li><a href=\"javaScript:void(0)\" onclick=\"openDelete(" + id + ")\">删除</a></li>";
                     }
                     html += "</ul></form> </div>";

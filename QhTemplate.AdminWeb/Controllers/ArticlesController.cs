@@ -4,6 +4,7 @@ using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using QhTemplate.ApplicationService.NewsArticles;
 using System.Linq.Dynamic.Core;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.NewsArticle;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 using UEditorNetCore;
@@ -11,6 +12,7 @@ using QhTemplate.AdminWeb.Utils;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class ArticlesController : Controller
     {
         private readonly IArticlesApplicationService _applicationService;

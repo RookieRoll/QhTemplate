@@ -33,7 +33,7 @@ namespace QhTemplate.AdminWeb.ViewComponents.HeaderViewComponents
             switch (types)
             {
                 case UserType.Admin: return "Account/Sigin";
-                case UserType.Teacher: return "";
+                case UserType.Teacher: return "schoolaccount/Signin";
                 default: return "CompanyAccount/Signin";
             }
         }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.Areas;
 using QhTemplate.AdminWeb.ViewModels.Organizations;
 using QhTemplate.ApplicationService.Areas;
@@ -9,6 +10,7 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class AreaController : Controller
     {
         private readonly IAreaAppService _areaApp;

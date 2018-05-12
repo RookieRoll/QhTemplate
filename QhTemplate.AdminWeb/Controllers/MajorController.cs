@@ -5,6 +5,7 @@ using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using IronPython.Modules;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.Major;
 using QhTemplate.ApplicationService.Majors;
 using QhTemplate.ApplicationService.Utils;
@@ -12,6 +13,7 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class MajorController : Controller
     {
         private readonly IMajorAppService _majorApp;

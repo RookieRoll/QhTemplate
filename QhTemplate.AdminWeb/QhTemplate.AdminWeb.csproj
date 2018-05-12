@@ -100,9 +100,6 @@
   <ItemGroup>
     <ProjectReference Include="..\QhTemplate.ApplicationService\QhTemplate.ApplicationService.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\Company\12\" />
-  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties config_1json__JSONSchema="" />

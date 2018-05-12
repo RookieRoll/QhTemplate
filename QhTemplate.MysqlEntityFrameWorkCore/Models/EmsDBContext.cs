@@ -12,6 +12,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public virtual DbSet<BriefingContent> BriefingContent { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CompanyUser> CompanyUser { get; set; }
+        public virtual DbSet<FileRelation> FileRelation { get; set; }
         public virtual DbSet<Major> Major { get; set; }
         public virtual DbSet<MajorRecruitMent> MajorRecruitMent { get; set; }
         public virtual DbSet<NewArticle> NewArticle { get; set; }
@@ -154,6 +155,27 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("CompanyUser_ibfk_1");
+            });
+
+            modelBuilder.Entity<FileRelation>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CompanyId).HasColumnType("int(11)");
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.DisplayName)
+                    .HasColumnName("displayName")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.RealName)
+                    .HasColumnName("realName")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.RecruitId).HasColumnType("int(11)");
+
+                entity.Property(e => e.UserId).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Major>(entity =>

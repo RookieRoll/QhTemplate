@@ -1,36 +1,44 @@
-﻿@model object
+﻿
 @{
+    ViewBag.Title = "title";
     Layout = null;
 }
-<!DOCTYPE html>
 
 <html>
 <head>
     <title>教师登录</title>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
-<body>
-    <div>
-        <label>教师登录</label>
-        <form>
-            <div>
-                <label>学校名称<input type="text" list="data" oninput="getData()" id="schoolname" /></label>
+<body style="display:flex;background-image:url(../../images/schoollogin.jpg);background-size:100%;">
+    <div style="width: 500px;border: 1px solid lightgray; margin: auto;height: 300px;background-color:white;border-radius: 30px;">
+        <h3 style="text-align:center;">教师登录</h3>
+        <form style="width:80%;margin:auto;">
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">学校名称</span>
+                <input type="text" class="form-control" placeholder="学校名称" aria-describedby="basic-addon1" list="data" oninput="getData()" id="schoolname">
             </div>
-            <div>
-                <label>用户名<input type="text" name="username" id="username" /></label>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">用户名</span>
+                <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon2" id="username">
             </div>
-            <div>
-                <label>密码<input type="password" name="password" id="password" /></label>
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">密码</span>
+                <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon3" id="password">
             </div>
-            <a href="/schoolaccount/signup">注册</a>
-            <button type="button" onclick="signIn()">登录</button>
-            
+            <div style="display:flex;justify-content:space-between;margin-top:20px;">
+                <a href="/schoolaccount/signup">注册</a>
+                <button type="button" onclick="signIn()" class="btn btn-lg btn-primary" style="width:200px;height:30px;font-size: 14px;padding: 0px;background-color: cornflowerblue;">登录</button>
+
+            </div>
+
             <datalist id="data"></datalist>
         </form>
     </div>
     <script>
-
+       
         function signIn() {
             var schoolname = $("#schoolname").val();
             var username = $("#username").val();
@@ -44,7 +52,11 @@
                     Password: password
                 },
                 success: function (data) {
-                    location.href = "/home/index";
+                    if (data === 'ok')
+                        location.href = "/home/index";
+                    else {
+                        alert(data)
+                    }
                 }
             });
 

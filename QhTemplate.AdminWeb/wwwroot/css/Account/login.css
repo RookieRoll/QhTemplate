@@ -259,7 +259,7 @@ form:after {
     width: 79px;
     vertical-align: middle;
 }
-#content form input[type="submit"] {
+#content form input[type="button"] {
     background: rgb(254,231,154);
     background: -moz-linear-gradient(top, rgba(254,231,154,1) 0%, rgba(254,193,81,1) 100%);
     background: -webkit-linear-gradient(top, rgba(254,231,154,1) 0%,rgba(254,193,81,1) 100%);
@@ -289,7 +289,7 @@ form:after {
     width: 120px;
 }
 
-    #content form input[type="submit"]:hover {
+    #content form input[type="button"]:hover {
         background: rgb(254,193,81);
         background: -moz-linear-gradient(top, rgba(254,193,81,1) 0%, rgba(254,231,154,1) 100%);
         background: -webkit-linear-gradient(top, rgba(254,193,81,1) 0%,rgba(254,231,154,1) 100%);

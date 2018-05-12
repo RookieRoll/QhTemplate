@@ -25,7 +25,7 @@ namespace QhTemplate.ApplicationService.Companys
         {
             var company = Company.Create(name, address, username, telphone, email);
             int result = _companyManager.Create(company);
-            CreateFolder(result);
+            //CreateFolder(result);
             return result;
         }
 

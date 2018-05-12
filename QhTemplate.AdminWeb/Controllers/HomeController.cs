@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class HomeController : Controller
     {
         public IActionResult Index()

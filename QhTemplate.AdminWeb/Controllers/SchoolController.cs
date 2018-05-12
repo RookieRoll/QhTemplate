@@ -4,6 +4,7 @@ using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.School;
 using QhTemplate.ApplicationService.Areas;
 using QhTemplate.ApplicationService.Schools;
@@ -11,6 +12,7 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class SchoolController : Controller
     {
         private readonly ISchoolService _schoolService;

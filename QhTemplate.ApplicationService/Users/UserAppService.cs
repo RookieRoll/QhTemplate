@@ -87,7 +87,8 @@ namespace QhTemplate.ApplicationService.Users
         public int Register(string userName, string name, string email, string password, UserType type)
         {
             var user = User.Register(name, userName, email, password, type);
-            var defaultRole = _roleManager.Finds(m => m.IsDefault).Select(m => m.Id);
+            var func = GetDefaultRole(type);
+            var defaultRole = _roleManager.Finds(func).Select(m => m.Id);
 
             using (var scope = _db.Database.BeginTransaction())
             {

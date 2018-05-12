@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationCore.Authentications.Permissions
 {
@@ -42,14 +43,16 @@ namespace QhTemplate.ApplicationCore.Authentications.Permissions
 
             #endregion
 
+            new Permissions {Name = PermissionNames.Major, DisplayName = "学科专业管理"},
+
+            new Permissions{Name = PermissionNames.Article,DisplayName = "新闻管理"},
             new Permissions {Name = PermissionNames.SchoolArea, DisplayName = "地区学校管理"},
             new Permissions {Name = PermissionNames.Company, DisplayName = "公司管理"},
 
-            new Permissions {Name = PermissionNames.RecruitMent, DisplayName = "招聘管理"},
-            new Permissions {Name = PermissionNames.CareerTalk, DisplayName = "宣讲会管理"}
+            //new Permissions {Name = PermissionNames.RecruitMent, DisplayName = "招聘管理"},
+            //new Permissions {Name = PermissionNames.CareerTalk, DisplayName = "宣讲会管理"},
 
-            
-          
+            //new Permissions {Name = PermissionNames.Resument, DisplayName = "简历查看"}
         };
 
         public class Permissions

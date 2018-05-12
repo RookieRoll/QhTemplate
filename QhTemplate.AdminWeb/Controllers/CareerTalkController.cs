@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.BriefingContents;
 using QhTemplate.ApplicationService.BriefingContents;
 using QhTemplate.ApplicationService.Schools;
@@ -15,6 +16,7 @@ using QhTemplate.AdminWeb.Utils;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
+    [MyAuthentications]
     public class CareerTalkController : Controller
     {
         private readonly IBriefingContentService _briefingContent;

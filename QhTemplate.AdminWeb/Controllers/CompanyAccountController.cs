@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using IronPython.Modules;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.AdminWeb.Models;
 using QhTemplate.AdminWeb.Navigation;
 using QhTemplate.AdminWeb.Utils;
 using QhTemplate.AdminWeb.ViewModels.CompanyAccounts;
+using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.ApplicationService.Companys;
 using QhTemplate.ApplicationService.Users;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -37,7 +39,7 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(SignViewModel model)
         {
-            var company = _companyService.Find(model.CompanyId);
+            var company = _companyService.FirstOrDefault(m=>m.Name.Equals(model.CompanyId));
             var users = _userAppService.GetUsersByCompany(company.Id);
             Func<User, bool> func = null;
             //判断是否是邮箱登陆
@@ -50,13 +52,13 @@ namespace QhTemplate.AdminWeb.Controllers
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "账号或者密码错误");
-                return RedirectToAction("SignIn");
+                return Json("账号或者密码错误");
             }
 
             await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, user);
             _menuProvider.RemoveMenu(user.Id);
             _menuProvider.LoadMenu(user.Id);
-            return RedirectToAction("Index", "Home");
+            return Json("ok");
         }
 
 
@@ -73,23 +75,36 @@ namespace QhTemplate.AdminWeb.Controllers
         public IActionResult SignUpCompany(CompanySignUpViewModel model)
         {
             var id = _companyService.Creat(model.Name, model.Address, model.LegalPerson, model.Tellphone, model.Email);
-            return RedirectToAction("SignUpUser", new { id });
+            return Json(new JsonModel { Status = true, Message = model.Name });
         }
 
-        public IActionResult SignUpUser(int? id)
+        public IActionResult SignUpUser(string name)
         {
-            return View("_SignUser", id ?? 0);
+            name = name ?? "";
+            return View("_SignUser",name);
         }
         [HttpPost]
         public IActionResult SignUpUser(SignUpViewModel model)
         {
-            var company = _companyService.Find(model.CompanyId);
+            var company = _companyService.FirstOrDefault(m=>m.Name.Equals(model.CompanyId))??throw new UserFriendlyException("公司不存在");
             var user = _userAppService.Register(model.UserName, model.Name, model.Email, model.Password,
                 UserType.Employee);
 
             _companyService.SetCompanyUser(company.Id, user);
-            return RedirectToAction("SignIn");
+            return Json("ok");
         }
         #endregion
+
+
+        public IActionResult GetCompany(string name)
+        {
+            name = name ?? "";
+            var company = _companyService.Finds(m => m.Name.Contains(name)).Select(m => new
+            {
+                id = m.Id,
+                name = m.Name
+            });
+            return Json(company);
+        }
     }
 }

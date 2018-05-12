@@ -37,6 +37,18 @@
 
         #endregion
 
+
+        #region 专业管理
+
+        public const string Major = BaseMenu + ".Major";
+
+        #endregion
+
+        #region 新闻管理
+
+        public const string Article = BaseMenu + ".Article";
+
+        #endregion
         #region 地区学校管理
 
         public const string SchoolArea = BaseMenu + ".SchoolArea";
@@ -62,6 +74,12 @@
         #region 宣讲会
 
         public const string CareerTalk = BaseMenu + ".CareerTalk";
+
+        #endregion
+
+        #region  简历
+
+        public const string Resument = BaseMenu + ".Resument";
 
         #endregion
     }

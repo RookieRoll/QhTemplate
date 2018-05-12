@@ -34,9 +34,9 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(AccountViewModel login)
         {
-            if (!ModelState.IsValid) return RedirectToAction("SignIn");
+            if (!ModelState.IsValid) return Json("输入信息错误");
             if (!CheckValidateCode(login.ValidateCode))
-                return RedirectToAction("SignIn");
+                return Json("验证码错误");
 
             Func<User, bool> func = null;
             //判断是否是邮箱登陆
@@ -49,13 +49,13 @@ namespace QhTemplate.AdminWeb.Controllers
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "账号或者密码错误");
-                return RedirectToAction("SignIn");
+                return Json("账号或者密码错误");
             }
 
             await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, user);
             _menuProvider.RemoveMenu(user.Id);
             _menuProvider.LoadMenu(user.Id);
-            return RedirectToAction("Index", "Home");
+            return Json("ok");
         }
 
         //        private async Task SaveSignInUserIndetifier(User user)

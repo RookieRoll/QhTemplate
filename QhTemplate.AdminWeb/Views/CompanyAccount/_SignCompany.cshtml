@@ -1,21 +1,94 @@
 ﻿
 @{
     ViewBag.Title = "title";
-    Layout =null;
+    Layout = null;
 }
 
-<h2>title</h2>
+@model string
+@{
+    ViewBag.Title = "title";
+    Layout = null;
+}
 
-<div>
-    <form asp-controller="CompanyAccount" asp-action="SignUpCompany" method="post">
-        <div>
-            <label>公司注册</label>
-        </div>
-        <label>公司名称：  <input type="text" name="Name" /></label>
-        <label>公司地址：  <input type="text" name="Address" /></label>
-        <label>公司法人：  <input type="text" name="LegalPerson" /></label>
-        <label>联系电话：  <input type="text" name="Tellphone" /></label>
-        <label>联系邮箱：  <input type="text" name="Email" /></label>
-        <input type="submit" value="注册" />
-    </form>
-</div>
+<html>
+<head>
+    <title>注册公司</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body style="display:flex;background-image:url(../../images/companyLogin.jpg);background-size:100%;">
+    <div style="width: 500px;border: 1px solid lightgray; margin: auto;height: 400px;background-color:white;border-radius: 30px;">
+        <h3 style="text-align:center;">注册公司</h3>
+        <form style="width:80%;margin:auto;">
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">公司名称</span>
+                <input type="text" class="form-control" placeholder="公司名称" aria-describedby="basic-addon1" id="name">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">公司法人</span>
+                <input type="text" class="form-control" placeholder="公司法人" aria-describedby="basic-addon2" id="legalperson">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">联系电话</span>
+                <input type="tel" class="form-control" placeholder="公司联系电话" aria-describedby="basic-addon3" id="telphone">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon4" style="min-width: 85px;">公司邮箱</span>
+                <input type="email" class="form-control" placeholder="邮箱" aria-describedby="basic-addon4" id="email">
+            </div>
+
+            <div class="input-group" style="margin-top:20px;">
+                <span class="input-group-addon" id="basic-addon5" style="min-width: 85px;">公司地址</span>
+                <input type="text" class="form-control" placeholder="公司地址" aria-describedby="basic-addon5" id="address">
+            </div>
+
+            <div style="display:flex;justify-content:space-between;margin-top:20px;">
+                <div>
+                    <a href="/companyaccount/Signin">返回登录</a>
+                    <a href="/companyaccount/SignUpUser">注册用户</a>
+                </div>
+                <button type="button" onclick="signUp()" class="btn btn-lg btn-primary" style="width:200px;height:30px;font-size: 14px;padding: 0px;background-color: cornflowerblue;">注册</button>
+
+            </div>
+
+            <datalist id="data"></datalist>
+        </form>
+    </div>
+    <script>
+        function signUp() {
+            var name = $("#name").val();
+            var address = $("#address").val();
+            var legalperson = $("#legalperson").val();
+            var telphone = $("#telphone").val();
+            var email = $("#email").val();
+            $.ajax({
+                url: "/CompanyAccount/SignUpCompany",
+                type: "post",
+                data: {
+                    Name: name,
+                    Address: address,
+                    LegalPerson: legalperson,
+                    Tellphone: telphone,
+                    Email:email
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (Object.prototype.toString.call(data) === "[object String]")
+                        alert(data)
+                    else {
+                        location.href = "/companyaccount/SignUpUser?name="+data.message;
+
+                    }
+              
+                }
+            });
+
+        }
+     
+    </script>
+</body>
+</html>

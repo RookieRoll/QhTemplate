@@ -2,7 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 <div>
- @Html.Partial("_Carousel")
+    @Html.Partial("_Carousel")
 
+    @await Component.InvokeAsync("BriefingContent")
+
+    @await Component.InvokeAsync("Recruit")
 
 </div>

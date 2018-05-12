@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "首页";
+}
+@section Styles{
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+}
+
+
+<section class="content-header">
+    <h1>
+        简历信息
+        <small> @ViewData["Title"]</small>
+    </h1>
+</section>
+<section class="content">
+    <table id="dataTable" class="table table-striped table-bordered"></table>
+</section>
+<div id="model"></div>x
+@section Scripts{
+    <script src="~/lib/datatables/js/datatables-fnReloadAjax.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="~/lib/jstree/dist/jstree.js"></script>
+    <script src="~/js/Resume/index.js"></script>
+}
