@@ -11,8 +11,9 @@ namespace QhTemplate.AdminWeb.ViewComponents.HeaderViewComponents
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var name = await Task.FromResult(HttpContext.User.Identities.SingleOrDefault(x => x.NameClaimType.Equals(ClaimTypes.Name))?.Name);
-
+            var name = await Task.FromResult(HttpContext.User.Identities
+                .SingleOrDefault(x => x.NameClaimType.Equals(ClaimTypes.Name))?.Name);
+        
             return View("_User", name);
         }
     }

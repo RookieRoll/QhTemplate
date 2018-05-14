@@ -1,0 +1,15 @@
+﻿@model string
+
+@if (string.IsNullOrEmpty(Model))
+{
+
+    <li><a href="javaScript:void(0)" onclick="openLogin()">用户登录</a></li>
+    <li><a href="http://localhost:59932/CompanyAccount/SignIn">企业入口</a></li>
+    <li><a href="http://localhost:59932/SchoolAccount/SignIn">学校入口</a></li>
+
+}
+else
+{ <li><a href="javaScript:void(0)" onclick="openPanel()">我的简历</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="/account/">退出登录</a></li>
+}

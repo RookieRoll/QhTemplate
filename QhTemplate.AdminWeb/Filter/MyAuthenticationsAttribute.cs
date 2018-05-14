@@ -8,8 +8,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 namespace QhTemplate.AdminWeb.Filter
 {
-    public  class MyAuthenticationsAttribute : Attribute,IResultFilter
+    public class MyAuthenticationsAttribute : Attribute, IResultFilter
     {
+        //public void OnActionExecuted(ActionExecutedContext context)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public void OnActionExecuting(ActionExecutingContext context)
+        //{
+        //    if (!context.HttpContext.User.Claims.Any())
+        //    {
+        //        context.Result = new RedirectToActionResult("SignIn", "Account", null);
+        //        return;
+        //    }
+        //}
+
         public void OnResultExecuted(ResultExecutedContext context)
         {
         }
@@ -21,9 +35,6 @@ namespace QhTemplate.AdminWeb.Filter
                 context.Result = new RedirectToActionResult("SignIn", "Account", null);
                 return;
             }
-                
-            
         }
     }
-
 }

@@ -1,0 +1,56 @@
+﻿@model string 
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="uploadfile">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content" style="text-align: center;padding: 5px 10px;padding-bottom: 30px;margin-top:100px;">
+            <div class="page-header">
+                <h4>我的简历</h4>
+            </div>
+            <div>
+                <div>
+                    <label>我的简历：</label>
+                    <a href="/upload/resumes/@Model" target="_blank">下载/查看</a>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="showFilter()">上传简历</button>
+                    <input id="harg_file" type="file" accept="application/pdf" style="display:none" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#uploadfile").modal("show");
+    function showFilter() {
+        $("#harg_file").click();
+
+    }
+
+    $("#harg_file").change(function () {
+        var fd = new FormData();
+        fd.append("file", $(this).get(0).files[0])
+        $.ajax({
+            url: "/FileDownload/UploadFileAsync",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: fd,
+            xhr: function () {  // custom xhr
+                myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // check if upload property exists
+                    myXhr.upload.addEventListener('progress', function (evt) {
+                        // $("#upload_tip").dialog("open");
+                        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                        console.log(percentComplete);
+                    }, false); // for handling the progress of the upload
+                }
+                return myXhr;
+            },
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+</script>

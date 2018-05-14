@@ -11,6 +11,7 @@ namespace QhTemplate.FontWeb.Models.BriefingContents
         public List<BriefingContentList> Result { get; set; }
         public int MenuType { get; set; }
         public int Page { get; set; }
+        public int SchoolId { get; set; }
     }
 
     public class BriefingContentList

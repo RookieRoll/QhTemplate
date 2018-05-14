@@ -15,6 +15,8 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
 </head>
 <body style="padding:0px;">
     <nav class="navbar">
@@ -26,27 +28,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo">就业网</a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand logo">就业网</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="navmenu myactive"><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
-                    <li class="navmenu"><a  href="/BriefingContent/index/14">宣讲</a></li>
-                    <li class="navmenu"><a  href="/Recruitment/index">招聘</a></li>
+                    <li class="navmenu"><a asp-area="" asp-controller="Article" asp-action="Index">新闻</a></li>
+                    <li class="navmenu"><a href="/BriefingContent/index/14">宣讲</a></li>
+                    <li class="navmenu"><a href="/Recruitment/index">招聘</a></li>
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="signin-btn-li"><a href="http://localhost:59932/CompanyAccount/SignIn" class="btn btn-info signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">企业登陆</a></li>
-                    <li class="signin-btn-li"><a href="http://localhost:59932/SchoolAccount/SignIn" class="btn btn-primary signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">学校登陆</a></li>
-                    <li class="signin-btn-li"><a href="" class="btn btn-default signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">学生登陆</a></li>
+                <ul class="nav navbar-nav navbar-right" id="barheader">
+                   @await Component.InvokeAsync("BarHeader")
                 </ul>
                 @*<form class="navbar-form navbar-right">
-                    <div class="form-group search-border">
-                        <input type="text"  placeholder="搜索 宣讲会/实习/公司/职位" class="search-input">
-                        <i class="glyphicon glyphicon-search search-logo"></i>
-                    </div>
-                   
-                </form>*@
+                        <div class="form-group search-border">
+                            <input type="text"  placeholder="搜索 宣讲会/实习/公司/职位" class="search-input">
+                            <i class="glyphicon glyphicon-search search-logo"></i>
+                        </div>
+
+                    </form>*@
 
 
             </div>
@@ -60,8 +61,10 @@
         </footer>
     </div>
 
+
+
+
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -80,7 +83,19 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    <script>
+        function openPanel() {
+            $.ajax({
+                url: "/home/GetMyResume",
+                type: "get",
+                success: function (data) {
+                    $("#model").html(data);
 
+                }
+            });
+        }
+     
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

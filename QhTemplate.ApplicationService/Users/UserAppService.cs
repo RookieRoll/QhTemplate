@@ -89,7 +89,8 @@ namespace QhTemplate.ApplicationService.Users
             var user = User.Register(name, userName, email, password, type);
             var func = GetDefaultRole(type);
             var defaultRole = _roleManager.Finds(func).Select(m => m.Id);
-
+            if (type == UserType.Student)
+                defaultRole = new List<int>();
             using (var scope = _db.Database.BeginTransaction())
             {
                 try

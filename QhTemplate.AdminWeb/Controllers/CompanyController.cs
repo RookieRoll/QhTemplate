@@ -4,8 +4,11 @@ using System.Linq.Dynamic.Core;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.Company;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -60,6 +63,32 @@ namespace QhTemplate.AdminWeb.Controllers
             var response = DataTablesResponse.Create(request, data.Count(), filteredData.Count(), dataPage);
 
             return new DataTablesJsonResult(response, true);
+        }
+
+        [HttpGet]
+        public IActionResult ModifyInfo()
+        {
+            var userid= HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            var id = _companyService.Finds().Include(m => m.CompanyUser)
+                .FirstOrDefault(m => m.CompanyUser.Any(n => n.UserId ==int.Parse(userid))).Id;
+            var company = _companyService.Find(id);
+            var modal = new CompanyInfo
+            {
+                Id = company.Id,
+                Content = company.Description
+            };
+            return View(modal);
+        }
+
+        public IActionResult ModifyInfo(CompanyInfo info)
+        {
+            var company = new Company
+            {
+                Id = info.Id,
+                Description = info.Content
+            };
+            _companyService.Update(company);
+            return Json("修改成功");
         }
     }
 }

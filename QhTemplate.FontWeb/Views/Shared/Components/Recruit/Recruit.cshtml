@@ -1,39 +1,43 @@
 ﻿
-@model IEnumerable<QhTemplate.FontWeb.Models.Recruitments.RecruitmentModel>
+@model QhTemplate.FontWeb.ViewComponents.RecruitList
 @{
     Layout = null;
 }
 <div class="panel" style="width: 85%;margin: auto;background-color: white;margin-top: 30px;">
     <div class="panel-heading" style="border-bottom: 1px solid lightgray;margin: 5px 15px;display:flex;">
         <div style="width:4px;height:25px;background-color:#3B85EB"></div>
-        <label style="margin-left: 10px;font-weight: normal;font-size: 18px;">热门宣讲会</label>
-        <a style="margin-left:85%;line-height: 30px;">
+        <label style="margin-left: 10px;font-weight: normal;font-size: 18px;">热门校招</label>
+        <a style="margin-left:86%;line-height: 30px;" href="/Recruitment/index">
             查看更多
             <i class="glyphicon glyphicon-menu-right" style="border: 1px solid lightgray;color: lightgray;border-radius: 50px;padding: 2px;"></i>
         </a>
     </div>
-    <div class="panel-body" style="    padding: 10px 0px;">
+    <div class="panel-body" style="padding: 10px 0px;">
+
         <ol style="float: left; width: 50%;padding: 0 44px; margin-top: 0; margin-bottom: 10px;">
-            @foreach (var item in Model)
+            @foreach (var item in Model.list2)
             {
                 <li style="line-height: 35px;height: 35px;">
                     <span style="display: block;float: left;overflow: hidden;width: 77%;padding-left: 10px;white-space: nowrap;text-overflow: ellipsis;">
-                        <a style="color: #333;width: 260px;float: left;display: block;text-overflow: ellipsis; overflow: hidden;white-space: nowrap;">@item.CompanyName</a>
+                        <a style="color: #333;width: 260px;float: left;display: block;text-overflow: ellipsis; overflow: hidden;white-space: nowrap;"
+                           target="_blank" href="/Recruitment/detail/@item.CompanyId">@item.CompanyName</a>
+                    </span>
+                    <span style="display: block;float: left;width: 23%;padding-right: 10px;color: #6c7583;text-align: right;">@item.JobName</span>
+                </li>
+            }
+        </ol>
+
+        <ol style="float: left; width: 50%;padding: 0 44px; margin-top: 0; margin-bottom: 10px;">
+            @foreach (var item in Model.list1)
+            {
+                <li style="line-height: 35px;height: 35px;">
+                    <span style="display: block;float: left;overflow: hidden;width: 77%;padding-left: 10px;white-space: nowrap;text-overflow: ellipsis;">
+                        <a style="color: #333;width: 260px;float: left;display: block;text-overflow: ellipsis; overflow: hidden;white-space: nowrap;"
+                           target="_blank" href="/Recruitment/detail/@item.CompanyId">@item.CompanyName</a>
                     </span>
                     <span style="display: block;float: left;width: 23%;padding-right: 10px;color: #6c7583;text-align: right;">@item.JobName</span>
                 </li>
 
-            }
-        </ol>
-        <ol style="float: left; width: 50%;padding: 0 44px; margin-top: 0; margin-bottom: 10px;">
-            @foreach (var item in Model)
-            {
-                <li style="line-height: 35px;height: 35px;">
-                    <span style="display: block;float: left;overflow: hidden;width: 77%;padding-left: 10px;white-space: nowrap;text-overflow: ellipsis;">
-                        <a style="color: #333;width: 260px;float: left;display: block;text-overflow: ellipsis; overflow: hidden;white-space: nowrap;">@item.CompanyName</a>
-                    </span>
-                    <span style="display: block;float: left;width: 23%;padding-right: 10px;color: #6c7583;text-align: right;">@item.JobName</span>
-                </li>
             }
         </ol>
     </div>

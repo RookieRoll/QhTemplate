@@ -87,7 +87,10 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult GetData(IDataTablesRequest request)
         {
-            var data = _briefingContent.Finds();
+            var tempid = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            int id = int.Parse(tempid);
+            int schoolId = _schoolService.Finds().Include(m => m.SchoolUser).Where(m => m.SchoolUser.Any(n => n.UserId == id)).FirstOrDefault().Id;
+            var data = _briefingContent.Finds(m=>m.SchoolId== schoolId);
 
             var filteredData = string.IsNullOrWhiteSpace(request.Search.Value)
                 ? data

@@ -91,7 +91,10 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public IActionResult GetData(IDataTablesRequest request)
         {
-            var data = _recruitment.Finds();
+            var tempid = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            int id = int.Parse(tempid);
+            int companyId = _company.Finds().Include(m => m.CompanyUser).Where(m => m.CompanyUser.Any(n => n.UserId == id)).FirstOrDefault().Id;
+            var data = _recruitment.Finds(m=>m.CompanyId== companyId);
 
             var filteredData = string.IsNullOrWhiteSpace(request.Search.Value)
                 ? data

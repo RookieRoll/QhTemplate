@@ -1,0 +1,39 @@
+﻿@model QhTemplate.AdminWeb.ViewModels.Company.CompanyInfo
+@{
+    ViewData["Title"] = "该描述将展示到职位界面";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link href="~/lib/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/lib/ueditor/themes/default/css/ueditor.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Article/Create.css" rel="stylesheet" type="text/css" />
+}
+
+
+<section class="content-header">
+    <h1>
+        修改公司描述
+        <small> @ViewData["Title"]</small>
+
+    </h1>
+</section>
+<section class="content">
+    <div>
+        <label>公司描述</label>
+
+        <input type="hidden" id="id" value="@Model.Id" />
+        <div>
+            @Html.TextAreaFor(m => m.Content, new { @id = "contentbox" })
+        </div>
+    </div>
+    <div class="sub-button">
+        <button type="button" class="btn btn-default commitbutton" onclick="sublogin()">修改</button>
+
+        <button type="button" class="btn btn-default commitbutton" onclick="cancle()">取消</button>
+    </div>
+</section>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="~/js/Companys/info.js"></script>

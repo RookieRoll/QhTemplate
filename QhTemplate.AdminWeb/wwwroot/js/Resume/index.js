@@ -15,7 +15,7 @@
                         "<button class=\"btn btn-default\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
                         "<span class=\"glyphicon glyphicon-th-list\"></span> </button>" +
                         "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\">";
-                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + id + ")\">下载</a></li>";
+                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit('" + row.fileName + "',"+row.companyId+","+row.userId+")\">下载</a></li>";
                  
                     html += "</ul></form> </div>";
                     return html;
@@ -27,22 +27,22 @@
                 title: 'Id',
                 visible: false,
             }, {
-                name: "filename",
-                data: "filename",
+                name: "fileName",
+                data: "fileName",
                 title:"简历名称"
             },
             {
-                name: 'username',
-                data: 'username',
+                name: 'userName',
+                data: 'userName',
                 title: '投递者'
             }, {
-                name: 'useremail',
-                data: 'useremail',
-                title:'useremail'
+                name: 'userEmail',
+                data: 'userEmail',
+                title:'邮箱'
             },
             {
-                name: 'sendtime',
-                data: 'sendtime',
+                name: 'sendTime',
+                data: 'sendTime',
                 title: '投递时间',
             }
         
@@ -52,3 +52,12 @@
         }
     });
 });
+
+
+function openEdit(filename, companyId, userId) {
+    //location.href = "http://localhost:54791/FileDownload/DownLoad?file=" + filename;
+    var filename = companyId + "@" + userId + "@" + filename;
+    var url = "http://localhost:54791/FileDownload/DownLoad?file=" + filename;
+    console.log(url)
+    window.open(url, "_blank");
+}

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.BriefingContents.BriefingContentList>
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td><a href="/BriefingContent/detail/@item.Id" style="display:block;width:100%;color:#4a90e6;" target="_blank">@item.Company</a></td>
+        <td>@item.StartTime</td>
+        <td>@item.Held</td>
+        <td>@item.PublishTime</td>
+    </tr>
+}

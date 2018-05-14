@@ -3,14 +3,23 @@
 <div class="menu-box">
     <div class="left-menu-bar">
         <div class="head-box">
-            @*<div class="login-box">
-                    <a class="btn btn-info user-button  ">登录</a>
-                    <a class="btn btn-default user-button ">注册</a>
-                </div>*@
-            <div class="header-box">
-                <img src="~/images/user-face-male.png" class="header-box-image" />
-                <span class="header-box-name">hi,kobold</span>
-            </div>
+            @if (string.IsNullOrEmpty(Model.UserName))
+            {
+                <div class="login-box">
+                    <a class="btn btn-info user-button  " href="javaScript:void(0)" onclick="openLogin()">登录</a>
+                    <a class="btn btn-default user-button " href="/Account/Signup">注册</a>
+                </div>
+
+            }
+            else
+            {
+                <div class="header-box">
+                    <img src="~/images/user-face-male.png" class="header-box-image" />
+                    <span class="header-box-name">hi,@Model.UserName</span>
+                </div>
+
+            }
+
             <ul class="header-menu-ul ">
                 @if (Model.MenuType == 1)
                 {

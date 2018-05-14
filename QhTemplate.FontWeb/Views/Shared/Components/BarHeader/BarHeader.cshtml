@@ -1,0 +1,71 @@
+﻿@model QhTemplate.FontWeb.ViewComponents.UserViewModel
+
+@if (Model.IsLogin)
+{
+    <li class="signin-btn-li"><a href="http://localhost:59932/CompanyAccount/SignIn" class="btn btn-info signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">企业登陆</a></li>
+    <li class="signin-btn-li"><a href="http://localhost:59932/SchoolAccount/SignIn" class="btn btn-primary signin-btn-li-a" style="padding-top: 7px;padding-bottom: 7px;">学校登陆</a></li>
+    <li class="signin-btn-li" style="margin-right:20px;">
+        <a href="javaScript:void(0)" class="btn btn-default signin-btn-li-a" style="padding-top: 7px; padding-bottom: 7px;" onclick="openLogin()">学生登陆</a>
+    </li>
+}
+else
+{
+    <li class="dropdown signin-btn-li" style="margin-right:20px;">
+        <a href="#" class="dropdown-toggle btn btn-default signin-btn-li-a "
+           data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="false" id="userlogo" style="padding-top: 7px;padding-bottom: 7px;">用户<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="javaScript:void(0)" onclick="openPanel()">我的简历</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="/Account/LoginOut">退出登录</a>
+            </li>
+        </ul>
+    </li>
+}
+
+<div id="model">
+
+</div>
+
+
+
+
+<script>
+    function openLogin() {
+        $.ajax({
+            url: "/Account/SignIn",
+            type: "get",
+            success: function (data) {
+                $("#model").html(data);
+
+            }
+        });
+
+    }
+
+
+    function getData() {
+        var value = $("#schoolname").val();
+
+        $.ajax({
+            url: "/Account/GetSchool",
+            type: "post",
+            data: {
+                name: value
+            },
+            success: function (data) {
+                console.log(data)
+                var html = "";
+                for (var i = 0; i < data.length; i++) {
+                    html += "<option value='" + data[i].name + "'>";
+                }
+                $("#data").html(html);
+
+            }
+        });
+
+    }
+</script>

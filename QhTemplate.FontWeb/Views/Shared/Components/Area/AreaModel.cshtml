@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model QhTemplate.FontWeb.ViewComponents.AreaListViewModel
+
+<div style="position: fixed;top: 20px;z-index: 99999;left: 180px;">
+    <a href="javaScript:void(0)" onclick="showhide()" style="color:white">@Model.CurrentName <i class="glyphicon glyphicon-chevron-down" ></i></a>
+</div>
+<div class="area-drop" id="area-drop" hidden="hidden">
+    <ul class="area-drop-ul">
+        @foreach (var item in Model.list)
+        {
+
+            <li><a class="area-drop-ul-a" href="/BriefingContent/index/@item.Id">@item.Name</a></li>
+        }
+
+
+    </ul>
+</div>
+
+
+<script>
+    function showhide() {
+        $("#area-drop").toggle();
+
+    }
+</script>

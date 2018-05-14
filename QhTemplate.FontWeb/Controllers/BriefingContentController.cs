@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.ApplicationCore;
 using QhTemplate.ApplicationService.BriefingContents;
 using QhTemplate.FontWeb.Models.BriefingContents;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -13,6 +14,7 @@ namespace QhTemplate.FontWeb.Controllers
     {
         private readonly IBriefingContentService _contentSerivce;
         private readonly EmsDBContext _db;
+        private const int Size = BaseConst.Size;
 
         public BriefingContentController(IBriefingContentService contentSerivce, EmsDBContext db)
         {
@@ -20,15 +22,15 @@ namespace QhTemplate.FontWeb.Controllers
             _db = db;
         }
 
-        public IActionResult Index(int id, int ids, string time, string search = "", int page = 1)
+        public IActionResult Index(int id, int ids, string time, string search = "")
         {
-            page = page > 1 ? page : 1;
             search = search ?? "";
             BriefingContentViewModel result = new BriefingContentViewModel()
             {
                 AreaId = id,
-                Page = page,
-                MenuType = 1
+                Page = 1,
+                MenuType = 1,
+                SchoolId=ids
             };
             var school = from area in _db.SchoolArea
                          where area.Path.Contains(string.Format(",{0},", id))
@@ -56,7 +58,7 @@ namespace QhTemplate.FontWeb.Controllers
                 filter = m => m.CompanyName.Contains(search) && m.StartTime.Date.Equals(DateTime.Parse(time).Date);
             }
 
-            result.Result = tempContent.Where(func).Where(filter).OrderBy(m => m.StartTime).Select(m =>
+            result.Result = tempContent.Where(func).Where(filter).OrderBy(m => m.StartTime).Take(Size).Select(m =>
                 new BriefingContentList
                 {
                     Id = m.Id,
@@ -68,6 +70,29 @@ namespace QhTemplate.FontWeb.Controllers
             return View(result);
         }
 
+        [HttpPost]
+        public IActionResult GetMore(int id, int ids,int page=1)
+        {
+            page -= 1;
+            var school = from area in _db.SchoolArea
+                         where area.Path.Contains(string.Format(",{0},", id))
+                         select area.Id;
+            var tempContent = from content in _db.BriefingContent
+                              where school.Any(m => m.Equals(content.SchoolId))
+                              select content;
+           var result= tempContent.OrderBy(m => m.StartTime).Skip(page*Size).Take(Size).Select(m =>
+                new BriefingContentList
+                {
+                    Id = m.Id,
+                    Company = m.CompanyName,
+                    Held = m.Held,
+                    StartTime = m.StartTime.ToString("yyyy-MM-dd HH:mm"),
+                    PublishTime = m.PublishTime.ToString("yyyy-MM-dd HH:mm")
+                }).ToList();
+
+            return PartialView("_Content",result);
+        }
+   
         public IActionResult Detail(int id)
         {
             var detail = (from briefing in _db.BriefingContent

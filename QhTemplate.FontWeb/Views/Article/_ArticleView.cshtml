@@ -1,0 +1,15 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.Articles.ArticleViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-default" style="margin-top:20px;">
+        <div class="panel-heading" style="display:flex;justify-content:space-between">
+            <a href="/Article/detail/@item.Id" target="_blank">@item.Title</a>
+            <label>@item.Time</label>
+        </div>
+        <div class="panel-body">
+            @item.Content
+        </div>
+    </div>
+
+}

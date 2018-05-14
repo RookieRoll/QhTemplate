@@ -11,6 +11,8 @@ namespace QhTemplate.FontWeb.Models.Recruitments
         public List<RecruitmentModel> Result { get; set; }
 
         public int TypeId { get; set; }
+
+        public int MajorId { get; set; }
     }
 
     public class RecruitmentModel

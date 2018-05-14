@@ -94,8 +94,15 @@
                 companyId:companyId,
                 recruidId:recruid
             },
-            sucess:function(data) {
-                alert("投递成功");
+            success:function(data) {
+                if (data === 'ok') {
+                    alert("投递成功");
+
+                }
+                else {
+                    alert(data);
+
+                }
             }
         });
     }

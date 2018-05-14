@@ -1,9 +1,16 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using IronPython.Runtime;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using QhTemplate.ApplicationCore.Exceptions;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.FontWeb.Controllers
 {
@@ -11,63 +18,48 @@ namespace QhTemplate.FontWeb.Controllers
     {
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public FileDownloadController(IHostingEnvironment hostingEnvironment)
+        private readonly EmsDBContext _context;
+        public FileDownloadController(IHostingEnvironment hostingEnvironment, EmsDBContext context)
         {
             _hostingEnvironment = hostingEnvironment;
+            _context = context;
         }
 
-        // GET
-        public IActionResult Index()
+        [HttpPost]
+        public async Task<IActionResult> UploadFileAsync(IFormFile file)
         {
-            return View();
-        }
-
-        public async Task<IActionResult> FileSave(int companyId)
-
-        {
-            var date = Request;
-
-            var files = Request.Form.Files;
-
-            long size = files.Sum(f => f.Length);
-
-            string webRootPath = _hostingEnvironment.WebRootPath;
-
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
-
-            foreach (var formFile in files)
-
+            var id = await Task.FromResult(HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value);
+            string fileExt = GetFileExt(file.FileName);
+            var path = _hostingEnvironment.WebRootPath + "/upload/resumes/" + id + '.' + fileExt;
+            try
             {
-                if (formFile.Length > 0)
-
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    string fileExt = GetFileExt(formFile.FileName); //文件扩展名，不含“.”
-
-                    long fileSize = formFile.Length; //获得文件大小，以字节为单位
-
-                    string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
-
-                    var filePath = webRootPath + "/upload/" + newFileName;
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
+                    await file.CopyToAsync(stream);
                 }
             }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
 
-            return Ok(new {count = files.Count, size});
+            return Json("上传成功");
         }
-
         /// <summary>
         /// 下载文件
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public IActionResult DowLoad(string file)
+        public IActionResult DownLoad(string file)
         {
-            var addrUrl = file;
+            var temp = file.Split("@");
+            var company = int.Parse(temp[0]);
+            var userId = int.Parse(temp[1]);
+            var filename = temp[2];
+            var real = _context.FileRelation.FirstOrDefault(m => m.CompanyId == company && m.UserId == userId && m.DisplayName.Equals(filename))?.RealName ??
+                throw new UserFriendlyException("该文件不存在");
+
+            var addrUrl = _hostingEnvironment.WebRootPath+ "/upload/resumes/" + real + ".pdf";
 
             var stream = System.IO.File.OpenRead(addrUrl);
 
@@ -77,7 +69,7 @@ namespace QhTemplate.FontWeb.Controllers
 
             var provider = new FileExtensionContentTypeProvider();
 
-            var memi = provider.Mappings[fileExt];
+            var memi = provider.Mappings[".pdf"];
 
             return File(stream, memi, Path.GetFileName(addrUrl));
         }

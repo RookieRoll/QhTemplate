@@ -33,8 +33,18 @@ namespace QhTemplate.FontWeb.ViewComponents
                     CompanyName = temp.FirstOrDefault().company.Name,
                     JobName =temp.FirstOrDefault().recruit.CreateTime.ToString("MM-dd"),
                     Email = temp.FirstOrDefault().company.Email
-                }).ToList();
-            return View("Recruit",result);
+                }).Take(40).ToList();
+            var count = result.Count() / 2;
+            var tempModal = new RecruitList();
+            tempModal.list1 = result.Take(count).ToList();
+            tempModal.list2 = result.Skip(count).ToList();
+            return View("Recruit",tempModal);
         }
+    }
+
+    public class RecruitList
+    {
+        public List<RecruitmentModel> list1 { get; set; }
+        public List<RecruitmentModel> list2 { get; set; }
     }
 }

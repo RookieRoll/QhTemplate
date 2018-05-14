@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
-
-namespace QhTemplate.AdminWeb.ViewModels.Account
+﻿namespace QhTemplate.AdminWeb.ViewModels.Account
 {
     public class HeaderShowViewModel
     {
@@ -8,5 +6,6 @@ namespace QhTemplate.AdminWeb.ViewModels.Account
         public string Name { get; set; }
 
         public string Login { get; set; }
+        public int UserType { get; set; }
     }
 }

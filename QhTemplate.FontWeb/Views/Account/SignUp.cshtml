@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+<div style="width: 500px;border: 1px solid lightgray; margin: auto;height: 400px;background-color:white;border-radius: 30px;">
+    <h3 style="text-align:center;">注册</h3>
+    <form style="width:80%;margin:auto;">
+
+        <div class="input-group" style="margin-top:20px;">
+            <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">学校名称</span>
+            <input type="text" class="form-control" placeholder="学校名称" aria-describedby="basic-addon1" list="data" oninput="getData()" id="schoolname">
+        </div>
+
+        <div class="input-group" style="margin-top:20px;">
+            <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">用户名</span>
+            <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon2" id="username">
+        </div>
+
+        <div class="input-group" style="margin-top:20px;">
+            <span class="input-group-addon" id="basic-addon5" style="min-width: 85px;">姓名</span>
+            <input type="text" class="form-control" placeholder="姓名" aria-describedby="basic-addon5" id="name">
+        </div>
+
+        <div class="input-group" style="margin-top:20px;">
+            <span class="input-group-addon" id="basic-addon4" style="min-width: 85px;">邮箱</span>
+            <input type="email" class="form-control" placeholder="邮箱" aria-describedby="basic-addon4" id="email" required="required" />
+        </div>
+
+        <div class="input-group" style="margin-top:20px;">
+            <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">密码</span>
+            <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon3" id="password">
+        </div>
+
+
+
+        <div style="display:flex;justify-content:space-between;margin-top:20px;">
+            <a href="/home/index">主页</a>
+            <button type="button" onclick="signUp()" class="btn btn-lg btn-primary" style="width:200px;height:30px;font-size: 14px;padding: 0px;background-color: cornflowerblue;">注册</button>
+
+        </div>
+
+        <datalist id="data"></datalist>
+    </form>
+</div>
+
+<script>
+    function signUp() {
+        var school = $("#schoolname").val();
+        var name = $("#name").val();
+        var username = $("#username").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            url: "/Account/SignUp",
+            type: "post",
+            data: {
+                schoolname: school,
+                name: name,
+                username: username,
+                email: email,
+                password: password
+            },
+            success: function (data) {
+                if (data === 'ok')
+                    location.href = "/home/index";
+                else
+                    alert(data)
+            }
+        });
+    }
+    function getData() {
+        var value = $("#schoolname").val();
+        $.ajax({
+            url: "/Account/GetSchool",
+            type: "post",
+            data: {
+                name: value
+            },
+            success: function (data) {
+                var html = "";
+                for (var i = 0; i < data.length; i++) {
+                    html += "<option value='" + data[i].name + "'>";
+                }
+                $("#data").html(html);
+            }
+        });
+
+    }
+</script>

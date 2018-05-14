@@ -20,18 +20,29 @@ namespace QhTemplate.FontWeb.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var list = from briefing in _dbContext.BriefingContent
+            var list = (from briefing in _dbContext.BriefingContent
                 join school in _dbContext.SchoolArea on briefing.SchoolId equals school.Id
                 where briefing.StartTime > DateTime.Now.Date
+                orderby briefing.StartTime
                 select new BrifingViewModel
                 {
                     Id = briefing.Id,
                     Company = briefing.CompanyName,
                     School = school.Name,
                     Time = briefing.StartTime.ToString("MM-dd HH:mm")
-                };
-            
-            return View("BrifingContent",list);
+                }).Take(40);
+            var count = list.Count() / 2;
+            BriefingContentViewModel model = new BriefingContentViewModel();
+            model.list1 = list.Take(count).ToList();
+            model.list2 = list.Skip(count).ToList();
+
+            return View("BrifingContent",model);
         }
+    }
+
+    public class BriefingContentViewModel
+    {
+        public List<BrifingViewModel> list1 { get; set; }
+        public List<BrifingViewModel> list2 { get; set; }
     }
 }

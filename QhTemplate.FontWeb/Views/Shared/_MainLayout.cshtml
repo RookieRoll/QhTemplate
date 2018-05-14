@@ -37,11 +37,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="userlogo">用户 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                           @await Component.InvokeAsync("Header")
                         </ul>
                     </li>
                 </ul>
@@ -57,7 +53,9 @@
             </footer>
         </div>
     </div>
+    <div id="model">
 
+    </div>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -80,5 +78,29 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+        function openLogin() {
+            $.ajax({
+                url: "/Account/SignIn",
+                type: "get",
+                success: function (data) {
+                    $("#model").html(data);
+
+                }
+            });
+        }
+        function openPanel() {
+            $.ajax({
+                url: "/home/GetMyResume",
+                type: "get",
+                success: function (data) {
+                    $("#model").html(data);
+
+                }
+            });
+        }
+
+    </script>
 </body>
 </html>

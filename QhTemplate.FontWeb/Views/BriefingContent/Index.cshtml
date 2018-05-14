@@ -3,14 +3,14 @@
     ViewData["Title"] = "Index";
     Layout = "_MainLayout";
 }
-
+@section Styles{
+    <link href="~/css/briefingContent/index.css" rel="stylesheet" />
+}
 
 @await Component.InvokeAsync("ClassifiesMenuBar", new { type = 1, areaId = Model.AreaId })
 <div class="main-content">
-    <div style="position: absolute;top: 20px;z-index: 99999;left: 200px;">
-        <span>重庆</span>
-    </div>
 
+    @await Component.InvokeAsync("Area",Model.AreaId)
     <div style="width:98%;margin:auto;margin-bottom:20px;">
         <form asp-controller="BriefingContent" asp-action="index">
             <div><h3>宣讲会查询系统</h3></div>
@@ -22,7 +22,7 @@
             </div>
         </form>
     </div>
-    <table class="table" style="width: 98%;margin: auto;background-color: white;">
+    <table class="table table-hover" style="width: 98%;margin: auto;background-color: white;">
         <thead>
             <tr>
                 <th>公司标题</th>
@@ -31,18 +31,33 @@
                 <th>发布时间</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var item in Model.Result)
-            {
-                <tr>
-                    <td><a href="/BriefingContent/detail/@item.Id" style="display:block;width:100%;color:#4a90e6;" target="_blank">@item.Company</a></td>
-                    <td>@item.StartTime</td>
-                    <td>@item.Held</td>
-                    <td>@item.PublishTime</td>
-                </tr>
-            }
+        <tbody id="contentbody">
+          @Html.Partial("_Content",Model.Result)
+          
         </tbody>
     </table>
-
+    <div style="width: 98%;margin: auto;text-align: center;background-color: white;border-top: 1px solid lightgray;">
+        <button class="btn btn-default" onclick="getMore()">加载下一页</button>
+    </div>
+    
 </div>
 
+<script>
+    var page = 1;
+    function getMore() {
+        page += 1;
+        $.ajax({
+            url: "/BriefingContent/GetMore/@Model.AreaId/@Model.SchoolId",
+            type: "post",
+            data: {
+                page: page
+
+            },
+            success: function (data) {
+                $("#contentbody").append(data);
+
+            }
+        })
+
+    }
+</script>

@@ -1,0 +1,16 @@
+﻿@model QhTemplate.FontWeb.Models.Articles.ArticleViewModel
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div style="width:85%;margin:auto;padding:5px 10px;background-color:white;">
+    <div class="page-header" style="overflow:hidden;">
+        <h3 style="text-align:center">@Model.Title</h3>
+        <div style="float:right;">@Model.Time</div>
+    </div>
+    <div class="page-content">
+        @Html.Raw(Model.Content)
+    </div>
+</div>
+
+

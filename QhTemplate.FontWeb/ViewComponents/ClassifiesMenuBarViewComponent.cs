@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
+using System.Security.Claims;
 
 namespace QhTemplate.FontWeb.ViewComponents
 {
@@ -19,6 +20,7 @@ namespace QhTemplate.FontWeb.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int type,int areaId)
         {
+            var username= await Task.FromResult(HttpContext.User.Identities.SingleOrDefault(x => x.NameClaimType.Equals(ClaimTypes.Name))?.Name);
             List<MenuBar> result;
             if (type == 1)
             {
@@ -44,7 +46,8 @@ namespace QhTemplate.FontWeb.ViewComponents
             {
                 AreaId = areaId,
                 MenuBar = result,
-                MenuType = type
+                MenuType = type,
+                UserName=username
             };
             return View("MenuBar",bar);
         }

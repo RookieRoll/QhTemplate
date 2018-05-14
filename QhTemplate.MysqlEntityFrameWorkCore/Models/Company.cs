@@ -34,12 +34,9 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
             };
         }
 
-        public void Update(string name, string address, string tellphone,string email)
+        public void Update(string content)
         {
-            this.Name = name;
-            this.Address = address;
-            this.Tellphone = tellphone;
-            this.Email = email;
+            this.Description = content;
         }
     }
 }

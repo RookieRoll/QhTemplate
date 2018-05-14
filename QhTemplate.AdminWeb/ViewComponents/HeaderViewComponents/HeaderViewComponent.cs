@@ -16,12 +16,13 @@ namespace QhTemplate.AdminWeb.ViewComponents.HeaderViewComponents
             var id = await Task.FromResult(HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value);
             var role = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Role))?.Value;
             var ids = Convert.ToInt32(id);
-
+            var type = int.Parse(role);
             var model = new HeaderShowViewModel
             {
                 Id = ids,
                 Name = name,
-                Login= GetLogoutUrl(role)
+                Login= GetLogoutUrl(role),
+                UserType = type
             };
             return View("_Header", model);
         }

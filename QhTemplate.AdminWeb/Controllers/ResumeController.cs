@@ -7,7 +7,10 @@ using QhTemplate.AdminWeb.ViewModels.Resumes;
 using QhTemplate.ApplicationService.Resumes;
 using QhTemplate.ApplicationService.Users;
 using System.Linq.Dynamic.Core;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using QhTemplate.AdminWeb.Filter;
+using QhTemplate.ApplicationService.Companys;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -17,11 +20,13 @@ namespace QhTemplate.AdminWeb.Controllers
         private readonly IResumeService _resumeService;
 
         private readonly IUserAppService _appService;
-
-        public ResumeController(IResumeService resumeService, IUserAppService appService)
+        private readonly ICompanyService _companyService;
+        
+        public ResumeController(IResumeService resumeService, IUserAppService appService, ICompanyService companyService)
         {
             _resumeService = resumeService;
             _appService = appService;
+            _companyService = companyService;
         }
 
         // GET
@@ -32,15 +37,21 @@ namespace QhTemplate.AdminWeb.Controllers
         
         public IActionResult GetData(IDataTablesRequest request)
         {
+            var tempid = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            int id = int.Parse(tempid);
+            int companyId = _companyService.Finds().Include(m => m.CompanyUser).FirstOrDefault(m => m.CompanyUser.Any(n => n.UserId == id)).Id;
             var data = (from file in _resumeService.Finds()
                 join user in _appService.Finds() on file.UserId equals user.Id
+                where  file.CompanyId==companyId
                 select new ResumeViewModel
                 {
                     Id = file.Id,
                     SendTime = ((DateTime) file.CreateTime).ToString("yyyy-MM-dd"),
                     FileName = file.DisplayName,
                     UserEmail = user.EmailAddress,
-                    UserName = user.Name
+                    UserName = user.Name,
+                    CompanyId = file.CompanyId,
+                    UserId = file.UserId
                 });
 
             var filteredData = string.IsNullOrWhiteSpace(request.Search.Value)

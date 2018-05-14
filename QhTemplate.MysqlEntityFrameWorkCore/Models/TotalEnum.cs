@@ -4,7 +4,7 @@
     {
         Admin,
         User,
-        Employee,
+        Employee,//公司员工
         Student,
         Teacher,
     }

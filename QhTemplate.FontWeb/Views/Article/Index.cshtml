@@ -1,0 +1,35 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.Articles.ArticleViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:85%;margin:auto;background-color:white;padding: 0 50px;padding-top:15px;padding-bottom:15px;">
+    <div id="datalist">
+        @Html.Partial("_ArticleView", Model)
+    </div>
+   
+    <div style="display: flex;justify-content: center;">
+        <button class="btn btn-default" onclick="getMore()">加载下一页</button>
+    </div>
+</div>
+
+<script>
+    var page = 1;
+    function getMore() {
+        page +=1;
+        $.ajax({
+            url: "/Article/GetMore",
+            type: "post",
+            data: {
+                page: page
+
+            },
+            success: function (data) {
+                $("#datalist").append(data);
+
+            }
+        })
+
+    }
+</script>
