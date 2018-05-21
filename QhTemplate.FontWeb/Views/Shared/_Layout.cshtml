@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - QhTemplate.FontWeb</title>
+    <title>@ViewData["Title"] - 就业网</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -32,8 +32,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="navmenu myactive"><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
-                    <li class="navmenu"><a asp-area="" asp-controller="Article" asp-action="Index">新闻</a></li>
+                    <li class="navmenu "><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
+                    <li class="navmenu"><a href="/Article/index" >新闻</a></li>
                     <li class="navmenu"><a href="/BriefingContent/index/14">宣讲</a></li>
                     <li class="navmenu"><a href="/Recruitment/index">招聘</a></li>
                 </ul>
@@ -94,7 +94,17 @@
                 }
             });
         }
-     
+
+
+        var pathName = location.pathname;
+        var tempa = $(".navmenu").find("a");
+        for (var i = 0; i < tempa.length; i++) {
+            let item = tempa[i];
+            let url = item.getAttribute("href");
+            if (url === pathName) {
+                item.parentElement.classList.add("myactive");
+            }
+        }
     </script>
     @RenderSection("Scripts", required: false)
 </body>

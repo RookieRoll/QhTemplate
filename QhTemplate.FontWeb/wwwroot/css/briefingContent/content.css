@@ -1,0 +1,7 @@
+﻿.bodytr {
+    height: 50px;
+}
+
+    .bodytr > td[class="bodytr-td"] {
+        padding-top: 16px;
+    }

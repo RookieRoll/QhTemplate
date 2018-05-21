@@ -27,8 +27,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav mynavmenu">
-                    <li><a href="/home/index">首页</a></li>
-                    <li class="active"><a href="/BriefingContent/index/14">宣讲</a></li>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/Article/index">新闻</a></li>
+                    <li><a href="/BriefingContent/index/14" id="menuBriefingContent">宣讲</a></li>
                     <li><a href="/Recruitment/index">实习</a></li>
                 </ul>
 
@@ -80,6 +81,16 @@
     @RenderSection("Scripts", required: false)
 
     <script>
+        var pathName = location.pathname;
+        var tempa = $(".mynavmenu").find("a");
+        for (var i = 0; i < tempa.length; i++) {
+            let item = tempa[i];
+            let url = item.getAttribute("href");
+            if (url === pathName) {
+                item.parentElement.classList.add("active");
+            }
+        }
+
         function openLogin() {
             $.ajax({
                 url: "/Account/SignIn",

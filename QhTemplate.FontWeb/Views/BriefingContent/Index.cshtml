@@ -5,12 +5,14 @@
 }
 @section Styles{
     <link href="~/css/briefingContent/index.css" rel="stylesheet" />
+    <link href="~/css/briefingContent/content.css" rel="stylesheet" />
+
 }
 
 @await Component.InvokeAsync("ClassifiesMenuBar", new { type = 1, areaId = Model.AreaId })
 <div class="main-content">
 
-    @await Component.InvokeAsync("Area",Model.AreaId)
+    @await Component.InvokeAsync("Area", Model.AreaId)
     <div style="width:98%;margin:auto;margin-bottom:20px;">
         <form asp-controller="BriefingContent" asp-action="index">
             <div><h3>宣讲会查询系统</h3></div>
@@ -32,17 +34,18 @@
             </tr>
         </thead>
         <tbody id="contentbody">
-          @Html.Partial("_Content",Model.Result)
-          
+            @Html.Partial("_Content", Model.Result)
+
         </tbody>
     </table>
     <div style="width: 98%;margin: auto;text-align: center;background-color: white;border-top: 1px solid lightgray;">
         <button class="btn btn-default" onclick="getMore()">加载下一页</button>
     </div>
-    
+
 </div>
 
 <script>
+    $("#menuBriefingContent").attr("href", "/BriefingContent/index/@Model.AreaId"); 
     var page = 1;
     function getMore() {
         page += 1;

@@ -1,0 +1,57 @@
+﻿@model QhTemplate.FontWeb.Models.UserInfo.ShowInfoViewModel
+@{
+    Layout = "_MainLayout";
+    ViewData["Title"] = "我的简历";
+}
+@section Styles{
+    <link href="~/css/UserInfo/index.css" rel="stylesheet" />
+}
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 2, areaId = 0 })
+<div class="main-content">
+    <div class="mainbox">
+        <h3>我的简历</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading heading headingtitle">
+                <span>小名片</span>
+                <a onclick="showEdit()" href="javaScript:void(0)" id="changes">编辑</a>
+            </div>
+            <div class="panel-body bodybox">
+                <div class="user-img imgbox">
+                    <img class="media-object" src="~/images/user-face-male.png">
+                </div>
+                <div class="user-info userinfobox">
+                    @Html.Partial("_ShowUserInfo",Model.UserInfos)
+                    @Html.Partial("_EditUserInfo",Model.UserInfos)
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading heading headingtitle">
+                <span>我的简历</span>
+                <a onclick="showEdit()" href="javaScript:void(0)" >上传简历</a>
+            </div>
+            <div class="panel-body">
+                <div style="display:flex;justify-content:space-between;padding:0 30px;">
+                    <div>简历名称</div>
+                    <div>2018-6-8</div>
+                    <div><a href="#">预览/下载</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showEdit() {
+        $("#showinfo").hide();
+        $("#editinfo").show();
+        $('#changes').hide()
+    }
+
+    function showInfo() {
+        $("#showinfo").show();
+        $("#editinfo").hide();
+        $('#changes').show();
+    }
+</script>

@@ -26,18 +26,18 @@ namespace QhTemplate.FontWeb.Controllers
             var userId = await Task.FromResult(HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value);
             var ids = int.Parse(userId);
             var temp = (from company in _context.Company
-                join recruid in _context.Recruitment on company.Id equals recruid.CompanyId
-                where company.Id == companyId && recruid.Id == recruidId
-                select new
-                {
-                    Email = company.Email,
-                    RecruitName = recruid.Title
-                }).FirstOrDefault();
+                        join recruid in _context.Recruitment on company.Id equals recruid.CompanyId
+                        where company.Id == companyId && recruid.Id == recruidId
+                        select new
+                        {
+                            Email = company.Email,
+                            RecruitName = recruid.Title
+                        }).FirstOrDefault();
 
             var school = (from sch in _context.SchoolArea
-                join relation in _context.SchoolUser on sch.Id equals relation.SchoolId
-                join user in _context.User on relation.UserId equals user.Id
-                where user.UserType == (int) UserType.Student && user.Id == ids
+                          join relation in _context.SchoolUser on sch.Id equals relation.SchoolId
+                          join user in _context.User on relation.UserId equals user.Id
+                          where user.UserType == (int)UserType.Student && user.Id == ids
                           select sch.Name).FirstOrDefault();
             var fileName = $"{temp.RecruitName}-{school}-{userName}";
 

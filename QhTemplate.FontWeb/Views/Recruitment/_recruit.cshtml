@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<QhTemplate.FontWeb.Models.Recruitments.RecruitmentModel>
 @foreach (var item in Model)
 {
-    <tr>
-        <td><a href="/Recruitment/detail/@item.CompanyId" style="display:block;width:100%;color:#4a90e6;" target="_blank">@item.CompanyName</a></td>
-        <td><a href="/Recruitment/detail/@item.CompanyId" style="display:block;width:100%" target="_blank"> @item.JobName </a></td>
-        <td>@item.Email</td>
-
+    <tr class="bodytr">
+        <td class="bodytr-td"><a href="/Recruitment/detail/@item.CompanyId" style="display:block;width:100%;color:#4a90e6;" target="_blank">@item.CompanyName</a></td>
+        <td class="bodytr-td"><a href="/Recruitment/detail/@item.CompanyId" style="display:block;width:100%" target="_blank"> @item.JobName </a></td>
+        <td class="bodytr-td">@item.Email</td>
     </tr>
 
 }

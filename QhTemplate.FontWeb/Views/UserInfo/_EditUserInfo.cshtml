@@ -1,0 +1,17 @@
+﻿@model QhTemplate.FontWeb.Models.UserInfo.UserInfo
+<div class="userinfobox" id="editinfo" style="display: none;">
+    <input type="hidden" value="@Model.Id"/>
+    <div class="user-info-left widthbox">
+        <div class="inputbox">昵称：<input type="text" value="@Model.UserName" class="form-control editwidth"/></div>
+        <div class="inputbox">姓名：<input type="text" value="@Model.Name" class="form-control editwidth"/></div>
+    </div>
+    <div class="user-info-right widthbox">
+        <div class="inputbox">邮箱：<input type="text" value="@Model.Email" class="form-control editwidth"/> </div>
+        <div class="inputbox">学校：@Model.School</div>
+    </div>
+    <div style="margin-left: 60px;">
+        <button class="btn btn-primary">保存</button>
+        <button class="btn btn-default" onclick="showInfo()">取消</button>
+    </div>
+
+</div>
