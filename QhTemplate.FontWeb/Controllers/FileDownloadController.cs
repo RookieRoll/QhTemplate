@@ -62,7 +62,7 @@ namespace QhTemplate.FontWeb.Controllers
             var addrUrl = _hostingEnvironment.WebRootPath+ "/upload/resumes/" + real + ".pdf";
 
             var stream = System.IO.File.OpenRead(addrUrl);
-
+           
             string fileExt = GetFileExt(file); //获取文件扩展名
 
             //获取文件的ContentType
@@ -70,8 +70,8 @@ namespace QhTemplate.FontWeb.Controllers
             var provider = new FileExtensionContentTypeProvider();
 
             var memi = provider.Mappings[".pdf"];
-
-            return File(stream, memi, Path.GetFileName(addrUrl));
+            var name = filename + ".pdf";
+            return File(stream, memi, name);
         }
 
         private string GetFileExt(string file)

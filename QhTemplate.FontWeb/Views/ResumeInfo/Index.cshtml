@@ -1,0 +1,63 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.ResumeInfo.ResumeInfoViewModel>
+
+@{
+    ViewBag.Title = "我的投递";
+    Layout = "_MainLayout";
+}
+@section Styles{
+    <link href="~/css/UserInfo/index.css" rel="stylesheet" />
+}
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 3, areaId = 0 })
+<div class="main-content">
+    <div class="mainbox">
+        <h3>简历投递记录</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading heading headingtitle">
+                <span>投递记录</span>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>投递公司</th>
+                            <th>投递岗位</th>
+                            <th>投递事件</th>
+                            <th>投递状态</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contentbody">
+                        @Html.Partial("_Record", Model)
+                    </tbody>
+                </table>
+                <div style="width: 98%;margin: auto;text-align: center;background-color: white;border-top: 1px solid lightgray;">
+                    <button class="btn btn-default" onclick="getMore()">加载下一页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showdetailInfo(id) {
+        var url = "/Recruitment/detail/" + id;
+        console.log(id)
+        window.open(url,"_blank")
+    }
+
+     var page = 1;
+    function getMore() {
+        page += 1;
+        $.ajax({
+            url: "/resumeinfo/GetMoreDate",
+            type: "post",
+            data: {
+                page: page
+
+            },
+            success: function (data) {
+                $("#contentbody").append(data);
+
+            }
+        })
+
+    }
+</script>

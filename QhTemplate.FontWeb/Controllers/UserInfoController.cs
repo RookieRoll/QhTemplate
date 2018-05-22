@@ -44,9 +44,10 @@ namespace QhTemplate.FontWeb.Controllers
             }
             else
             {
-                model.HasResume = true;
-                model.ResumeInfos = null;
+                model.HasResume = false;
+                model.ResumeInfos = new ResumeInfo();
             }
+
             return View(model);
         }
 
@@ -74,10 +75,21 @@ namespace QhTemplate.FontWeb.Controllers
             ResumeInfo info = new ResumeInfo
             {
                 Name = file.Name,
-                Time = file.CreationTime.ToString("yyyy-MM-dd"),
-                Url = path
+                Time = file.LastWriteTime.ToString("yyyy-MM-dd"),
+                Url = "http://localhost:54791//upload/resumes/" + Ids + ".pdf"
             };
             return info;
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUserInfo(int id, string username, string name, string email)
+        {
+            var user = _context.User.FirstOrDefault(m => m.Id == id) ?? throw new UserFriendlyException("该用户不存在");
+            user.Name = name;
+            user.UserName = username;
+            user.EmailAddress = email;
+            _context.SaveChanges();
+            return Json("修改成功，下次登录后生效");
         }
     }
 }

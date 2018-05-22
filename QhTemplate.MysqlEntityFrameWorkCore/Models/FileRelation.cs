@@ -10,7 +10,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public int RecruitId { get; set; }
         public string DisplayName { get; set; }
         public string RealName { get; set; }
-        public DateTime? CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
         public int Id { get; set; }
     }
 }

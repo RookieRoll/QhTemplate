@@ -81,7 +81,7 @@ namespace QhTemplate.FontWeb.Controllers
 
             var user = _userApp.Register(obj.UserName, obj.Name, obj.Email, obj.Password, UserType.Student);
             _schoolService.AddTeachers(schoolArea.Id, user);
-            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, new User { Id=user,Name=obj.Name,UserType=(int)UserType.Student});
+            await AccountServiceUtil.SaveSignInUserIndetifier(HttpContext, new User { Id=user,UserName=obj.Name,UserType=(int)UserType.Student});
             return Json("ok");
         }
     }

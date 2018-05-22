@@ -6,7 +6,7 @@
 @section Styles{
     <link href="~/css/UserInfo/index.css" rel="stylesheet" />
 }
-@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 2, areaId = 0 })
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 3, areaId = 0 })
 <div class="main-content">
     <div class="mainbox">
         <h3>我的简历</h3>
@@ -20,8 +20,8 @@
                     <img class="media-object" src="~/images/user-face-male.png">
                 </div>
                 <div class="user-info userinfobox">
-                    @Html.Partial("_ShowUserInfo",Model.UserInfos)
-                    @Html.Partial("_EditUserInfo",Model.UserInfos)
+                    @Html.Partial("_ShowUserInfo", Model.UserInfos)
+                    @Html.Partial("_EditUserInfo", Model.UserInfos)
                 </div>
             </div>
         </div>
@@ -29,14 +29,20 @@
         <div class="panel panel-default">
             <div class="panel-heading heading headingtitle">
                 <span>我的简历</span>
-                <a onclick="showEdit()" href="javaScript:void(0)" >上传简历</a>
+                <a onclick="showFilter()" href="javaScript:void(0)">上传简历</a>
+                <input id="harg_file" type="file" accept="application/pdf" style="display:none" />
             </div>
             <div class="panel-body">
-                <div style="display:flex;justify-content:space-between;padding:0 30px;">
-                    <div>简历名称</div>
-                    <div>2018-6-8</div>
-                    <div><a href="#">预览/下载</a></div>
-                </div>
+                @if (Model.HasResume)
+                {
+                    <div style="display:flex;justify-content:space-between;padding:0 30px;">
+                        <div>@Model.ResumeInfos.Name</div>
+                        <div>@Model.ResumeInfos.Time</div>
+                        <div><a href="@Model.ResumeInfos.Url" target="_blank">预览/下载</a></div>
+                    </div>
+
+                }
+
             </div>
         </div>
     </div>
@@ -54,4 +60,38 @@
         $("#editinfo").hide();
         $('#changes').show();
     }
+
+    function showFilter() {
+        $("#harg_file").click();
+
+    }
+
+
+    
+    $("#harg_file").change(function () {
+        var fd = new FormData();
+        fd.append("file", $(this).get(0).files[0])
+        $.ajax({
+            url: "/FileDownload/UploadFileAsync",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: fd,
+            xhr: function () {  // custom xhr
+                myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // check if upload property exists
+                    myXhr.upload.addEventListener('progress', function (evt) {
+                        // $("#upload_tip").dialog("open");
+                        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                        console.log(percentComplete);
+                    }, false); // for handling the progress of the upload
+                }
+                return myXhr;
+            },
+            success: function (data) {
+                alert(data);
+                location.reload();
+            }
+        });
+    });
 </script>

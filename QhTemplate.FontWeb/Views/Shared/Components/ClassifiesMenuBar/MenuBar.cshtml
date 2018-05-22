@@ -23,12 +23,13 @@
             <ul class="header-menu-ul ">
                 @if (Model.MenuType == 1)
                 {
+                    <li class="header-menu-ul-li"><a href="/BriefingContent/index/@Model.AreaId"> • 全部</a></li>
                     foreach (var item in Model.MenuBar)
                     {
                         <li class="header-menu-ul-li"><a href="/BriefingContent/index/@Model.AreaId/@item.Id"> • @item.Name</a></li>
                     }
                 }
-                else
+                else if (Model.MenuType == 2)
                 {
                     <li class="header-menu-ul-li"><a href="/Recruitment/index/0"> • 全部</a></li>
                     foreach (var item in Model.MenuBar)
@@ -36,9 +37,12 @@
                         <li class="header-menu-ul-li"><a href="/Recruitment/index/@item.Id"> • @item.Name</a></li>
                     }
                 }
+                else if (Model.MenuType == 3)
+                {
+                    <li class="header-menu-ul-li"><a href="/Userinfo/index"> • 我的简历</a></li>
+                    <li class="header-menu-ul-li"><a href="/ResumeInfo/index"> • 我的投递</a></li>
 
-
-
+                }
             </ul>
         </div>
     </div>

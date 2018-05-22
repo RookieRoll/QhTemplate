@@ -1,0 +1,11 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.ResumeInfo.ResumeInfoViewModel>
+
+@foreach (var item in Model)
+{
+    <tr onclick="showdetailInfo(@item.CompanyId)" style="cursor: pointer;">
+        <td>@item.CompanyName</td>
+        <td>@item.JobName</td>
+        <td>@item.ResumeTime</td>
+        <td>已投递</td>
+    </tr>
+}
