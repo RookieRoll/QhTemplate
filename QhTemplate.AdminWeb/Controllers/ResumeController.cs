@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using QhTemplate.AdminWeb.Filter;
 using QhTemplate.ApplicationService.Companys;
+using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -21,8 +22,9 @@ namespace QhTemplate.AdminWeb.Controllers
 
         private readonly IUserAppService _appService;
         private readonly ICompanyService _companyService;
-        
-        public ResumeController(IResumeService resumeService, IUserAppService appService, ICompanyService companyService)
+
+        public ResumeController(IResumeService resumeService, IUserAppService appService,
+            ICompanyService companyService)
         {
             _resumeService = resumeService;
             _appService = appService;
@@ -34,15 +36,29 @@ namespace QhTemplate.AdminWeb.Controllers
         {
             return View();
         }
-        
+
+        public IActionResult Delete(int id)
+        {
+            var resume = _resumeService.Find(id);
+            return PartialView("_Delete", ResumeViewModel.ConvertToDelete(resume));
+        }
+
+        [HttpPost]
+        public IActionResult DeleteComfirm(int id)
+        {
+            _resumeService.DeleteComfirm(id);
+            return Json("删除成功");
+        }
+
         public IActionResult GetData(IDataTablesRequest request)
         {
             var tempid = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             int id = int.Parse(tempid);
-            int companyId = _companyService.Finds().Include(m => m.CompanyUser).FirstOrDefault(m => m.CompanyUser.Any(n => n.UserId == id)).Id;
+            int companyId = _companyService.Finds().Include(m => m.CompanyUser)
+                .FirstOrDefault(m => m.CompanyUser.Any(n => n.UserId == id)).Id;
             var data = (from file in _resumeService.Finds()
                 join user in _appService.Finds() on file.UserId equals user.Id
-                where  file.CompanyId==companyId
+                where file.CompanyId == companyId && !file.IsDeleted
                 select new ResumeViewModel
                 {
                     Id = file.Id,
@@ -51,7 +67,8 @@ namespace QhTemplate.AdminWeb.Controllers
                     UserEmail = user.EmailAddress,
                     UserName = user.Name,
                     CompanyId = file.CompanyId,
-                    UserId = file.UserId
+                    UserId = file.UserId,
+                    Status = file.Status == 0 ? "未读" : "已读"
                 });
 
             var filteredData = string.IsNullOrWhiteSpace(request.Search.Value)

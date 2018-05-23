@@ -167,6 +167,10 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
                 entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
+                entity.Property(e => e.IsDeleted).HasColumnType("tinyint");
+
+                entity.Property(e => e.Status).HasColumnType("int");
+                
                 entity.Property(e => e.DisplayName)
                     .HasColumnName("displayName")
                     .HasMaxLength(255);
@@ -214,6 +218,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.SubContent).HasColumnType("text");
 
                 entity.Property(e => e.Title).HasColumnType("text");
+
+                entity.Property(e => e.SchoolId).HasColumnType("int");
             });
 
             modelBuilder.Entity<Organization>(entity =>

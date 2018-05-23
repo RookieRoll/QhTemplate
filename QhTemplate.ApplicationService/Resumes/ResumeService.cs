@@ -5,9 +5,8 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationService.Resumes
 {
-    public class ResumeService:IResumeService
+    public class ResumeService : IResumeService
     {
-
         private readonly ResumeManager _resume;
 
         public ResumeService(ResumeManager resume)
@@ -33,6 +32,16 @@ namespace QhTemplate.ApplicationService.Resumes
         public FileRelation First(Func<FileRelation, bool> func)
         {
             return _resume.First(func);
+        }
+
+        public FileRelation Find(int id)
+        {
+            return _resume.Find(id);
+        }
+
+        public void DeleteComfirm(int id)
+        {
+            _resume.DeleteComfirm(id);
         }
     }
 }

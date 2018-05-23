@@ -13,7 +13,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public bool IsDelete { get; set; }
         public string SubContent { get; set; }
 
-        public static NewArticle Create(string title, string content, string subcontent)
+        public int? SchoolId { get; set; }
+        public static NewArticle Create(string title, string content, string subcontent,int? SchoolId)
         {
             return new NewArticle()
             {
@@ -21,7 +22,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 Content = content??string.Empty,
                 PublishTime = DateTime.Now,
                 IsDelete = false,
-                SubContent = subcontent ?? string.Empty
+                SubContent = subcontent ?? string.Empty,
+                SchoolId = SchoolId
         };
     }
 

@@ -32,7 +32,7 @@ namespace QhTemplate.FontWeb.Controllers
                         {
                             company.Email,
                             RecruitName = recruid.Title,
-                            CompanyName=company.Name
+                            CompanyName = company.Name
                         }).FirstOrDefault();
 
             var school = (from sch in _context.SchoolArea
@@ -46,24 +46,31 @@ namespace QhTemplate.FontWeb.Controllers
 
             var origin = _context.FileRelation.FirstOrDefault(m =>
                 m.CompanyId == companyId && m.RecruitId == recruidId && m.UserId == ids);
-            if (origin != null)
+            if (origin == null)
             {
-                _context.FileRelation.Remove(origin);
+                _context.FileRelation.Add(new FileRelation()
+                {
+                    CompanyId = companyId,
+                    RealName = userId,
+                    RecruitId = recruidId,
+                    CreateTime = DateTime.Now,
+                    DisplayName = fileName,
+                    UserId = ids
+                });
                 _context.SaveChanges();
+
+            }
+            else
+            {
+                if (!origin.IsDeleted)
+                {
+                    return Json("ok");
+                }
             }
 
-            _context.FileRelation.Add(new FileRelation()
-            {
-                CompanyId = companyId,
-                RealName = userId,
-                RecruitId = recruidId,
-                CreateTime = DateTime.Now,
-                DisplayName = fileName,
-                UserId = ids
-            });
-            _context.SaveChanges();
-            
-            EmailHelper emailHelper=new EmailHelper();
+
+
+            EmailHelper emailHelper = new EmailHelper();
             var filename = companyId + "@" + userId + "@" + fileName;
             var url = "http://localhost:54791/FileDownload/DownLoad?file=" + filename;
             EmailRecevierConfig emailRecevierConfig = new EmailRecevierConfig
@@ -73,12 +80,10 @@ namespace QhTemplate.FontWeb.Controllers
                 Content = string.Format("您有收到一份简历【{0}】<a href='{1}'>下载</a>" +
                 "或者进入<a href='http://localhost:59932/CompanyAccount/Signin'>就业网</a>进行查看", fileName, url),
                 Subject = "有人向您投递了一份简历，请注意查收-就业网"
-                
+
             };
             await emailHelper.SendEmailAsync(emailRecevierConfig);
             return Json("ok");
         }
-
-       
     }
 }

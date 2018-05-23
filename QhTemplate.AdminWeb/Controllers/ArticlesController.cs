@@ -4,11 +4,14 @@ using DataTables.AspNet.Core;
 using Microsoft.AspNetCore.Mvc;
 using QhTemplate.ApplicationService.NewsArticles;
 using System.Linq.Dynamic.Core;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using QhTemplate.AdminWeb.Filter;
 using QhTemplate.AdminWeb.ViewModels.NewsArticle;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 using UEditorNetCore;
 using QhTemplate.AdminWeb.Utils;
+using QhTemplate.ApplicationService.Schools;
 
 namespace QhTemplate.AdminWeb.Controllers
 {
@@ -17,11 +20,12 @@ namespace QhTemplate.AdminWeb.Controllers
     {
         private readonly IArticlesApplicationService _applicationService;
         private readonly UEditorService _uEditorService;
-        
-        public ArticlesController(IArticlesApplicationService applicationService, UEditorService uEditorService)
+        private readonly ISchoolService _schoolService;
+        public ArticlesController(IArticlesApplicationService applicationService, UEditorService uEditorService, ISchoolService schoolService)
         {
             _applicationService = applicationService;
             _uEditorService = uEditorService;
+            _schoolService = schoolService;
         }
 
         // GET
@@ -37,7 +41,15 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Create(CreateArticleViewModel model)
         {
-            _applicationService.Create(model.Title, PathUtil.PathReplace(model.Content),model.SubContent);
+            var usertype = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Role))?.Value;
+            var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            var id = int.Parse(userId);
+            var schoolid = _schoolService.Finds().Include(m => m.SchoolUser)
+                .FirstOrDefault(m => m.SchoolUser.Any(n => n.UserId == id))?.Id;
+            var type = int.Parse(usertype);
+            _applicationService.Create(model.Title, PathUtil.PathReplace(model.Content), model.SubContent,
+                type == (int) UserType.Teacher ? schoolid : null);
+
             return Json("创建成功");
         }
         public IActionResult Update(int id)
@@ -76,12 +88,22 @@ namespace QhTemplate.AdminWeb.Controllers
 
         public void DoUeditor()
         {
-            _uEditorService.DoAction(HttpContext);
+           _uEditorService.DoAction(HttpContext);
         }
         public IActionResult GetData(IDataTablesRequest request)
         {
-            var data = _applicationService.Finds();
-
+            var data = _applicationService.Finds(m=>m.SchoolId==null);
+            var usertype = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Role))?.Value;
+            var type = int.Parse(usertype);
+            
+            var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            var id = int.Parse(userId);
+            var schoolid = _schoolService.Finds().Include(m => m.SchoolUser)
+                .FirstOrDefault(m => m.SchoolUser.Any(n => n.UserId == id))?.Id;
+            if (type == (int) UserType.Teacher)
+            {
+                data = _applicationService.Finds(m=>m.SchoolId==schoolid);
+            }
             var filteredData = string.IsNullOrWhiteSpace(request.Search.Value)
                 ? data
                 : data.Where(item => item.Title.Contains(request.Search.Value));

@@ -56,13 +56,17 @@ namespace QhTemplate.FontWeb.Controllers
             var company = int.Parse(temp[0]);
             var userId = int.Parse(temp[1]);
             var filename = temp[2];
-            var real = _context.FileRelation.FirstOrDefault(m => m.CompanyId == company && m.UserId == userId && m.DisplayName.Equals(filename))?.RealName ??
+            var resume = _context.FileRelation.FirstOrDefault(m => m.CompanyId == company && m.UserId == userId && m.DisplayName.Equals(filename)) ??
                 throw new UserFriendlyException("该文件不存在");
 
-            var addrUrl = _hostingEnvironment.WebRootPath+ "/upload/resumes/" + real + ".pdf";
+            resume.Status = (int)ResumeStatus.Readed;
+
+            _context.SaveChanges();
+            var real = resume.RealName;
+            var addrUrl = _hostingEnvironment.WebRootPath + "/upload/resumes/" + real + ".pdf";
 
             var stream = System.IO.File.OpenRead(addrUrl);
-           
+
             string fileExt = GetFileExt(file); //获取文件扩展名
 
             //获取文件的ContentType

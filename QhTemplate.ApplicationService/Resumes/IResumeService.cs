@@ -11,5 +11,8 @@ namespace QhTemplate.ApplicationService.Resumes
         IQueryable<FileRelation> Finds(Func<FileRelation, bool> func);
         FileRelation FirstOrDefault(Func<FileRelation, bool> func);
         FileRelation First(Func<FileRelation, bool> func);
+
+        FileRelation Find(int id);
+        void DeleteComfirm(int id);
     }
 }

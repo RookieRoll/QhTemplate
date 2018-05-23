@@ -118,7 +118,7 @@ function createArticle() {
         return;
     }
     $.ajax({
-        url: "/recruitment/Create",
+        url: "/Articles/Create",
         type:"post",
         data: {
             title: title,

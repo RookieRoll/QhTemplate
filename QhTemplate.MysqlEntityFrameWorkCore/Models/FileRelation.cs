@@ -12,5 +12,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public string RealName { get; set; }
         public DateTime CreateTime { get; set; }
         public int Id { get; set; }
+        public int Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

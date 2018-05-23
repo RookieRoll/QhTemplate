@@ -8,4 +8,10 @@
         Student,
         Teacher,
     }
+
+    public enum ResumeStatus
+    {
+        Unread,
+        Readed
+    }
 }

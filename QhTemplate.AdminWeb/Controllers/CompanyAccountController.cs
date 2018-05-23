@@ -39,7 +39,7 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(SignViewModel model)
         {
-            var company = _companyService.FirstOrDefault(m=>m.Name.Equals(model.CompanyId));
+            var company = _companyService.FirstOrDefault(m=>m.Name.Equals(model.CompanyId))??throw new UserFriendlyException("该公司不存在");
             var users = _userAppService.GetUsersByCompany(company.Id);
             Func<User, bool> func = null;
             //判断是否是邮箱登陆

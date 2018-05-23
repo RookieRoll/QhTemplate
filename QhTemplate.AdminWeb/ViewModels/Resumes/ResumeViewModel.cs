@@ -1,4 +1,6 @@
-﻿namespace QhTemplate.AdminWeb.ViewModels.Resumes
+﻿using QhTemplate.MysqlEntityFrameWorkCore.Models;
+
+namespace QhTemplate.AdminWeb.ViewModels.Resumes
 {
     public class ResumeViewModel
     {
@@ -9,5 +11,15 @@
         public string FileName { get; set; }
         public int CompanyId { get; set; }
         public int UserId { get; set; }
+        public string Status { get; set; }
+
+        public static ResumeViewModel ConvertToDelete(FileRelation relation)
+        {
+            return new ResumeViewModel
+            {
+                Id = relation.Id,
+                FileName = relation.DisplayName
+            };
+        }
     }
 }
