@@ -1,2 +1,19 @@
-﻿@model TModel
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.Articles.ArticleViewModel>
+@{ 
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+    <tr class="bodytr" onclick="openNews(@item.Id)" style="cursor:pointer;">
+        <td class="bodytr-td" width="20%">@item.Title</td>
+        <td class="bodytr-td" width="60%">@item.Content</td>
+        <td class="bodytr-td" width="20%">@item.Time</td>
+    </tr>
+}
 
+<script>
+    function openNews(id) {
+        var url = "/article/detail/" + id;
+        window.open(url,"_blank")
+    }
+</script>

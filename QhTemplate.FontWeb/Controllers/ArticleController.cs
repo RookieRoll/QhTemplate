@@ -75,19 +75,21 @@ namespace QhTemplate.FontWeb.Controllers
 
         #region 学校新闻
         [MyAuthentications]
-        public IActionResult SchoolArticle()
+        public IActionResult SchoolArticle(string search = "")
         {
+            search = string.IsNullOrWhiteSpace(search) ? search : "";
             var userId = HttpContext.User.Claims.FirstOrDefault(m => m.Type == ClaimTypes.Sid) ??
                          throw new UserFriendlyException("请登录");
             var id = int.Parse(userId.Value);
             var schoolId = _context.SchoolUser.FirstOrDefault(m => m.UserId == id);
-            var artiles = _context.NewArticle.Where(m => m.SchoolId.Equals(schoolId))
+            var artiles = _context.NewArticle.Where(m => m.SchoolId.Equals(schoolId.SchoolId)
+                      && (m.Title.Contains(search) || m.Content.Contains(search)))
                 .OrderByDescending(m => m.PublishTime).Take(Size).Select(m => new ArticleViewModel
                 {
                     Id = m.Id,
                     Time = m.PublishTime.ToString("yyyy-MM-dd HH-mm"),
                     Title = m.Title,
-                    Content = m.SubContent
+                    Content = m.SubContent.Length > 100 ? m.SubContent.Substring(0, 100) : m.SubContent,
                 });
             return View("SchoolArticle", artiles);
         }
@@ -99,28 +101,15 @@ namespace QhTemplate.FontWeb.Controllers
                          throw new UserFriendlyException("请登录");
             var id = int.Parse(userId.Value);
             var schoolId = _context.SchoolUser.FirstOrDefault(m => m.UserId == id);
-            var artiles = _context.NewArticle.Where(m => m.SchoolId.Equals(schoolId))
+            var artiles = _context.NewArticle.Where(m => m.SchoolId.Equals(schoolId.SchoolId))
                 .OrderByDescending(m => m.PublishTime).Skip(page * Size).Take(Size).Select(m => new ArticleViewModel
                 {
                     Id = m.Id,
                     Time = m.PublishTime.ToString("yyyy-MM-dd HH-mm"),
                     Title = m.Title,
-                    Content = m.SubContent
+                    Content = m.SubContent.Length > 50 ? m.SubContent.Substring(0, 50) : m.SubContent,
                 });
             return PartialView("_SchoolArticle", artiles);
-        }
-
-        public IActionResult SchoolArticleDetail(int id)
-        {
-            var result = _context.NewArticle.FirstOrDefault(m => m.Id == id);
-            var model = new ArticleViewModel
-            {
-                Id = result.Id,
-                Content = result.Content,
-                Time = result.PublishTime.ToString("yyyy-MM-dd HH:mm"),
-                Title = result.Title
-            };
-            return View(model);
         }
         #endregion
     }

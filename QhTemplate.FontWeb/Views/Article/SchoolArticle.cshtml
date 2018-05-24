@@ -1,8 +1,65 @@
-﻿@model TModel
-
+﻿
+@model IEnumerable<QhTemplate.FontWeb.Models.Articles.ArticleViewModel>
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewBag.Title = "学校新闻";
+    Layout = "_MainLayout";
 }
 
-<h2>title</h2>
+
+@section Styles{
+    <link href="~/css/briefingContent/index.css" rel="stylesheet" />
+    <link href="~/css/briefingContent/content.css" rel="stylesheet" />
+
+}
+
+@await Component.InvokeAsync("ClassifiesMenuBar", new { type = 3, areaId = 0 })
+<div class="main-content">
+
+    <div style="width:98%;margin:auto;margin-bottom:20px;">
+        <form asp-controller="Article" asp-action="SchoolArticle">
+            <div><h3>本校新闻</h3></div>
+            <div style="background-color:white;display:flex;border:10px solid lightgray;border-radius:4px;">
+                <i class="glyphicon glyphicon-search" style="    min-width: 45px;font-size: 18px;padding-left: 11px;line-height: 40px;color: lightgray;"></i>
+                <input type="text" name="search" style="border:none;outline:none;width: 100%;" />
+                <button style="min-width: 100px;" class="btn btn-primary">搜索新闻</button>
+            </div>
+        </form>
+    </div>
+    <table class="table table-hover" style="width: 98%;margin: auto;background-color: white;">
+        <thead>
+            <tr>
+                <th>新闻标题</th>
+                <th>内容摘要</th>
+                <th>发布时间</th>
+            </tr>
+        </thead>
+        <tbody id="contentbody">
+            @Html.Partial("_SchoolArticle",Model)
+        </tbody>
+    </table>
+    <div style="width: 98%;margin: auto;text-align: center;background-color: white;border-top: 1px solid lightgray;">
+        <button class="btn btn-default" onclick="getMore()">加载下一页</button>
+    </div>
+
+</div>
+
+<script>
+
+    var page = 1;
+    function getMore() {
+        page += 1;
+        $.ajax({
+            url: "/Article/MoreSchoolArticle",
+            type: "post",
+            data: {
+                page: page
+
+            },
+            success: function (data) {
+                $("#contentbody").append(data);
+
+            }
+        })
+
+    }
+</script>
