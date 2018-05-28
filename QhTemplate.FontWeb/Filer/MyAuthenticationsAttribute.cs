@@ -17,7 +17,7 @@ namespace QhTemplate.FontWeb.Filer
         {
             if (!context.HttpContext.User.Claims.Any())
             {
-                context.Result = new JsonResult("请登陆");
+                context.Result = new RedirectResult("http://localhost:54791/");
                 return;
             }
         }

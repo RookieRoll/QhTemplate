@@ -27,6 +27,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public ICollection<UserOrganization> UserOrganization { get; set; }
         public ICollection<UserRole> UserRole { get; set; }
         public IEnumerable<SchoolUser> SchoolUser { get; internal set; }
+        public IEnumerable<NoticeBriefing> NoticeBriefings { get; internal set; }
 
         public static User Create(string name, string username, string email, UserType type)
         {

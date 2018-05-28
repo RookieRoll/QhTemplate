@@ -48,7 +48,7 @@ namespace QhTemplate.FontWeb.Controllers
                 m.CompanyId == companyId && m.RecruitId == recruidId && m.UserId == ids);
             if (origin == null)
             {
-                _context.FileRelation.Add(new FileRelation()
+                _context.FileRelation.Add(new FileRelation
                 {
                     CompanyId = companyId,
                     RealName = userId,

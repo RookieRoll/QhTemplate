@@ -86,6 +86,9 @@ namespace QhTemplate.FontWeb
                 options.LoginPath = "/Account/Signin";
                 options.LogoutPath = "/Account/SignOut";
             });
+
+
+            services.AddTimedJob();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +102,7 @@ namespace QhTemplate.FontWeb
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseTimedJob();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>

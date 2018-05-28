@@ -16,6 +16,8 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public DateTime PublishTime { get; set; }
         public DateTime StartTime { get; set; }
 
+        public IEnumerable<NoticeBriefing> NoticeBriefings { get; internal set; }
+
         public static BriefingContent Create(string title, string content, string held,
             DateTime startTime, int schoolId,string companyName)
         {

@@ -25,14 +25,15 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserOrganization> UserOrganization { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<NoticeBriefing> NoticeBriefing { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
-               // optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=qh18723361304;Database=EmsDB");
+               //  optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
+               optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=qh18723361304;Database=EmsDB");
 
             }
         }
@@ -314,6 +315,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .HasConstraintName("FK_Reference_7");
             });
 
+            
             modelBuilder.Entity<SchoolUser>(entity =>
             {
                 entity.HasKey(e => new { e.SchoolId, e.UserId });
@@ -338,6 +340,29 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .HasConstraintName("SchoolUser_ibfk_2");
             });
 
+            modelBuilder.Entity<NoticeBriefing>(entity =>
+            {
+                entity.HasKey(e => new {e.Id});
+                entity.HasIndex(e => e.Id)
+                    .HasName("Id");
+
+                entity.Property(e => e.BriefingId).HasColumnType("int(11)");
+
+                entity.Property(e => e.UserId).HasColumnType("int(11)");
+
+                entity.HasOne(d => d.Briefing)
+                    .WithMany(p => p.NoticeBriefings)
+                    .HasForeignKey(d => d.BriefingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("NoticeBriefing_ibfk_1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.NoticeBriefings)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("NoticeBriefing_ibfk_2");
+            });
+            
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");

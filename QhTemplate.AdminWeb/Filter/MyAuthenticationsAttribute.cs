@@ -21,7 +21,7 @@ namespace QhTemplate.AdminWeb.Filter
             var user= context.HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid));
             if (user==null&&!context.HttpContext.Request.Path.StartsWithSegments("/Articles/DoUeditor"))
             {
-                context.Result = new RedirectToActionResult("SignIn", "Account", null);
+                context.Result =new RedirectResult("http://localhost:54791/");
                 return;
             }
         }
