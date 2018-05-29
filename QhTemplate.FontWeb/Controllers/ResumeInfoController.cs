@@ -4,10 +4,13 @@ using System.Linq;
 using System.Security.Claims;
 using QhTemplate.ApplicationCore;
 using QhTemplate.ApplicationService.Recruitments;
+using QhTemplate.FontWeb.Filer;
 using QhTemplate.FontWeb.Models.ResumeInfo;
+
 
 namespace QhTemplate.FontWeb.Controllers
 {
+    [MyAuthentications]
     public class ResumeInfoController : Controller
     {
         private readonly EmsDBContext _context;

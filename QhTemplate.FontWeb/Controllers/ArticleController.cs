@@ -93,7 +93,7 @@ namespace QhTemplate.FontWeb.Controllers
                 });
             return View("SchoolArticle", artiles);
         }
-
+        [MyAuthentications]
         public IActionResult MoreSchoolArticle(int page = 1)
         {
             page -= 1;

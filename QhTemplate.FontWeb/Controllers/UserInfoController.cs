@@ -10,11 +10,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 using QhTemplate.ApplicationCore.Exceptions;
+using QhTemplate.FontWeb.Filer;
 using QhTemplate.FontWeb.Models.UserInfo;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.FontWeb.Controllers
 {
+    [MyAuthentications]
     public class UserInfoController : Controller
     {
         private readonly EmsDBContext _context;
