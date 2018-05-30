@@ -10,10 +10,14 @@
 @await Component.InvokeAsync("ClassifiesMenuBar", new { type = 2, areaId = 0 })
 <div class="main-content">
     <div>
-        @*公司信息*@
-        <h3 style="width:95%;margin-left:20px;">
-            【@Model.CompanyName】
-        </h3>
+        <div style="width:95%;margin:auto;">
+            @*公司信息*@
+            <h3 style="display: inline-block;">
+                【@Model.CompanyName】
+            </h3>
+            <button class="btn btn-default" style="float: right; margin-top: 20px;" onclick="SetNotices(@Model.Id)">设置提醒</button>
+        </div>
+
         <div class="detail-description-company">
             <table style="width: 100%;height: 75px; margin-left: 34px;">
                 <tr>
@@ -45,7 +49,7 @@
                     <li class="detail-description-ul-li">
                         <a href="#detailcontent" class="detail-description-ul-li-a">宣讲正文</a>
                     </li>
-                 
+
                 </ul>
             </div>
             <div id="detailcontent" style="padding: 0 30px;">
@@ -55,3 +59,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    function SetNotices(id) {
+        $.ajax({
+            url: "/NoticesBriefing/SetNotices",
+            type: "post",
+            data: {
+                id: id
+
+            },
+            success: function (data) {
+                alert(data);
+            }
+        })
+
+    }
+</script>

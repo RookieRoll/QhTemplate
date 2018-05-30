@@ -100,6 +100,7 @@ namespace QhTemplate.FontWeb.Controllers
                           where briefing.Id == id
                           select new DetailViewModel
                           {
+                              Id=briefing.Id,
                               CompanyName = briefing.CompanyName,
                               Content = briefing.Content,
                               Held = briefing.Held,

@@ -88,6 +88,7 @@
     margin: auto;
     background-color: white;
     font-size: 15px;
+    border-radius: 5px;
 }
 
     .recruit-list > tbody > tr > td > a {

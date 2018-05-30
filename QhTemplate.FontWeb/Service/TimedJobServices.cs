@@ -23,7 +23,7 @@ namespace QhTemplate.FontWeb.Service
             _environment = environment;
         }
 
-        // [Invoke(Begin = "2018-5-28 7:00", Interval = 1000, SkipWhileExecuting = true)]
+        [Invoke(Begin = "2018-5-28 7:00", SkipWhileExecuting = true)]
         public void Run()
         {
             var template = GetEmailTemplate();

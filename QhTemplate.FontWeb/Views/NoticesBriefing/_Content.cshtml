@@ -1,0 +1,19 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.NoticeBrefing.NoticeBriefingViewModel>
+
+@foreach (var item in Model)
+{
+    <tr style="cursor:default;">
+        <td onclick="openDetail(@item.BriefId)" style="cursor:pointer" width="40%">@item.Company</td>
+        <td width="10%">@item.Time</td>
+        <td width="20%">@item.Held</td>
+        <td width="10%">@item.PublishTime</td>
+        @if (!item.IsExpired)
+        {
+            <td><button class="btn btn-default" disabled="disabled">已过期</button></td>
+        }
+        else
+        {
+            <td><button class="btn btn-default" onclick="CancleNotices(@item.Id)">取消提醒</button></td>
+        }
+    </tr>
+}

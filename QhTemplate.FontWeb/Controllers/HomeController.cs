@@ -15,18 +15,8 @@ namespace QhTemplate.FontWeb.Controllers
     public class HomeController : Controller
     {
 
-        private readonly IHostingEnvironment _environmentl;
-
-        public HomeController(IHostingEnvironment environmentl)
-        {
-            _environmentl = environmentl;
-        }
-
         public IActionResult Index()
         {
-            EmsDBContext context=new EmsDBContext();
-            TimedJobServices job=new TimedJobServices(context,_environmentl);
-            job.Run();
             return View();
         }
 

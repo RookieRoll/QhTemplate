@@ -7,6 +7,7 @@ namespace QhTemplate.FontWeb.Models.BriefingContents
 {
     public class DetailViewModel
     {
+        public int Id { get; set; }
         public string SchoolName { get; set; }
         public string CompanyName { get; set; }
         public string Held { get; set; }
