@@ -88,7 +88,7 @@
 <script>
     function SendFile(companyId,recruid) {
         $.ajax({
-            url:"/FileOption/Delivery",
+            url:"/FileOption/DeliveryAsync",
             type:"post",
             data: {
                 companyId:companyId,

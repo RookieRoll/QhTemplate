@@ -1,0 +1,25 @@
+﻿@model IEnumerable<QhTemplate.FontWeb.Models.ResumeInfo.ResumeViewModel>
+
+@foreach (var item in Model)
+{
+    <div style="display:flex;justify-content:space-between;padding:10px 30px;cursor:default;">
+        <div style="width:200px;">@item.Name</div>
+        <div style="width:200px;">@item.Time</div>
+        <div style="width:200px;display:flex;">
+            @if (item.IsDefault)
+            {
+                
+                <a style="display:block;width:100px;">默认</a>
+            }
+            else
+            {
+                <a style="display:block;width:100px;">设为默认</a>
+
+            }
+            <a href="/FileDownload/DownloadFile/@item.Id" target="_blank">预览/下载</a>
+            <a style="margin-left:10px;">删除</a>
+        </div>
+    </div>
+}
+
+

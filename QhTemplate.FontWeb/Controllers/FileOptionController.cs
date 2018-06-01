@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.ApplicationService.Utils.EmailUtils;
 using QhTemplate.FontWeb.Filer;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
@@ -21,7 +22,7 @@ namespace QhTemplate.FontWeb.Controllers
 
         [HttpPost]
         [MyAuthentications]
-        public async Task<IActionResult> Delivery(int companyId, int recruidId)
+        public async Task<IActionResult> DeliveryAsync(int companyId, int recruidId)
         {
             var userId = await Task.FromResult(HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value);
             var ids = int.Parse(userId);
@@ -46,12 +47,15 @@ namespace QhTemplate.FontWeb.Controllers
 
             var origin = _context.FileRelation.FirstOrDefault(m =>
                 m.CompanyId == companyId && m.RecruitId == recruidId && m.UserId == ids);
+
+            var resume = _context.Resumes.FirstOrDefault(m => m.UserId == ids && m.IsDefault) ?? throw new UserFriendlyException("请上传简历");
+
             if (origin == null)
             {
                 _context.FileRelation.Add(new FileRelation
                 {
                     CompanyId = companyId,
-                    RealName = userId,
+                    RealName = resume.Id.ToString(),
                     RecruitId = recruidId,
                     CreateTime = DateTime.Now,
                     DisplayName = fileName,
@@ -84,6 +88,34 @@ namespace QhTemplate.FontWeb.Controllers
             };
             await emailHelper.SendEmailAsync(emailRecevierConfig);
             return Json("ok");
+        }
+
+        [HttpPost]
+        public IActionResult SetDefault(int id)
+        {
+            var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
+            var ids = int.Parse(userId);
+            var originResumes = _context.Resumes.Where(m => m.UserId == ids);
+            using (var scope = _context.Database.BeginTransaction())
+            {
+                var originResume = originResumes.FirstOrDefault(m => m.Id == id);
+                var defaultResume = originResumes.FirstOrDefault(m => m.IsDefault);
+                defaultResume.IsDefault = false;
+                originResume.IsDefault = true;
+                scope.Commit();
+            }
+            return Json("更改成功");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var originResume = _context.Resumes.FirstOrDefault(m => m.Id == id);
+            if (originResume.IsDefault)
+                throw new UserFriendlyException("默认简历，不能删除");
+            _context.Resumes.Remove(originResume);
+            _context.SaveChanges();
+            return Json("删除成功");
         }
     }
 }

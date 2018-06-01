@@ -15,7 +15,7 @@
                         "<button class=\"btn btn-default\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
                         "<span class=\"glyphicon glyphicon-th-list\"></span> </button>" +
                         "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\">";
-                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit('" + row.fileName + "'," + row.companyId + "," + row.userId + ")\">下载</a></li>";
+                    html += "<li><a href=\"javaScript:void(0)\" onclick=\"openEdit(" + row.id + ")\">下载</a></li>";
                     html += "<li><a href=\"javaScript:void(0)\" onclick=\"openDelete(" + row.id + ")\">删除</a></li>";
 
                     html += "</ul></form> </div>";
@@ -60,10 +60,10 @@
 });
 
 
-function openEdit(filename, companyId, userId) {
+function openEdit(id) {
     //location.href = "http://localhost:54791/FileDownload/DownLoad?file=" + filename;
-    var filename = companyId + "@" + userId + "@" + filename;
-    var url = "http://localhost:54791/FileDownload/DownLoad?file=" + filename;
+    //var filename = companyId + "@" + userId + "@" + filename;
+    var url = "http://localhost:54791/FileDownload/CompanyDownloadFile/" + id;
     console.log(url)
     window.open(url, "_blank");
 }

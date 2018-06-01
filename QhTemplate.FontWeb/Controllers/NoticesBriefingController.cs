@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Claims;
 using IronPython.Modules;
 using Microsoft.AspNetCore.Mvc;
@@ -22,24 +23,40 @@ namespace QhTemplate.FontWeb.Controllers
         }
 
         // GET
-        public IActionResult Index(string time="",string search = "")
+        public IActionResult Index(string time = "", string search = "")
         {
+            search = string.IsNullOrWhiteSpace(search) ? string.Empty : search;
             var uid = GetUserId();
             var noticeList = (from notices in _context.NoticeBriefing
-                              join briefs in _context.BriefingContent on notices.BriefingId equals briefs.Id
-                              join schools in _context.SchoolArea on briefs.SchoolId equals schools.Id
-                              where notices.UserId == uid && briefs.StartTime.Date >= DateTime.Now.Date
-                              select new NoticeBriefingViewModel
-                              {
-                                  Id=notices.Id,
-                                  BriefId=briefs.Id,
-                                  Company=briefs.CompanyName,
-                                  Held=schools.Name+briefs.Held,
-                                  IsExpired=briefs.StartTime.Date>=DateTime.Now,
-                                  Time=briefs.StartTime.ToString("MM-dd HH:mm"),
-                                  PublishTime=briefs.PublishTime.ToString("MM-dd HH:mm")
-                              }).ToList();
-            return View(noticeList);
+                join briefs in _context.BriefingContent on notices.BriefingId equals briefs.Id
+                join schools in _context.SchoolArea on briefs.SchoolId equals schools.Id
+                where notices.UserId == uid
+                select new NoticeBriefingViewModel
+                {
+                    Id = notices.Id,
+                    BriefId = briefs.Id,
+                    Company = briefs.CompanyName,
+                    Held = schools.Name + briefs.Held,
+                    IsExpired = briefs.StartTime.Date >= DateTime.Now,
+                    Time = briefs.StartTime.ToString("yyyy-MM-dd HH:mm"),
+                    PublishTime = briefs.PublishTime.ToString("yyyy-MM-dd HH:mm")
+                });
+
+            Func<NoticeBriefingViewModel, bool> func ;
+            if (!string.IsNullOrWhiteSpace(time))
+            {
+                func = m => DateTime.Parse(m.Time).Date >= DateTime.Parse(time).Date&&m.Company.Contains(search);
+          
+            }
+            else
+            {
+                func = m => DateTime.Parse(m.Time).Date >= DateTime.Now.Date && m.Company.Contains(search); ;
+            }
+
+            var result = noticeList.AsEnumerable().Where(func).ToList();
+
+
+            return View(result);
         }
 
         [HttpPost]
@@ -56,10 +73,12 @@ namespace QhTemplate.FontWeb.Controllers
             _context.SaveChanges();
             return Json("设置成功");
         }
+
         [HttpPost]
         public IActionResult CancleNotices(int id)
         {
-            var origin = _context.NoticeBriefing.FirstOrDefault(m => m.Id == id) ?? throw new UserFriendlyException("该提醒不存在");
+            var origin = _context.NoticeBriefing.FirstOrDefault(m => m.Id == id) ??
+                         throw new UserFriendlyException("该提醒不存在");
             _context.NoticeBriefing.Remove(origin);
             _context.SaveChanges();
             return Json("取消成功");

@@ -33,15 +33,16 @@
                 <input id="harg_file" type="file" accept="application/pdf" style="display:none" />
             </div>
             <div class="panel-body">
-                @if (Model.HasResume)
-                {
-                    <div style="display:flex;justify-content:space-between;padding:0 30px;">
-                        <div>@Model.ResumeInfos.Name</div>
-                        <div>@Model.ResumeInfos.Time</div>
-                        <div><a href="@Model.ResumeInfos.Url" target="_blank">预览/下载</a></div>
-                    </div>
-
-                }
+@*                 @if (Model.HasResume) *@
+@*                 { *@
+@*                     <div style="display:flex;justify-content:space-between;padding:0 30px;"> *@
+@*                         <div>@Model.ResumeInfos.Name</div> *@
+@*                         <div>@Model.ResumeInfos.Time</div> *@
+@*                         <div><a href="@Model.ResumeInfos.Url" target="_blank">预览/下载</a></div> *@
+@*                     </div> *@
+@* *@
+                @*                 } *@
+                @await Component.InvokeAsync("Resumes")
 
             </div>
         </div>
@@ -49,6 +50,40 @@
 </div>
 
 <script>
+
+    //设置默认
+    function SetDefault(id) {
+        $.ajax({
+            url: "/FileOption/SetDefault",
+            type: "POST",
+            data: {
+                id: id
+
+            },
+            success: function (data) {
+                alert(data);
+                location.reload();
+
+            }
+        })
+
+    }
+    //删除
+    function Delete(id) {
+        $.ajax({
+            url: "/FileOption/Delete",
+            type: "POST",
+            data: {
+                id: id
+
+            },
+            success: function (data) {
+                alert(data);
+                location.reload();
+
+            }
+        })
+    }
     function showEdit() {
         $("#showinfo").hide();
         $("#editinfo").show();
@@ -72,7 +107,7 @@
         var fd = new FormData();
         fd.append("file", $(this).get(0).files[0])
         $.ajax({
-            url: "/FileDownload/UploadFileAsync",
+            url: "/FileDownload/UploadFile",
             type: "POST",
             processData: false,
             contentType: false,

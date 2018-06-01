@@ -26,15 +26,15 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
         public virtual DbSet<UserOrganization> UserOrganization { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<NoticeBriefing> NoticeBriefing { get; set; }
+        public virtual DbSet<Resumes> Resumes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-               //  optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
-               optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=qh18723361304;Database=EmsDB");
-
+                //  optionsBuilder.UseMySql("Server=119.28.178.12;User Id=root;Password=qh18723361304;Database=EmsDB");
+                optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=qh18723361304;Database=EmsDB");
             }
         }
 
@@ -57,7 +57,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<AreaRecruit>(entity =>
             {
-                entity.HasKey(e => new { e.RecruitMentId, e.AreaId });
+                entity.HasKey(e => new {e.RecruitMentId, e.AreaId});
 
                 entity.Property(e => e.RecruitMentId).HasColumnType("int(11)");
 
@@ -171,7 +171,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                 entity.Property(e => e.IsDeleted).HasColumnType("tinyint");
 
                 entity.Property(e => e.Status).HasColumnType("int");
-                
+
                 entity.Property(e => e.DisplayName)
                     .HasColumnName("displayName")
                     .HasMaxLength(255);
@@ -196,7 +196,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<MajorRecruitMent>(entity =>
             {
-                entity.HasKey(e => new { e.MajorId, e.RecruitMentId });
+                entity.HasKey(e => new {e.MajorId, e.RecruitMentId});
 
                 entity.HasIndex(e => e.RecruitMentId)
                     .HasName("MajorRecruitMent_ibfk_2");
@@ -315,10 +315,10 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .HasConstraintName("FK_Reference_7");
             });
 
-            
+
             modelBuilder.Entity<SchoolUser>(entity =>
             {
-                entity.HasKey(e => new { e.SchoolId, e.UserId });
+                entity.HasKey(e => new {e.SchoolId, e.UserId});
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("UserId");
@@ -362,7 +362,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("NoticeBriefing_ibfk_2");
             });
-            
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
@@ -388,7 +388,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<UserOrganization>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.OrganizationId });
+                entity.HasKey(e => new {e.UserId, e.OrganizationId});
 
                 entity.HasIndex(e => e.OrganizationId)
                     .HasName("FK_Reference_4");
@@ -412,7 +412,7 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
+                entity.HasKey(e => new {e.UserId, e.RoleId});
 
                 entity.HasIndex(e => e.RoleId)
                     .HasName("FK_Reference_2");
@@ -432,6 +432,17 @@ namespace QhTemplate.MysqlEntityFrameWorkCore.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Reference_1");
+            });
+
+            modelBuilder.Entity<Resumes>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(m => m.CreationTime).HasColumnType("datetime");
+                entity.Property(m => m.IsDefault).HasColumnType("tinyint(1)");
+                entity.Property(m => m.Name).HasMaxLength(255);
+                entity.Property(m => m.RealName).HasMaxLength(255);
+                entity.Property(m => m.UserId).HasColumnType("int(11)");
+
             });
         }
     }

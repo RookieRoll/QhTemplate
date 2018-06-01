@@ -19,18 +19,34 @@ namespace QhTemplate.FontWeb.Controllers
         private readonly IHostingEnvironment _hostingEnvironment;
 
         private readonly EmsDBContext _context;
+
         public FileDownloadController(IHostingEnvironment hostingEnvironment, EmsDBContext context)
         {
             _hostingEnvironment = hostingEnvironment;
             _context = context;
         }
 
+      
         [HttpPost]
-        public async Task<IActionResult> UploadFileAsync(IFormFile file)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
-            var id = await Task.FromResult(HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value);
-            string fileExt = GetFileExt(file.FileName);
-            var path = _hostingEnvironment.WebRootPath + "/upload/resumes/" + id + '.' + fileExt;
+            var id = await Task.FromResult(HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))
+                ?.Value);
+            var userId = int.Parse(id);
+
+            #region 记录简历历史
+            var filename = file.FileName.Replace(".pdf", "");
+            var originResume = _context.Resumes.FirstOrDefault(m => m.UserId == userId && m.IsDefault);
+            var resume = Resumes.Create(filename, userId);
+            if (originResume == null)
+            {
+                resume.IsDefault = true;
+            }
+            _context.Resumes.Add(resume);
+            _context.SaveChanges();
+            #endregion
+
+            var path = _hostingEnvironment.WebRootPath + "/upload/resumes/" + resume.RealName + ".pdf";
             try
             {
                 using (var stream = new FileStream(path, FileMode.Create))
@@ -45,42 +61,54 @@ namespace QhTemplate.FontWeb.Controllers
 
             return Json("上传成功");
         }
+
+        /// <summary>
+        /// 前台用户下载简历链接
+        /// </summary>
+        /// <param name="id">简历Id</param>
+        /// <returns></returns>
+        public IActionResult DownloadFile(int id)
+        {
+            var resume = _context.Resumes.FirstOrDefault(m => m.Id == id) ?? 
+                throw new UserFriendlyException("该简历不存在");
+
+            var filename = resume.RealName+".pdf";
+            var addrUrl = _hostingEnvironment.WebRootPath + "/upload/resumes/" +filename;
+            var stream = System.IO.File.OpenRead(addrUrl);
+            var provider = new FileExtensionContentTypeProvider();
+            var memi = provider.Mappings[".pdf"];
+            var name = resume.Name+".pdf";
+            return File(stream, memi, name);
+        }
+        /// <summary>
+        /// 公司下载简历
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult CompanyDownloadFile(int id)
+        {
+            var relation = _context.FileRelation.FirstOrDefault(m => m.Id == id)??
+                throw new UserFriendlyException("该简历不存在");
+            var resume=_context.Resumes.FirstOrDefault(m=>m.Id.Equals(int.Parse(relation.RealName)))?? 
+                throw new UserFriendlyException("该简历不存在");
+
+            relation.Status= (int)ResumeStatus.Readed;
+
+            _context.SaveChanges();
+
+            var filename = resume.RealName + ".pdf";
+            var addrUrl = _hostingEnvironment.WebRootPath + "/upload/resumes/" + filename;
+            var stream = System.IO.File.OpenRead(addrUrl);
+            var provider = new FileExtensionContentTypeProvider();
+            var memi = provider.Mappings[".pdf"];
+            var name = relation.DisplayName+".pdf";
+            return File(stream, memi, name);
+        }
         /// <summary>
         /// 下载文件
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public IActionResult DownLoad(string file)
-        {
-            var temp = file.Split("@");
-            var company = int.Parse(temp[0]);
-            var userId = int.Parse(temp[1]);
-            var filename = temp[2];
-            var resume = _context.FileRelation.FirstOrDefault(m => m.CompanyId == company && m.UserId == userId && m.DisplayName.Equals(filename)) ??
-                throw new UserFriendlyException("该文件不存在");
-
-            resume.Status = (int)ResumeStatus.Readed;
-
-            _context.SaveChanges();
-            var real = resume.RealName;
-            var addrUrl = _hostingEnvironment.WebRootPath + "/upload/resumes/" + real + ".pdf";
-
-            var stream = System.IO.File.OpenRead(addrUrl);
-
-            string fileExt = GetFileExt(file); //获取文件扩展名
-
-            //获取文件的ContentType
-
-            var provider = new FileExtensionContentTypeProvider();
-
-            var memi = provider.Mappings[".pdf"];
-            var name = filename + ".pdf";
-            return File(stream, memi, name);
-        }
-
-        private string GetFileExt(string file)
-        {
-            return file.Split('.').LastOrDefault();
-        }
+     
     }
 }
