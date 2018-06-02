@@ -9,15 +9,15 @@
             @if (item.IsDefault)
             {
                 
-                <a style="display:block;width:100px;">默认</a>
+                <button style="display:block;min-width:82px;" class="btn btn-default">默认</button>
             }
             else
             {
-                <a style="display:block;width:100px;">设为默认</a>
+                <button style="display:block;width:82px;" class="btn btn-default" onclick="SetDefault(@item.Id)" >设为默认</button>
 
             }
-            <a href="/FileDownload/DownloadFile/@item.Id" target="_blank">预览/下载</a>
-            <a style="margin-left:10px;">删除</a>
+            <a href="/FileDownload/DownloadFile/@item.Id" target="_blank"  class="btn btn-default">预览/下载</a>
+            <button class="btn btn-default" style="margin-left:10px;"  href="javaScript:void(0)" onclick="Delete(@item.Id)">删除</button>
         </div>
     </div>
 }

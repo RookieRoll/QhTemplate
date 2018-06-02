@@ -96,14 +96,11 @@ namespace QhTemplate.FontWeb.Controllers
             var userId = HttpContext.User.Claims.SingleOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value;
             var ids = int.Parse(userId);
             var originResumes = _context.Resumes.Where(m => m.UserId == ids);
-            using (var scope = _context.Database.BeginTransaction())
-            {
-                var originResume = originResumes.FirstOrDefault(m => m.Id == id);
-                var defaultResume = originResumes.FirstOrDefault(m => m.IsDefault);
-                defaultResume.IsDefault = false;
-                originResume.IsDefault = true;
-                scope.Commit();
-            }
+            var originResume = originResumes.FirstOrDefault(m => m.Id == id);
+            var defaultResume = originResumes.FirstOrDefault(m => m.IsDefault);
+            defaultResume.IsDefault = false;
+            originResume.IsDefault = true;
+            _context.SaveChanges();
             return Json("更改成功");
         }
 

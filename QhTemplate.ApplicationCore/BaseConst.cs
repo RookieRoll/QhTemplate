@@ -7,6 +7,6 @@ namespace QhTemplate.ApplicationCore
     public class BaseConst
     {
         public const string FolderPrefix = "/Company/";
-        public const int Size = 1;
+        public const int Size = 30;
     }
 }

@@ -48,11 +48,11 @@ namespace QhTemplate.FontWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvc(opt =>
-            //{
-            //    opt.Filters.Add<MyExceptionFilter>();
-            //});
-            services.AddMvc();
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add<MyExceptionFilter>();
+            });
+            //services.AddMvc();
             services.AddDbContext<EmsDBContext>();
             services.AddScoped<RoleManager>();
             services.AddScoped<UserManager>();

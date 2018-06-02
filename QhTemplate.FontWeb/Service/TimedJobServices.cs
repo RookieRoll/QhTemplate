@@ -12,7 +12,7 @@ using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.FontWeb.Service
 {
-    public class TimedJobServices
+    public class TimedJobServices : Job
     {
         private readonly EmsDBContext _context;
         private readonly IHostingEnvironment _environment;
@@ -39,7 +39,7 @@ namespace QhTemplate.FontWeb.Service
                     EmailRecevierConfig config = new EmailRecevierConfig
                     {
                         Addressee = tempValue.Name,
-                        EmailAdd = tempValue.Name,
+                        EmailAdd = tempValue.Email,
                         Subject = "宣讲会提醒-就业网",
                         Content = GetEmailContent(template, tempValue.Briefings)
                     };
@@ -74,30 +74,30 @@ namespace QhTemplate.FontWeb.Service
         {
             var temp1 = _context.NoticeBriefing.ToList();
             var resule = (from notices in _context.NoticeBriefing
-                    join briefings in _context.BriefingContent on notices.BriefingId equals briefings.Id
-                    join users in _context.User on notices.UserId equals users.Id
-                    join schools in _context.SchoolArea on briefings.SchoolId equals schools.Id
-                    group new
-                    {
-                        notices,
-                        users,
-                        briefings,
-                        schools
-                    } by notices.UserId
+                          join briefings in _context.BriefingContent on notices.BriefingId equals briefings.Id
+                          join users in _context.User on notices.UserId equals users.Id
+                          join schools in _context.SchoolArea on briefings.SchoolId equals schools.Id
+                          group new
+                          {
+                              notices,
+                              users,
+                              briefings,
+                              schools
+                          } by notices.UserId
                     into temp
-                    select new Notice
-                    {
-                        UserId = temp.FirstOrDefault().users.Id,
-                        Email = temp.FirstOrDefault().users.EmailAddress,
-                        Name = temp.FirstOrDefault().users.Name,
-                        Briefings = temp.Select(m => new BriefingMessage
-                        {
-                            Company = m.briefings.CompanyName,
-                            Id = m.briefings.Id,
-                            Held = m.schools.Name + m.briefings.Held,
-                            Time = m.briefings.StartTime.ToString("MM-dd HH:mm")
-                        }).ToList()
-                    }
+                          select new Notice
+                          {
+                              UserId = temp.FirstOrDefault().users.Id,
+                              Email = temp.FirstOrDefault().users.EmailAddress,
+                              Name = temp.FirstOrDefault().users.Name,
+                              Briefings = temp.Select(m => new BriefingMessage
+                              {
+                                  Company = m.briefings.CompanyName,
+                                  Id = m.briefings.Id,
+                                  Held = m.schools.Name + m.briefings.Held,
+                                  Time = m.briefings.StartTime.ToString("MM-dd HH:mm")
+                              }).ToList()
+                          }
                 ).ToList();
             return resule;
         }
