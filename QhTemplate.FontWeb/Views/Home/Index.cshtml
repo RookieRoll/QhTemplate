@@ -1,13 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "就业网";
+    ViewData["Title"] = "首页";
 }
 <div>
     @Html.Partial("_Carousel")
-
-    @await Component.InvokeAsync("BriefingContent")
-
-    @await Component.InvokeAsync("Recruit")
-
-    @await Component.InvokeAsync("Article")
-
+    <div id="briefing">
+        @await Component.InvokeAsync("BriefingContent")
+    </div>
+    <div id="recruit">
+        @await Component.InvokeAsync("Recruit")
+    </div>
+    <div id="article">
+        @await Component.InvokeAsync("Article")
+    </div>
 </div>

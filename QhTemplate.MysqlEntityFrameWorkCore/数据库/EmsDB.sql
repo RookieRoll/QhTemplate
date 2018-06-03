@@ -1,27 +1,27 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : myServer
+ Source Server         : 本地mysql
  Source Server Type    : MySQL
- Source Server Version : 50721
- Source Host           : 119.28.178.12:3306
- Source Schema         : EmsDB
+ Source Server Version : 80011
+ Source Host           : localhost:3306
+ Source Schema         : emsdb
 
  Target Server Type    : MySQL
- Target Server Version : 50721
+ Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 12/05/2018 23:51:51
+ Date: 02/06/2018 16:46:22
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for Area
+-- Table structure for area
 -- ----------------------------
-DROP TABLE IF EXISTS `Area`;
-CREATE TABLE `Area`  (
+DROP TABLE IF EXISTS `area`;
+CREATE TABLE `area`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -32,20 +32,20 @@ CREATE TABLE `Area`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for AreaRecruit
+-- Table structure for arearecruit
 -- ----------------------------
-DROP TABLE IF EXISTS `AreaRecruit`;
-CREATE TABLE `AreaRecruit`  (
+DROP TABLE IF EXISTS `arearecruit`;
+CREATE TABLE `arearecruit`  (
   `RecruitMentId` int(11) NOT NULL,
   `AreaId` int(11) NOT NULL,
   PRIMARY KEY (`RecruitMentId`, `AreaId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for AuditLog
+-- Table structure for auditlog
 -- ----------------------------
-DROP TABLE IF EXISTS `AuditLog`;
-CREATE TABLE `AuditLog`  (
+DROP TABLE IF EXISTS `auditlog`;
+CREATE TABLE `auditlog`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `UserId` int(11) NULL DEFAULT NULL,
   `ServiceName` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -61,10 +61,10 @@ CREATE TABLE `AuditLog`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for BriefingContent
+-- Table structure for briefingcontent
 -- ----------------------------
-DROP TABLE IF EXISTS `BriefingContent`;
-CREATE TABLE `BriefingContent`  (
+DROP TABLE IF EXISTS `briefingcontent`;
+CREATE TABLE `briefingcontent`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `CompanyName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `SchoolId` int(11) NULL DEFAULT NULL COMMENT '举办学校',
@@ -74,14 +74,16 @@ CREATE TABLE `BriefingContent`  (
   `OpthonList` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `PublishTime` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
   `StartTime` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
-  PRIMARY KEY (`Id`) USING BTREE
+  PRIMARY KEY (`Id`) USING BTREE,
+  INDEX `Id`(`Id`) USING BTREE,
+  INDEX `Id_2`(`Id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for Company
+-- Table structure for company
 -- ----------------------------
-DROP TABLE IF EXISTS `Company`;
-CREATE TABLE `Company`  (
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE `company`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -94,40 +96,42 @@ CREATE TABLE `Company`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for CompanyUser
+-- Table structure for companyuser
 -- ----------------------------
-DROP TABLE IF EXISTS `CompanyUser`;
-CREATE TABLE `CompanyUser`  (
+DROP TABLE IF EXISTS `companyuser`;
+CREATE TABLE `companyuser`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `UserId` int(11) NOT NULL,
   `CompanyId` int(11) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `UserId`(`UserId`) USING BTREE,
   INDEX `CompanyId`(`CompanyId`) USING BTREE,
-  CONSTRAINT `CompanyUser_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `User` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `CompanyUser_ibfk_2` FOREIGN KEY (`CompanyId`) REFERENCES `Company` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `CompanyUser_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `CompanyUser_ibfk_2` FOREIGN KEY (`CompanyId`) REFERENCES `company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for FileRelation
+-- Table structure for filerelation
 -- ----------------------------
-DROP TABLE IF EXISTS `FileRelation`;
-CREATE TABLE `FileRelation`  (
+DROP TABLE IF EXISTS `filerelation`;
+CREATE TABLE `filerelation`  (
   `CompanyId` int(11) NOT NULL,
   `UserId` int(11) NOT NULL,
   `RecruitId` int(11) NOT NULL,
-  `displayName` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `realName` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `displayName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `realName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `CreateTime` datetime(0) NULL DEFAULT NULL,
   `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IsDeleted` tinyint(1) NOT NULL DEFAULT 0,
+  `Status` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for Major
+-- Table structure for major
 -- ----------------------------
-DROP TABLE IF EXISTS `Major`;
-CREATE TABLE `Major`  (
+DROP TABLE IF EXISTS `major`;
+CREATE TABLE `major`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -135,10 +139,10 @@ CREATE TABLE `Major`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '专业' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for MajorRecruitMent
+-- Table structure for majorrecruitment
 -- ----------------------------
-DROP TABLE IF EXISTS `MajorRecruitMent`;
-CREATE TABLE `MajorRecruitMent`  (
+DROP TABLE IF EXISTS `majorrecruitment`;
+CREATE TABLE `majorrecruitment`  (
   `MajorId` int(11) NOT NULL,
   `RecruitMentId` int(11) NOT NULL,
   PRIMARY KEY (`MajorId`, `RecruitMentId`) USING BTREE,
@@ -146,24 +150,40 @@ CREATE TABLE `MajorRecruitMent`  (
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for NewArticle
+-- Table structure for newarticle
 -- ----------------------------
-DROP TABLE IF EXISTS `NewArticle`;
-CREATE TABLE `NewArticle`  (
+DROP TABLE IF EXISTS `newarticle`;
+CREATE TABLE `newarticle`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Title` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `Content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `PublishTime` datetime(0) NULL DEFAULT NULL,
   `IsDelete` tinyint(1) NULL DEFAULT NULL,
   `SubContent` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `SchoolId` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for Organization
+-- Table structure for noticebriefing
 -- ----------------------------
-DROP TABLE IF EXISTS `Organization`;
-CREATE TABLE `Organization`  (
+DROP TABLE IF EXISTS `noticebriefing`;
+CREATE TABLE `noticebriefing`  (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `UserId` int(11) NULL DEFAULT NULL,
+  `BriefingId` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  INDEX `UserrId`(`UserId`) USING BTREE,
+  INDEX `BriefingId`(`BriefingId`) USING BTREE,
+  CONSTRAINT `NoticeBriefing_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `NoticeBriefing_ibfk_2` FOREIGN KEY (`BriefingId`) REFERENCES `briefingcontent` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for organization
+-- ----------------------------
+DROP TABLE IF EXISTS `organization`;
+CREATE TABLE `organization`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `ParentId` int(11) NULL DEFAULT NULL,
   `Name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -176,23 +196,23 @@ CREATE TABLE `Organization`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for Permission
+-- Table structure for permission
 -- ----------------------------
-DROP TABLE IF EXISTS `Permission`;
-CREATE TABLE `Permission`  (
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `RoleId` int(11) NULL DEFAULT NULL,
   `UserId` int(11) NULL DEFAULT NULL,
   `Code` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CreationTime` datetime(0) NOT NULL,
   PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 192 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 193 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for Recruitment
+-- Table structure for recruitment
 -- ----------------------------
-DROP TABLE IF EXISTS `Recruitment`;
-CREATE TABLE `Recruitment`  (
+DROP TABLE IF EXISTS `recruitment`;
+CREATE TABLE `recruitment`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `CompanyId` int(11) NULL DEFAULT NULL,
   `Title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -203,10 +223,24 @@ CREATE TABLE `Recruitment`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '职位招聘表\r\n' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for Role
+-- Table structure for resumes
 -- ----------------------------
-DROP TABLE IF EXISTS `Role`;
-CREATE TABLE `Role`  (
+DROP TABLE IF EXISTS `resumes`;
+CREATE TABLE `resumes`  (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `RealName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `IsDefault` tinyint(1) NOT NULL,
+  `CreationTime` datetime(0) NOT NULL,
+  `UserId` int(11) NOT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `IsStatic` tinyint(1) NOT NULL,
@@ -219,10 +253,10 @@ CREATE TABLE `Role`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for SchoolArea
+-- Table structure for schoolarea
 -- ----------------------------
-DROP TABLE IF EXISTS `SchoolArea`;
-CREATE TABLE `SchoolArea`  (
+DROP TABLE IF EXISTS `schoolarea`;
+CREATE TABLE `schoolarea`  (
   `AreaId` int(11) NOT NULL,
   `Name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `Address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -231,27 +265,27 @@ CREATE TABLE `SchoolArea`  (
   `Path` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`Id`) USING BTREE,
   INDEX `FK_Reference_7`(`AreaId`) USING BTREE,
-  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`AreaId`) REFERENCES `Area` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `FK_Reference_7` FOREIGN KEY (`AreaId`) REFERENCES `area` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for SchoolUser
+-- Table structure for schooluser
 -- ----------------------------
-DROP TABLE IF EXISTS `SchoolUser`;
-CREATE TABLE `SchoolUser`  (
+DROP TABLE IF EXISTS `schooluser`;
+CREATE TABLE `schooluser`  (
   `SchoolId` int(11) NOT NULL,
   `UserId` int(11) NOT NULL,
   PRIMARY KEY (`SchoolId`, `UserId`) USING BTREE,
   INDEX `UserId`(`UserId`) USING BTREE,
-  CONSTRAINT `SchoolUser_ibfk_1` FOREIGN KEY (`SchoolId`) REFERENCES `SchoolArea` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `SchoolUser_ibfk_2` FOREIGN KEY (`UserId`) REFERENCES `User` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `SchoolUser_ibfk_1` FOREIGN KEY (`SchoolId`) REFERENCES `schoolarea` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `SchoolUser_ibfk_2` FOREIGN KEY (`UserId`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for User
+-- Table structure for user
 -- ----------------------------
-DROP TABLE IF EXISTS `User`;
-CREATE TABLE `User`  (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`  (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `UserName` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -262,33 +296,35 @@ CREATE TABLE `User`  (
   `LastModificationTime` datetime(0) NULL DEFAULT NULL,
   `DeletionTime` datetime(0) NULL DEFAULT NULL,
   `UserType` int(255) NOT NULL,
-  PRIMARY KEY (`Id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`Id`) USING BTREE,
+  INDEX `Id`(`Id`) USING BTREE,
+  INDEX `Id_2`(`Id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for UserOrganization
+-- Table structure for userorganization
 -- ----------------------------
-DROP TABLE IF EXISTS `UserOrganization`;
-CREATE TABLE `UserOrganization`  (
+DROP TABLE IF EXISTS `userorganization`;
+CREATE TABLE `userorganization`  (
   `UserId` int(11) NOT NULL,
   `OrganizationId` int(11) NOT NULL,
   PRIMARY KEY (`UserId`, `OrganizationId`) USING BTREE,
   INDEX `FK_Reference_4`(`OrganizationId`) USING BTREE,
-  CONSTRAINT `FK_Reference_3` FOREIGN KEY (`UserId`) REFERENCES `User` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_Reference_4` FOREIGN KEY (`OrganizationId`) REFERENCES `Organization` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `FK_Reference_3` FOREIGN KEY (`UserId`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_Reference_4` FOREIGN KEY (`OrganizationId`) REFERENCES `organization` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for UserRole
+-- Table structure for userrole
 -- ----------------------------
-DROP TABLE IF EXISTS `UserRole`;
-CREATE TABLE `UserRole`  (
+DROP TABLE IF EXISTS `userrole`;
+CREATE TABLE `userrole`  (
   `UserId` int(11) NOT NULL,
   `RoleId` int(11) NOT NULL,
   PRIMARY KEY (`UserId`, `RoleId`) USING BTREE,
   INDEX `FK_Reference_2`(`RoleId`) USING BTREE,
-  CONSTRAINT `FK_Reference_1` FOREIGN KEY (`UserId`) REFERENCES `User` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_Reference_2` FOREIGN KEY (`RoleId`) REFERENCES `Role` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `FK_Reference_1` FOREIGN KEY (`UserId`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_Reference_2` FOREIGN KEY (`RoleId`) REFERENCES `role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -18,38 +18,50 @@ namespace QhTemplate.FontWeb.ViewComponents
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int type,int areaId)
+        public async Task<IViewComponentResult> InvokeAsync(int type, int areaId)
         {
-            var username= await Task.FromResult(HttpContext.User.Identities.SingleOrDefault(x => x.NameClaimType.Equals(ClaimTypes.Name))?.Name);
+            var username = await Task.FromResult(HttpContext.User.Identities.SingleOrDefault(x => x.NameClaimType.Equals(ClaimTypes.Name))?.Name);
             List<MenuBar> result;
             if (type == 1)
             {
-                var area = _context.Area.FirstOrDefault(m => m.Id == areaId);
-                result = _context.SchoolArea.Where(m => m.Path.StartsWith(area.Path)).Select(m => new MenuBar()
+                if (areaId == 0)
                 {
-                    Id = m.Id,
-                    Name = m.Name
-                }).ToList();
+                    result = _context.SchoolArea.Select(m => new MenuBar()
+                    {
+                        Id = m.Id,
+                        Name = m.Name
+                    }).ToList();
+                }
+                else
+                {
+                    var area = _context.Area.FirstOrDefault(m => m.Id == areaId);
+                    result = _context.SchoolArea.Where(m => m.Path.StartsWith(area.Path)).Select(m => new MenuBar()
+                    {
+                        Id = m.Id,
+                        Name = m.Name
+                    }).ToList();
+                }
+
 
             }
             else
             {
                 result = _context.Major.Select(m => new MenuBar
                 {
-                    Id=m.Id,
-                    Name=m.Name
+                    Id = m.Id,
+                    Name = m.Name
                 }).ToList();
             }
-       
+
 
             MenuBarViewModel bar = new MenuBarViewModel
             {
                 AreaId = areaId,
                 MenuBar = result,
                 MenuType = type,
-                UserName=username
+                UserName = username
             };
-            return View("MenuBar",bar);
+            return View("MenuBar", bar);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace QhTemplate.FontWeb.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            var result = _context.NewArticle.OrderByDescending(m => m.PublishTime).Take(40).Select(m => new ArticleViewModel
+            var result = _context.NewArticle.Where(m=>m.SchoolId==null).OrderByDescending(m => m.PublishTime).Take(20).Select(m => new ArticleViewModel
             {
                 Id = m.Id,
                 Time = m.PublishTime.ToString("yyyy-MM-dd HH-mm"),

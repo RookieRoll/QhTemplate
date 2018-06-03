@@ -30,11 +30,24 @@ namespace QhTemplate.FontWeb.Controllers
                 AreaId = id,
                 Page = 1,
                 MenuType = 1,
-                SchoolId=ids
+                SchoolId = ids
             };
-            var school = from area in _db.SchoolArea
-                         where area.Path.Contains(string.Format(",{0},", id))
-                         select area.Id;
+
+            List<int> school = new List<int>();
+            if (id == 0)
+            {
+                school = (from area in _db.SchoolArea
+                          select area.Id).ToList();
+            }
+            else
+            {
+                school = (from area in _db.SchoolArea
+                          where area.Path.Contains(string.Format(",{0},", id))
+                          select area.Id).ToList();
+            }
+
+
+
             var tempContent = from content in _db.BriefingContent
                               where school.Any(m => m.Equals(content.SchoolId))
                               select content;
@@ -71,7 +84,7 @@ namespace QhTemplate.FontWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetMore(int id, int ids,int page=1)
+        public IActionResult GetMore(int id, int ids, int page = 1)
         {
             page -= 1;
             var school = from area in _db.SchoolArea
@@ -80,19 +93,19 @@ namespace QhTemplate.FontWeb.Controllers
             var tempContent = from content in _db.BriefingContent
                               where school.Any(m => m.Equals(content.SchoolId))
                               select content;
-           var result= tempContent.OrderBy(m => m.StartTime).Skip(page*Size).Take(Size).Select(m =>
-                new BriefingContentList
-                {
-                    Id = m.Id,
-                    Company = m.CompanyName,
-                    Held = m.Held,
-                    StartTime = m.StartTime.ToString("yyyy-MM-dd HH:mm"),
-                    PublishTime = m.PublishTime.ToString("yyyy-MM-dd HH:mm")
-                }).ToList();
+            var result = tempContent.OrderBy(m => m.StartTime).Skip(page * Size).Take(Size).Select(m =>
+                    new BriefingContentList
+                    {
+                        Id = m.Id,
+                        Company = m.CompanyName,
+                        Held = m.Held,
+                        StartTime = m.StartTime.ToString("yyyy-MM-dd HH:mm"),
+                        PublishTime = m.PublishTime.ToString("yyyy-MM-dd HH:mm")
+                    }).ToList();
 
-            return PartialView("_Content",result);
+            return PartialView("_Content", result);
         }
-   
+
         public IActionResult Detail(int id)
         {
             var detail = (from briefing in _db.BriefingContent
@@ -100,7 +113,7 @@ namespace QhTemplate.FontWeb.Controllers
                           where briefing.Id == id
                           select new DetailViewModel
                           {
-                              Id=briefing.Id,
+                              Id = briefing.Id,
                               CompanyName = briefing.CompanyName,
                               Content = briefing.Content,
                               Held = briefing.Held,

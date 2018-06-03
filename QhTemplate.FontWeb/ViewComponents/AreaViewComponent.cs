@@ -25,8 +25,13 @@ namespace QhTemplate.FontWeb.ViewComponents
                     list.Add(m);
                 }
             });
-
-            var name = _dbContext.Area.FirstOrDefault(m=>m.Id==id).Name;
+            string name = string.Empty;
+            if (id == 0)
+            {
+                name = "全部";
+            }
+            else
+                name = _dbContext.Area.FirstOrDefault(m=>m.Id==id).Name;
             AreaListViewModel model = new AreaListViewModel
             {
                 CurrentName = name,
