@@ -17,16 +17,16 @@
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">学校名称</span>
-                <input type="text" class="form-control" placeholder="学校名称" aria-describedby="basic-addon1" list="data" oninput="getData()" id="schoolname">
+                <input type="text" class="form-control" placeholder="学校名称" aria-describedby="basic-addon1" list="data" oninput="getData()" id="schoolname" required="required">
             </div>
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">用户名</span>
-                <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon2" id="username">
+                <input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon2" id="username" required="required">
             </div>
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">密码</span>
-                <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon3" id="password">
+                <input type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon3" id="password" required="required">
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:20px;">
                 <a href="/schoolaccount/signup">注册</a>
@@ -43,6 +43,20 @@
             var schoolname = $("#schoolname").val();
             var username = $("#username").val();
             var password = $("#password").val();
+
+            if (schoolname === "") {
+                alert("学校不能为空");
+                return;
+
+            }
+            if (username === "") {
+                alert("用户名不能为空"); return;
+
+            }
+            if (password === "") {
+                alert("密码不能为空"); return;
+
+            }
             $.ajax({
                 url: "/SchoolAccount/SignIN",
                 type: "post",

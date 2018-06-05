@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using QhTemplate.ApplicationCore.Authentications.Permissions;
 using QhTemplate.ApplicationCore.Authentications.Roles;
+using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.ApplicationCore.Users;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
@@ -51,8 +50,23 @@ namespace QhTemplate.ApplicationService.Users
             return _userManager.Find(id);
         }
 
+        private bool HasUserName(string userName, int? id)
+        {
+            if (id == null)
+            {
+                return _db.User.FirstOrDefault(m => m.UserName.Equals(userName)) == null;
+            }
+
+            return _db.User.FirstOrDefault(m => m.UserName.Equals(userName) && m.Id != id) == null;
+        }
+
         public void Create(string userName, string name, string email, UserType type)
         {
+            if (!HasUserName(userName, null))
+            {
+                throw new UserFriendlyException("该用户名以及被使用");
+            }
+
             var user = User.Create(name, userName, email, type);
             Func<Role, bool> func = GetDefaultRole(type);
             var defaultRole = _roleManager.Finds(func).Select(m => m.Id);
@@ -77,15 +91,30 @@ namespace QhTemplate.ApplicationService.Users
             Func<Role, bool> func;
             switch (type)
             {
-                case UserType.Employee: func = m => m.Id == 3 && m.IsDefault; break;
-                case UserType.Teacher: func = m => m.IsDefault && m.Id == 2; break;
-                case UserType.Admin: func = m => m.IsDefault && m.Id == 1; break;
-                default: func = m => m.IsDefault && !m.IsStatic; break;
+                case UserType.Employee:
+                    func = m => m.Id == 3 && m.IsDefault;
+                    break;
+                case UserType.Teacher:
+                    func = m => m.IsDefault && m.Id == 2;
+                    break;
+                case UserType.Admin:
+                    func = m => m.IsDefault && m.Id == 1;
+                    break;
+                default:
+                    func = m => m.IsDefault && !m.IsStatic;
+                    break;
             }
+
             return func;
         }
+
         public int Register(string userName, string name, string email, string password, UserType type)
         {
+            if (!HasUserName(userName, null))
+            {
+                throw new UserFriendlyException("该用户名以及被使用");
+            }
+
             var user = User.Register(name, userName, email, password, type);
             var func = GetDefaultRole(type);
             var defaultRole = _roleManager.Finds(func).Select(m => m.Id);
@@ -107,6 +136,7 @@ namespace QhTemplate.ApplicationService.Users
 
             return user.Id;
         }
+
         public void Remove(int? id)
         {
             _userManager.Deleted(id);
@@ -114,6 +144,11 @@ namespace QhTemplate.ApplicationService.Users
 
         public void Update(User user)
         {
+            if (!HasUserName(user.UserName, user.Id))
+            {
+                throw new UserFriendlyException("该用户名已经被使用");
+            }
+
             _userManager.Update(user);
         }
 
@@ -154,18 +189,18 @@ namespace QhTemplate.ApplicationService.Users
         public IEnumerable<User> GetUsersByCompany(int companyId)
         {
             var users = (from cu in _db.CompanyUser
-                         join us in Finds() on cu.UserId equals us.Id
-                         where cu.CompanyId == companyId
-                         select us);
+                join us in Finds() on cu.UserId equals us.Id
+                where cu.CompanyId == companyId
+                select us);
             return users;
         }
 
         public IEnumerable<User> GetUsersBySchool(int school)
         {
             var users = (from cu in _db.SchoolUser
-                         join us in Finds() on cu.UserId equals us.Id
-                         where cu.SchoolId == school
-                         select us);
+                join us in Finds() on cu.UserId equals us.Id
+                where cu.SchoolId == school
+                select us);
             return users;
         }
     }

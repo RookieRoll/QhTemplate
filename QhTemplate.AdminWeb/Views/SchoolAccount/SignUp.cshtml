@@ -43,7 +43,7 @@
 
 
             <div style="display:flex;justify-content:space-between;margin-top:20px;">
-                <a href="/schoolaccount/signup">登录</a>
+                <a href="/schoolaccount/signin">登录</a>
                 <button type="button" onclick="signUp()" class="btn btn-lg btn-primary" style="width:200px;height:30px;font-size: 14px;padding: 0px;background-color: cornflowerblue;">注册</button>
 
             </div>
@@ -59,7 +59,27 @@
             var username = $("#username").val();
             var email = $("#email").val();
             var password = $("#password").val();
+            if (school === "") {
+                alert("学校不能为空");
+                return;
 
+            }
+            if (username === "") {
+                alert("用户名不能为空"); return;
+
+            }
+            if (password === "") {
+                alert("密码不能为空"); return;
+
+            }
+            if (name === "") {
+                alert("姓名不能为空"); return;
+
+            }
+            if (email === "") {
+                alert("邮箱不能为空"); return;
+
+            }
             $.ajax({
                 url: "/SchoolAccount/SignUp",
                 type: "post",

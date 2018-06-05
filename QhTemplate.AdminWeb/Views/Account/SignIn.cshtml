@@ -42,6 +42,18 @@
             var userName = $("#username").val();
             var password = $("#password").val();
             var validatecode = $("#validatecode").val();
+            if (userName === "") {
+                alert("用户名不能为空"); return;
+
+            }
+            if (password === "") {
+                alert("密码不能为空"); return;
+
+            }
+            if (validatecode === "") {
+                alert("校验码不能为空"); return;
+
+            }
             $.ajax({
 
                 url: "/Account/SignIn",

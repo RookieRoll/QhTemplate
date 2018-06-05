@@ -24,7 +24,7 @@ namespace QhTemplate.FontWeb.ViewComponents
 
             var result = (from company in _dbContext.Company
                 join recruit in _dbContext.Recruitment on company.Id equals recruit.CompanyId
-                where ids.Any(m => m == recruit.Id)
+                where ids.Any(m => m == recruit.Id)&&recruit.EndTime.Date>=DateTime.Now.Date
                 group new {recruit, company} by recruit.CompanyId
                 into temp
                 select new RecruitmentModel

@@ -46,7 +46,12 @@ namespace QhTemplate.AdminWeb.Controllers
         [HttpPost]
         public IActionResult Update(MajorViewModel model)
         {
-            var major = MapperUtil<MajorViewModel, Major>.Convert(model);
+            var major = new Major
+            {
+                Id=model.Id,
+                Name=model.Name,
+                Code=model.Code
+            };
             _majorApp.Update(major);
             return Json("修改成功");
         }

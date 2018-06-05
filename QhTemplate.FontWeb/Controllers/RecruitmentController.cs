@@ -44,7 +44,7 @@ namespace QhTemplate.FontWeb.Controllers
 
             var companys = (from company in _db.Company
                             join recruit in result on company.Id equals recruit.CompanyId
-                            where company.Name.Contains(search) || recruit.Title.Contains(search)
+                            where company.Name.Contains(search) || recruit.Title.Contains(search)&& recruit.EndTime.Date>=DateTime.Now.Date
                             group new { recruit, company } by recruit.CompanyId into temp
                             select new RecruitmentModel
                             {
@@ -100,6 +100,7 @@ namespace QhTemplate.FontWeb.Controllers
 
             var companys = (from company in _db.Company
                             join recruit in result on company.Id equals recruit.CompanyId
+                            where recruit.EndTime.Date >= DateTime.Now.Date
                             group new { recruit, company } by recruit.CompanyId into temp
                             select new RecruitmentModel
                             {

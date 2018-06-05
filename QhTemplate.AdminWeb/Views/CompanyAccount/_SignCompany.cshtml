@@ -23,27 +23,27 @@
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon1" style="min-width: 85px;">公司名称</span>
-                <input type="text" class="form-control" placeholder="公司名称" aria-describedby="basic-addon1" id="name">
+                <input type="text" class="form-control" placeholder="公司名称" aria-describedby="basic-addon1" id="name" required="required">
             </div>
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon2" style="min-width: 85px;">公司法人</span>
-                <input type="text" class="form-control" placeholder="公司法人" aria-describedby="basic-addon2" id="legalperson">
+                <input type="text" class="form-control" placeholder="公司法人" aria-describedby="basic-addon2" id="legalperson" required="required">
             </div>
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon3" style="min-width: 85px;">联系电话</span>
-                <input type="tel" class="form-control" placeholder="公司联系电话" aria-describedby="basic-addon3" id="telphone">
+                <input type="tel" class="form-control" placeholder="公司联系电话" aria-describedby="basic-addon3" id="telphone" required="required">
             </div>
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon4" style="min-width: 85px;">公司邮箱</span>
-                <input type="email" class="form-control" placeholder="邮箱" aria-describedby="basic-addon4" id="email">
+                <input type="email" class="form-control" placeholder="邮箱" aria-describedby="basic-addon4" id="email" required="required">
             </div>
 
             <div class="input-group" style="margin-top:20px;">
                 <span class="input-group-addon" id="basic-addon5" style="min-width: 85px;">公司地址</span>
-                <input type="text" class="form-control" placeholder="公司地址" aria-describedby="basic-addon5" id="address">
+                <input type="text" class="form-control" placeholder="公司地址" aria-describedby="basic-addon5" id="address" required="required">
             </div>
 
             <div style="display:flex;justify-content:space-between;margin-top:20px;">
@@ -65,6 +65,28 @@
             var legalperson = $("#legalperson").val();
             var telphone = $("#telphone").val();
             var email = $("#email").val();
+
+            if (name === "") {
+                alert("公司名不能为空");
+                return;
+
+            }
+            if (address === "") {
+                alert("公司地址不能为空"); return;
+
+            }
+            if (legalperson === "") {
+                alert("公司法人不能为空"); return;
+
+            }
+            if (telphone === "") {
+                alert("联系电话不能为空"); return;
+
+            }
+            if (email === "") {
+                alert("邮箱不能为空"); return;
+
+            }
             $.ajax({
                 url: "/CompanyAccount/SignUpCompany",
                 type: "post",

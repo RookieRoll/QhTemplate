@@ -43,6 +43,23 @@
             var schoolname = $("#schoolname").val();
             var username = $("#username").val();
             var password = $("#password").val();
+
+
+            if (schoolname === "") {
+                alert("公司名不能为空");
+                return;
+
+            }
+            if (username === "") {
+                alert("用户名不能为空");
+                return;
+
+            }
+            if (password === "") {
+                alert("密码不能为空");
+                return;
+
+            }
             $.ajax({
                 url: "/CompanyAccount/SignIn",
                 type: "post",

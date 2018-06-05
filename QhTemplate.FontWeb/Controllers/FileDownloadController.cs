@@ -104,11 +104,7 @@ namespace QhTemplate.FontWeb.Controllers
             var name = relation.DisplayName+".pdf";
             return File(stream, memi, name);
         }
-        /// <summary>
-        /// 下载文件
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
+ 
      
     }
 }

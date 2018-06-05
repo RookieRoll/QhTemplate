@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using QhTemplate.ApplicationCore;
 using QhTemplate.ApplicationCore.Companys;
+using QhTemplate.ApplicationCore.Exceptions;
 using QhTemplate.MysqlEntityFrameWorkCore.Models;
 
 namespace QhTemplate.ApplicationService.Companys
@@ -13,7 +14,7 @@ namespace QhTemplate.ApplicationService.Companys
         private readonly CompanyManager _companyManager;
         private readonly EmsDBContext _db;
         private readonly IHostingEnvironment _hosting;
-       
+
         public CompanyService(CompanyManager companyManager, EmsDBContext db, IHostingEnvironment hosting)
         {
             _companyManager = companyManager;
@@ -23,20 +24,25 @@ namespace QhTemplate.ApplicationService.Companys
 
         public int Creat(string name, string address, string username, string telphone, string email)
         {
+            if (!IsCompanyExit(name, null))
+            {
+                throw new UserFriendlyException("该公司在系统中已经存在");
+            }
+
             var company = Company.Create(name, address, username, telphone, email);
-            int result = _companyManager.Create(company);
+            var result = _companyManager.Create(company);
             //CreateFolder(result);
             return result;
         }
 
-        private void CreateFolder(int id)
+        private bool IsCompanyExit(string name, int? id)
         {
-            var url = _hosting.WebRootPath;
-            var path = url+ BaseConst.FolderPrefix+ id.ToString();
-            if (Directory.Exists(path))
-                return;
+            if (id == null)
+            {
+                return _db.Company.FirstOrDefault(m => m.Name.Equals(name)) == null;
+            }
 
-            Directory.CreateDirectory(path);
+            return _db.Company.FirstOrDefault(m => m.Name.Equals(name) && m.Id != id) == null;
         }
 
 
